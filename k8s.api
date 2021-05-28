@@ -9,98 +9,98 @@ type (
 	NamespaceListReq {
 		Name string `json:"name,optional"`
 	}
-
+	
 	NamespaceListResp {
-		Message string `json:"message"`
+		Namespaces []string `json:"namespaces"`
 	}
-
+	
 	NamespaceAddReq {
 		Name string `json:"name,options=you|me"`
 	}
-
+	
 	NamespaceAddResp {
 		Message string `json:"message"`
 	}
 	NamespaceDeleteReq {
 		Name string `json:"name,options=you|me"`
 	}
-
+	
 	NamespaceDeleteResp {
 		Message string `json:"message"`
 	}
-
+	
 	DeploymentListReq {
 		Name string `json:"name,options=you|me"`
 	}
-
+	
 	DeploymentListResp {
 		Message string `json:"message"`
 	}
-
+	
 	DeploymentAddReq {
 		Name string `json:"name,options=you|me"`
 	}
-
+	
 	DeploymentAddResp {
 		Message string `json:"message"`
 	}
 	DeploymentUpdateReq {
 		Name string `json:"name,options=you|me"`
 	}
-
+	
 	DeploymentUpdateResp {
 		Message string `json:"message"`
 	}
 	DeploymentDeleteReq {
 		Name string `json:"name,options=you|me"`
 	}
-
+	
 	DeploymentDeleteResp {
 		Message string `json:"message"`
 	}
-
+	
 	ServiceListReq {
 		Name string `json:"name,options=you|me"`
 	}
-
+	
 	ServiceListResp {
 		Message string `json:"message"`
 	}
-
+	
 	ServiceAddReq {
 		Name string `json:"name,options=you|me"`
 	}
-
+	
 	ServiceAddResp {
 		Message string `json:"message"`
 	}
 	ServiceDeleteReq {
 		Name string `json:"name,options=you|me"`
 	}
-
+	
 	ServiceDeleteResp {
 		Message string `json:"message"`
 	}
-
+	
 	IngressListReq {
 		Name string `json:"name,options=you|me"`
 	}
-
+	
 	IngressListResp {
 		Message string `json:"message"`
 	}
-
+	
 	IngressAddReq {
 		Name string `json:"name,options=you|me"`
 	}
-
+	
 	IngressAddResp {
 		Message string `json:"message"`
 	}
 	IngressDeleteReq {
 		Name string `json:"name,options=you|me"`
 	}
-
+	
 	IngressDeleteResp {
 		Message string `json:"message"`
 	}
