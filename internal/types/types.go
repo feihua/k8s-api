@@ -17,12 +17,18 @@ type DeploymentDeleteResp struct {
 	Message string `json:"message"`
 }
 
+type DeploymentListData struct {
+	Name              string `json:"name"`
+	Namespace         string `json:"namespace"`
+	CreationTimestamp string `json:"creationTimestamp"`
+}
+
 type DeploymentListReq struct {
-	Name string `json:"name,options=you|me"`
+	Namespace string `json:"namespace"`
 }
 
 type DeploymentListResp struct {
-	Message string `json:"message"`
+	ListData []*DeploymentListData `json:"listData"`
 }
 
 type DeploymentUpdateReq struct {

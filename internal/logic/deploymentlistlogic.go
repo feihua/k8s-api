@@ -2,11 +2,14 @@ package logic
 
 import (
 	"context"
-
+	"fmt"
+	"github.com/tal-tech/go-zero/core/logx"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/tools/clientcmd"
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
-
-	"github.com/tal-tech/go-zero/core/logx"
+	"log"
 )
 
 type DeploymentListLogic struct {
@@ -24,7 +27,55 @@ func NewDeploymentListLogic(ctx context.Context, svcCtx *svc.ServiceContext) Dep
 }
 
 func (l *DeploymentListLogic) DeploymentList(req types.DeploymentListReq) (*types.DeploymentListResp, error) {
-	// todo: add your logic here and delete this line
+	// k8s 配置
+	kubeConfig := "etc/config"
+	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
 
-	return &types.DeploymentListResp{}, nil
+	if err != nil {
+		log.Fatal(err)
+	}
+	clientSet, err := kubernetes.NewForConfig(config)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// 2. deployment 列表
+	fmt.Println("deployments:")
+	//for _, namespace := range namespaces {
+	//	deploymentClient := clientSet.AppsV1().Deployments(namespace)
+	//
+	//	deploymentResult, err := deploymentClient.List(context.TODO(), metaV1.ListOptions{})
+	//	if err != nil {
+	//		log.Println(err)
+	//	} else {
+	//		for _, deployment := range deploymentResult.Items {
+	//			fmt.Println(deployment.Name, deployment.Namespace, deployment.CreationTimestamp)
+	//		}
+	//
+	//	}
+	//}
+	//
+	deploymentClient := clientSet.AppsV1().Deployments(req.Namespace)
+
+	deploymentResult, err := deploymentClient.List(context.TODO(), metaV1.ListOptions{})
+
+	var list []*types.DeploymentListData
+
+	if err != nil {
+		log.Println(err)
+	} else {
+		for _, deployment := range deploymentResult.Items {
+			fmt.Println(deployment.Name, deployment.Namespace, deployment.CreationTimestamp)
+			list = append(list, &types.DeploymentListData{
+				Name:              deployment.Name,
+				Namespace:         deployment.Namespace,
+				CreationTimestamp: deployment.CreationTimestamp.Format("2006-01-02 15:04:05"),
+			})
+		}
+
+	}
+
+	return &types.DeploymentListResp{
+		ListData: list,
+	}, nil
 }
