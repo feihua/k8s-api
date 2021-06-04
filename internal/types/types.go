@@ -103,10 +103,21 @@ type ServiceDeleteResp struct {
 	Message string `json:"message"`
 }
 
+type ServiceListData struct {
+	Name              string `json:"name"`
+	Namespace         string `json:"namespace"`
+	Labels            string `json:"labels"`
+	Selector          string `json:"selector"`
+	Type              string `json:"type"`
+	ClusterIP         string `json:"clusterIP"`
+	Ports             string `json:"ports"`
+	CreationTimestamp string `json:"creationTimestamp"`
+}
+
 type ServiceListReq struct {
-	Name string `json:"name,options=you|me"`
+	Namespace string `json:"namespace"`
 }
 
 type ServiceListResp struct {
-	Message string `json:"message"`
+	ListData []*ServiceListData `json:"listData"`
 }

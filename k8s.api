@@ -66,11 +66,22 @@ type (
 	}
 	
 	ServiceListReq {
-		Name string `json:"name,options=you|me"`
+		Namespace string `json:"namespace"`
 	}
 	
 	ServiceListResp {
-		Message string `json:"message"`
+		ListData []*ServiceListData `json:"listData"`
+	}
+	
+	ServiceListData {
+		Name string `json:"name"`
+		Namespace string `json:"namespace"`
+		Labels string `json:"labels"`
+		Selector string `json:"selector"`
+		Type string `json:"type"`
+		ClusterIP string `json:"clusterIP"`
+		Ports string `json:"ports"`
+		CreationTimestamp string `json:"creationTimestamp"`
 	}
 	
 	ServiceAddReq {
