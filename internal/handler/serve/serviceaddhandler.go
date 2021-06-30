@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 
-	"k8s_test/internal/logic"
+	"k8s_test/internal/logic/serve"
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
 

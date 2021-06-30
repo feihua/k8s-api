@@ -1,0 +1,11 @@
+import "deployment.api"
+import "ingress.api"
+import "namespace.api"
+import "service.api"
+
+info(
+	title: "k8s admin"
+	desc: "k8s admin"
+	author: "koobe"
+	email: "koobe.liu@uaf.com.cn"
+)

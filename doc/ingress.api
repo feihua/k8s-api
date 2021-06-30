@@ -1,0 +1,42 @@
+info(
+    title: "k8s admin"
+    desc: "k8s admin"
+    author: "koobe"
+    email: "koobe.liu@uaf.com.cn"
+)
+
+type (
+    IngressListReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    IngressListResp {
+        Message string `json:"message"`
+    }
+
+    IngressAddReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    IngressAddResp {
+        Message string `json:"message"`
+    }
+    IngressDeleteReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    IngressDeleteResp {
+        Message string `json:"message"`
+    }
+)
+@server(
+    group: ingress
+)
+service k8s-api {
+    @handler IngressList
+    post /api/ingress/list (IngressListReq) returns (IngressListResp);
+    @handler IngressAdd
+    post /api/ingress/add (IngressAddReq) returns (IngressAddResp);
+    @handler IngressDelete
+    post /api/ingress/delete (IngressDeleteReq) returns (IngressDeleteReq);
+}

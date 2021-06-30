@@ -4,6 +4,10 @@ package handler
 import (
 	"net/http"
 
+	deployment "k8s_test/internal/handler/deployment"
+	ingress "k8s_test/internal/handler/ingress"
+	namespace "k8s_test/internal/handler/namespace"
+	serve "k8s_test/internal/handler/serve"
 	"k8s_test/internal/svc"
 
 	"github.com/tal-tech/go-zero/rest"
@@ -14,68 +18,83 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/namespace/list",
-				Handler: NamespaceListHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/namespace/add",
-				Handler: NamespaceAddHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/namespace/delete",
-				Handler: NamespaceDeleteHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
 				Path:    "/api/deployment/list",
-				Handler: DeploymentListHandler(serverCtx),
+				Handler: deployment.DeploymentListHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/api/deployment/add",
-				Handler: DeploymentAddHandler(serverCtx),
+				Handler: deployment.DeploymentAddHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/api/deployment/update",
-				Handler: DeploymentUpdateHandler(serverCtx),
+				Handler: deployment.DeploymentUpdateHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/api/deployment/delete",
-				Handler: DeploymentDeleteHandler(serverCtx),
+				Handler: deployment.DeploymentDeleteHandler(serverCtx),
 			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/service/list",
-				Handler: ServiceListHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/service/add",
-				Handler: ServiceAddHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/service/delete",
-				Handler: ServiceDeleteHandler(serverCtx),
-			},
+		},
+	)
+
+	engine.AddRoutes(
+		[]rest.Route{
 			{
 				Method:  http.MethodPost,
 				Path:    "/api/ingress/list",
-				Handler: IngressListHandler(serverCtx),
+				Handler: ingress.IngressListHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/api/ingress/add",
-				Handler: IngressAddHandler(serverCtx),
+				Handler: ingress.IngressAddHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/api/ingress/delete",
-				Handler: IngressDeleteHandler(serverCtx),
+				Handler: ingress.IngressDeleteHandler(serverCtx),
+			},
+		},
+	)
+
+	engine.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/namespace/list",
+				Handler: namespace.NamespaceListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/namespace/add",
+				Handler: namespace.NamespaceAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/namespace/delete",
+				Handler: namespace.NamespaceDeleteHandler(serverCtx),
+			},
+		},
+	)
+
+	engine.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/service/list",
+				Handler: serve.ServiceListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/service/add",
+				Handler: serve.ServiceAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/service/delete",
+				Handler: serve.ServiceDeleteHandler(serverCtx),
 			},
 		},
 	)

@@ -1,0 +1,53 @@
+info(
+    title: "k8s admin"
+    desc: "k8s admin"
+    author: "koobe"
+    email: "koobe.liu@uaf.com.cn"
+)
+
+type (
+    ServiceListReq {
+        Namespace string `json:"namespace"`
+    }
+
+    ServiceListResp {
+        ListData []*ServiceListData `json:"listData"`
+    }
+
+    ServiceListData {
+        Name string `json:"name"`
+        Namespace string `json:"namespace"`
+        Labels string `json:"labels"`
+        Selector string `json:"selector"`
+        Type string `json:"type"`
+        ClusterIP string `json:"clusterIP"`
+        Ports string `json:"ports"`
+        CreationTimestamp string `json:"creationTimestamp"`
+    }
+
+    ServiceAddReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    ServiceAddResp {
+        Message string `json:"message"`
+    }
+    ServiceDeleteReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    ServiceDeleteResp {
+        Message string `json:"message"`
+    }
+)
+@server(
+    group: serve
+)
+service k8s-api {
+    @handler ServiceList
+    post /api/service/list (ServiceListReq) returns (ServiceListResp);
+    @handler ServiceAdd
+    post /api/service/add (ServiceAddReq) returns (ServiceAddResp);
+    @handler ServiceDelete
+    post /api/service/delete (ServiceDeleteReq) returns (ServiceDeleteResp);
+}

@@ -1,0 +1,43 @@
+info(
+    title: "k8s admin"
+    desc: "k8s admin"
+    author: "koobe"
+    email: "koobe.liu@uaf.com.cn"
+)
+
+type (
+    NamespaceListReq {
+        Name string `json:"name,optional"`
+    }
+
+    NamespaceListResp {
+        Namespaces []string `json:"namespaces"`
+    }
+
+    NamespaceAddReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    NamespaceAddResp {
+        Message string `json:"message"`
+    }
+    NamespaceDeleteReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    NamespaceDeleteResp {
+        Message string `json:"message"`
+    }
+)
+
+@server(
+    group: namespace
+)
+service k8s-api {
+    @handler NamespaceList
+    post /api/namespace/list (NamespaceListReq) returns (NamespaceListResp);
+    @handler NamespaceAdd
+    post /api/namespace/add (NamespaceAddReq) returns (NamespaceAddResp);
+    @handler NamespaceDelete
+    post /api/namespace/delete (NamespaceDeleteReq) returns (NamespaceDeleteResp);
+}

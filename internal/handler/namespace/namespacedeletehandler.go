@@ -3,23 +3,23 @@ package handler
 import (
 	"net/http"
 
-	"k8s_test/internal/logic"
+	"k8s_test/internal/logic/namespace"
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
 
 	"github.com/tal-tech/go-zero/rest/httpx"
 )
 
-func ServiceDeleteHandler(ctx *svc.ServiceContext) http.HandlerFunc {
+func NamespaceDeleteHandler(ctx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.ServiceDeleteReq
+		var req types.NamespaceDeleteReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.Error(w, err)
 			return
 		}
 
-		l := logic.NewServiceDeleteLogic(r.Context(), ctx)
-		resp, err := l.ServiceDelete(req)
+		l := logic.NewNamespaceDeleteLogic(r.Context(), ctx)
+		resp, err := l.NamespaceDelete(req)
 		if err != nil {
 			httpx.Error(w, err)
 		} else {
