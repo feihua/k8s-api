@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"k8s_test/internal/common/errorx"
 	"time"
 
 	"k8s_test/internal/svc"
@@ -41,13 +42,13 @@ func (l *NamespaceListLogic) NamespaceList(req types.NamespaceListReq) (*types.N
 	}
 	clientSet, err := kubernetes.NewForConfig(config)
 	if err != nil {
-		log.Fatal(err)
+		return nil, errorx.NewDefaultError(err.Error())
 	}
 	// 1. namespace 列表
 	namespaceClient := clientSet.CoreV1().Namespaces()
 	namespaceResult, err := namespaceClient.List(context.TODO(), metaV1.ListOptions{})
 	if err != nil {
-		log.Fatal(err)
+		return nil, errorx.NewDefaultError(err.Error())
 	}
 	now := time.Now()
 
