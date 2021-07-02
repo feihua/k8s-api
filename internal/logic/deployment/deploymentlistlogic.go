@@ -7,9 +7,9 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
+	"k8s_test/internal/common/errorx"
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
-	"log"
 )
 
 type DeploymentListLogic struct {
@@ -32,11 +32,11 @@ func (l *DeploymentListLogic) DeploymentList(req types.DeploymentListReq) (*type
 	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
 
 	if err != nil {
-		log.Fatal(err)
+		return nil, errorx.NewDefaultError(err.Error())
 	}
 	clientSet, err := kubernetes.NewForConfig(config)
 	if err != nil {
-		log.Fatal(err)
+		return nil, errorx.NewDefaultError(err.Error())
 	}
 
 	// 2. deployment 列表
@@ -62,7 +62,7 @@ func (l *DeploymentListLogic) DeploymentList(req types.DeploymentListReq) (*type
 	var list []*types.DeploymentListData
 
 	if err != nil {
-		log.Println(err)
+		return nil, errorx.NewDefaultError(err.Error())
 	} else {
 		for _, deployment := range deploymentResult.Items {
 			fmt.Println(deployment.Name, deployment.Namespace, deployment.CreationTimestamp)
