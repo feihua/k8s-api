@@ -10,6 +10,7 @@ import (
 	"k8s_test/internal/common/errorx"
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
+	"strings"
 )
 
 type DeploymentListLogic struct {
@@ -41,41 +42,67 @@ func (l *DeploymentListLogic) DeploymentList(req types.DeploymentListReq) (*type
 
 	// 2. deployment 列表
 	fmt.Println("deployments:")
-	//for _, namespace := range namespaces {
-	//	deploymentClient := clientSet.AppsV1().Deployments(namespace)
-	//
-	//	deploymentResult, err := deploymentClient.List(context.TODO(), metaV1.ListOptions{})
-	//	if err != nil {
-	//		log.Println(err)
-	//	} else {
-	//		for _, deployment := range deploymentResult.Items {
-	//			fmt.Println(deployment.Name, deployment.Namespace, deployment.CreationTimestamp)
-	//		}
-	//
-	//	}
-	//}
-	//
-	deploymentClient := clientSet.AppsV1().Deployments(req.Namespace)
-
-	deploymentResult, err := deploymentClient.List(context.TODO(), metaV1.ListOptions{})
 
 	var list []*types.DeploymentListData
 
-	if err != nil {
-		return nil, errorx.NewDefaultError(err.Error())
+	if len(strings.TrimSpace(req.Namespace)) == 0 {
+		namespaceClient := clientSet.CoreV1().Namespaces()
+		namespaceResult, err := namespaceClient.List(context.TODO(), metaV1.ListOptions{})
+		if err != nil {
+			return nil, errorx.NewDefaultError(err.Error())
+		}
+		for _, namespace := range namespaceResult.Items {
+			deploymentClient := clientSet.AppsV1().Deployments(namespace.Name)
+			deploymentResult, err := deploymentClient.List(context.TODO(), metaV1.ListOptions{})
+
+			if err != nil {
+				return nil, errorx.NewDefaultError(err.Error())
+			}
+
+			for _, deployment := range deploymentResult.Items {
+				fmt.Println(deployment.Name, deployment.Namespace, deployment.CreationTimestamp)
+				list = append(list, &types.DeploymentListData{
+					Name:               deployment.Name,
+					Namespace:          deployment.Namespace,
+					Labels:             deployment.Labels["run"],
+					Strategy:           string(deployment.Spec.Strategy.Type),
+					Replicas:           deployment.Status.Replicas,
+					UpdatedReplicas:    deployment.Status.UpdatedReplicas,
+					ReadyReplicas:      deployment.Status.ReadyReplicas,
+					AvailableReplicas:  deployment.Status.AvailableReplicas,
+					ObservedGeneration: deployment.Status.ObservedGeneration,
+					CreationTimestamp:  deployment.CreationTimestamp.Format("2006-01-02 15:04:05"),
+				})
+			}
+		}
 	} else {
+		deploymentClient := clientSet.AppsV1().Deployments(req.Namespace)
+		deploymentResult, err := deploymentClient.List(context.TODO(), metaV1.ListOptions{})
+
+		if err != nil {
+			return nil, errorx.NewDefaultError(err.Error())
+		}
+
 		for _, deployment := range deploymentResult.Items {
 			fmt.Println(deployment.Name, deployment.Namespace, deployment.CreationTimestamp)
 			list = append(list, &types.DeploymentListData{
-				Name:              deployment.Name,
-				Namespace:         deployment.Namespace,
-				CreationTimestamp: deployment.CreationTimestamp.Format("2006-01-02 15:04:05"),
+				Name:               deployment.Name,
+				Namespace:          deployment.Namespace,
+				Labels:             deployment.Labels["run"],
+				Strategy:           string(deployment.Spec.Strategy.Type),
+				Replicas:           deployment.Status.Replicas,
+				UpdatedReplicas:    deployment.Status.UpdatedReplicas,
+				ReadyReplicas:      deployment.Status.ReadyReplicas,
+				AvailableReplicas:  deployment.Status.AvailableReplicas,
+				ObservedGeneration: deployment.Status.ObservedGeneration,
+				CreationTimestamp:  deployment.CreationTimestamp.Format("2006-01-02 15:04:05"),
 			})
 		}
-
 	}
 
 	return &types.DeploymentListResp{
-		ListData: list,
+		Code: 0,
+		Msg:  "successful",
+		Data: list,
 	}, nil
 }

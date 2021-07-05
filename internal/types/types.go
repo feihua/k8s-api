@@ -18,17 +18,26 @@ type DeploymentDeleteResp struct {
 }
 
 type DeploymentListData struct {
-	Name              string `json:"name"`
-	Namespace         string `json:"namespace"`
-	CreationTimestamp string `json:"creationTimestamp"`
+	Name               string `json:"name"`
+	Namespace          string `json:"namespace"`
+	Labels             string `json:"labels"`
+	Strategy           string `json:"strategy"`
+	Replicas           int32  `json:"replicas"`
+	UpdatedReplicas    int32  `json:"updatedReplicas"`
+	ReadyReplicas      int32  `json:"readyReplicas"`
+	AvailableReplicas  int32  `json:"availableReplicas"`
+	ObservedGeneration int64  `json:"observedGeneration"`
+	CreationTimestamp  string `json:"creationTimestamp"`
 }
 
 type DeploymentListReq struct {
-	Namespace string `json:"namespace"`
+	Namespace string `json:"namespace,optional"`
 }
 
 type DeploymentListResp struct {
-	ListData []*DeploymentListData `json:"listData"`
+	Code int                   `json:"code"`
+	Msg  string                `json:"msg"`
+	Data []*DeploymentListData `json:"data"`
 }
 
 type DeploymentUpdateReq struct {
