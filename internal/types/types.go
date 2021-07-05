@@ -127,7 +127,10 @@ type ServiceListData struct {
 	Selector          string `json:"selector"`
 	Type              string `json:"type"`
 	ClusterIP         string `json:"clusterIP"`
-	Ports             string `json:"ports"`
+	Protocol          string `json:"protocol"`
+	Ports             int32  `json:"ports"`
+	TargetPort        int32  `json:"targetPort"`
+	NodePort          int32  `json:"nodePort"`
 	CreationTimestamp string `json:"creationTimestamp"`
 }
 
@@ -136,5 +139,7 @@ type ServiceListReq struct {
 }
 
 type ServiceListResp struct {
-	ListData []*ServiceListData `json:"listData"`
+	Code int                `json:"code"`
+	Msg  string             `json:"msg"`
+	Data []*ServiceListData `json:"data"`
 }
