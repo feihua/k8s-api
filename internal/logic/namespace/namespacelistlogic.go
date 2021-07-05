@@ -52,14 +52,21 @@ func (l *NamespaceListLogic) NamespaceList(req types.NamespaceListReq) (*types.N
 	}
 	now := time.Now()
 
-	var namespaces []string
-	fmt.Println("namespaces:")
+	var listData []*types.NamespaceListData
+	fmt.Println("namespace:")
 	for _, namespace := range namespaceResult.Items {
-		namespaces = append(namespaces, namespace.Name)
+		listData = append(listData, &types.NamespaceListData{
+			Name:              namespace.Name,
+			Status:            string(namespace.Status.Phase),
+			CreationTimestamp: namespace.CreationTimestamp.Format("2006-01-02 15:04:05"),
+		})
+
 		fmt.Println(namespace.Name, now.Sub(namespace.CreationTimestamp.Time))
 	}
 
 	return &types.NamespaceListResp{
-		Namespaces: namespaces,
+		Code: 0,
+		Msg:  "successful",
+		Data: listData,
 	}, nil
 }

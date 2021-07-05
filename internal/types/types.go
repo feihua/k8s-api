@@ -79,12 +79,20 @@ type NamespaceDeleteResp struct {
 	Message string `json:"message"`
 }
 
+type NamespaceListData struct {
+	Name              string `json:"name"`
+	Status            string `json:"status"`
+	CreationTimestamp string `json:"creationTimestamp"`
+}
+
 type NamespaceListReq struct {
 	Name string `json:"name,optional"`
 }
 
 type NamespaceListResp struct {
-	Namespaces []string `json:"namespaces"`
+	Code int                  `json:"code"`
+	Msg  string               `json:"msg"`
+	Data []*NamespaceListData `json:"data"`
 }
 
 type ServiceAddReq struct {

@@ -1,9 +1,7 @@
-import (
-	"deployment.api"
-	"ingress.api"
-	"namespace.api"
-	"service.api"
-)
+import "deployment.api"
+import "ingress.api"
+import "namespace.api"
+import "service.api"
 
 info(
 	title: "k8s admin"
