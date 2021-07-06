@@ -1,0 +1,54 @@
+info(
+    title: "k8s admin"
+    desc: "k8s admin"
+    author: "koobe"
+    email: "koobe.liu@uaf.com.cn"
+)
+
+type (
+    PodsListReq {
+        Name string `json:"name,optional"`
+    }
+
+    PodsListResp {
+        Code int    `json:"code"`
+        Msg  string `json:"msg"`
+        Data []*PodsListData `json:"data"`
+    }
+
+    PodsListData {
+        Name string    `json:"name"`
+        Status string    `json:"status"`
+        Labels string    `json:"labels"`
+        Namespace string    `json:"namespace"`
+        HostIP string    `json:"hostIP"`
+        PodIP string    `json:"podIP"`
+        StartTime string    `json:"startTime"`
+        RestartCount int32    `json:"restartCount"`
+        Image string    `json:"image"`
+        CreationTimestamp  string `json:"creationTimestamp"`
+    }
+
+    PodsAddReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    PodsAddResp {
+        Message string `json:"message"`
+    }
+    PodsDeleteReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    PodsDeleteResp {
+        Message string `json:"message"`
+    }
+)
+
+@server(
+    group: pods
+)
+service k8s-api {
+    @handler PodsList
+    post /api/pods/list (PodsListReq) returns (PodsListResp);
+}

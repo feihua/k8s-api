@@ -7,6 +7,8 @@ import (
 	deployment "k8s_test/internal/handler/deployment"
 	ingress "k8s_test/internal/handler/ingress"
 	namespace "k8s_test/internal/handler/namespace"
+	nodes "k8s_test/internal/handler/nodes"
+	pods "k8s_test/internal/handler/pods"
 	serve "k8s_test/internal/handler/serve"
 	"k8s_test/internal/svc"
 
@@ -95,6 +97,26 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/api/service/delete",
 				Handler: serve.ServiceDeleteHandler(serverCtx),
+			},
+		},
+	)
+
+	engine.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/pods/list",
+				Handler: pods.PodsListHandler(serverCtx),
+			},
+		},
+	)
+
+	engine.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/nodes/list",
+				Handler: nodes.NodesListHandler(serverCtx),
 			},
 		},
 	)

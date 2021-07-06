@@ -2,6 +2,8 @@ import "deployment.api"
 import "ingress.api"
 import "namespace.api"
 import "service.api"
+import "pods.api"
+import "nodes.api"
 
 info(
 	title: "k8s admin"

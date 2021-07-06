@@ -48,6 +48,11 @@ type DeploymentUpdateResp struct {
 	Message string `json:"message"`
 }
 
+type ImagesData struct {
+	Name string `json:"name"`
+	Size int64  `json:"size"`
+}
+
 type IngressAddReq struct {
 	Name string `json:"name,options=you|me"`
 }
@@ -102,6 +107,93 @@ type NamespaceListResp struct {
 	Code int                  `json:"code"`
 	Msg  string               `json:"msg"`
 	Data []*NamespaceListData `json:"data"`
+}
+
+type NodeData struct {
+	MachineID               string `json:"machineID"`
+	SystemUUID              string `json:"systemUUID"`
+	BootID                  string `json:"bootID"`
+	KernelVersion           string `json:"kernelVersion"`
+	OSImage                 string `json:"oSImage"`
+	ContainerRuntimeVersion string `json:"containerRuntimeVersion"`
+	KubeletVersion          string `json:"kubeletVersion"`
+	KubeProxyVersion        string `json:"kubeProxyVersion"`
+	OperatingSystem         string `json:"operatingSystem"`
+	Architecture            string `json:"architecture"`
+}
+
+type NodesAddReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type NodesAddResp struct {
+	Message string `json:"message"`
+}
+
+type NodesDeleteReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type NodesDeleteResp struct {
+	Message string `json:"message"`
+}
+
+type NodesListData struct {
+	Name              string        `json:"name"`
+	Status            string        `json:"status"`
+	Memory            string        `json:"memory"`
+	NodeInfo          NodeData      `json:"nodeInfo"`
+	Images            []*ImagesData `json:"Images"`
+	CreationTimestamp string        `json:"creationTimestamp"`
+}
+
+type NodesListReq struct {
+	Name string `json:"name,optional"`
+}
+
+type NodesListResp struct {
+	Code int              `json:"code"`
+	Msg  string           `json:"msg"`
+	Data []*NodesListData `json:"data"`
+}
+
+type PodsAddReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type PodsAddResp struct {
+	Message string `json:"message"`
+}
+
+type PodsDeleteReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type PodsDeleteResp struct {
+	Message string `json:"message"`
+}
+
+type PodsListData struct {
+	Name              string `json:"name"`
+	Status            string `json:"status"`
+	Labels            string `json:"labels"`
+	Namespace         string `json:"namespace"`
+	HostIP            string `json:"hostIP"`
+	PodIP             string `json:"podIP"`
+	StartTime         string `json:"startTime"`
+	RestartCount      int32  `json:"restartCount"`
+	Image             string `json:"image"`
+	CreationTimestamp string `json:"creationTimestamp"`
+}
+
+type PodsListReq struct {
+	Name string `json:"name,optional"`
+}
+
+type PodsListResp struct {
+	Code int             `json:"code"`
+	Msg  string          `json:"msg"`
+	Data []*PodsListData `json:"data"`
 }
 
 type ServiceAddReq struct {
