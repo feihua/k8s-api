@@ -7,7 +7,7 @@ info(
 
 type (
     PodsListReq {
-        Name string `json:"name,optional"`
+        Namespace string `json:"namespace,optional"`
     }
 
     PodsListResp {

@@ -7,7 +7,7 @@ info(
 
 type (
     ServiceListReq {
-        Namespace string `json:"namespace"`
+        Namespace string `json:"namespace,optional"`
     }
 
     ServiceListResp {

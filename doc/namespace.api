@@ -23,18 +23,55 @@ type (
     }
 
     NamespaceAddReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name"`
     }
 
     NamespaceAddResp {
-        Message string `json:"message"`
+        Code int    `json:"code"`
+        Msg  string `json:"msg"`
     }
     NamespaceDeleteReq {
         Name string `json:"name,options=you|me"`
     }
 
     NamespaceDeleteResp {
-        Message string `json:"message"`
+        Code int    `json:"code"`
+        Msg  string `json:"msg"`
+    }
+
+    NamespaceGetReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    NamespaceGetResp {
+        Code int    `json:"code"`
+        Msg  string `json:"msg"`
+        data  NamespaceGetData `json:"data"`
+    }
+
+    NamespaceGetData {
+        Name string    `json:"name"`
+        ClusterName string    `json:"clusterName"`
+        Status string    `json:"status"`
+        CreationTimestamp  string `json:"creationTimestamp"`
+    }
+
+    NamespaceWatchReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    NamespaceWatchResp {
+        Code int    `json:"code"`
+        Msg  string `json:"msg"`
+    }
+
+    NamespacePatchReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    NamespacePatchResp {
+        Code int    `json:"code"`
+        Msg  string `json:"msg"`
     }
 )
 
@@ -45,7 +82,13 @@ service k8s-api {
     @handler NamespaceList
     post /api/namespace/list (NamespaceListReq) returns (NamespaceListResp);
     @handler NamespaceAdd
-    post /api/namespace/add (NamespaceAddReq) returns (NamespaceAddResp);
+    post /api/namespace/create (NamespaceAddReq) returns (NamespaceAddResp);
     @handler NamespaceDelete
     post /api/namespace/delete (NamespaceDeleteReq) returns (NamespaceDeleteResp);
+    @handler Get
+    post /api/namespace/get (NamespaceListReq) returns (NamespaceGetResp);
+    @handler Watch
+    post /api/namespace/watch (NamespaceListReq) returns (NamespaceWatchResp);
+    @handler Patch
+    post /api/namespace/patch (NamespaceListReq) returns (NamespacePatchResp);
 }

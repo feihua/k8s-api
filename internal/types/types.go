@@ -78,11 +78,12 @@ type IngressListResp struct {
 }
 
 type NamespaceAddReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name"`
 }
 
 type NamespaceAddResp struct {
-	Message string `json:"message"`
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
 }
 
 type NamespaceDeleteReq struct {
@@ -90,7 +91,25 @@ type NamespaceDeleteReq struct {
 }
 
 type NamespaceDeleteResp struct {
-	Message string `json:"message"`
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
+type NamespaceGetData struct {
+	Name              string `json:"name"`
+	ClusterName       string `json:"clusterName"`
+	Status            string `json:"status"`
+	CreationTimestamp string `json:"creationTimestamp"`
+}
+
+type NamespaceGetReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type NamespaceGetResp struct {
+	Code int              `json:"code"`
+	Msg  string           `json:"msg"`
+	Data NamespaceGetData `json:"data"`
 }
 
 type NamespaceListData struct {
@@ -107,6 +126,24 @@ type NamespaceListResp struct {
 	Code int                  `json:"code"`
 	Msg  string               `json:"msg"`
 	Data []*NamespaceListData `json:"data"`
+}
+
+type NamespacePatchReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type NamespacePatchResp struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
+type NamespaceWatchReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type NamespaceWatchResp struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
 }
 
 type NodeData struct {
@@ -187,7 +224,7 @@ type PodsListData struct {
 }
 
 type PodsListReq struct {
-	Name string `json:"name,optional"`
+	Namespace string `json:"namespace,optional"`
 }
 
 type PodsListResp struct {
@@ -227,7 +264,7 @@ type ServiceListData struct {
 }
 
 type ServiceListReq struct {
-	Namespace string `json:"namespace"`
+	Namespace string `json:"namespace,optional"`
 }
 
 type ServiceListResp struct {

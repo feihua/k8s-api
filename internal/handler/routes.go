@@ -70,13 +70,28 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/namespace/add",
+				Path:    "/api/namespace/create",
 				Handler: namespace.NamespaceAddHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/api/namespace/delete",
 				Handler: namespace.NamespaceDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/namespace/get",
+				Handler: namespace.GetHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/namespace/watch",
+				Handler: namespace.WatchHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/namespace/patch",
+				Handler: namespace.PatchHandler(serverCtx),
 			},
 		},
 	)

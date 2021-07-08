@@ -41,7 +41,7 @@ func (l *NamespaceDeleteLogic) NamespaceDelete(req types.NamespaceDeleteReq) (*t
 	}
 
 	namespaceClient := forConfig.CoreV1().Namespaces()
-	_ = namespaceClient.Delete(context.TODO(), "nginx", metaV1.DeleteOptions{})
+	_ = namespaceClient.Delete(context.TODO(), req.Name, metaV1.DeleteOptions{})
 
 	return &types.NamespaceDeleteResp{}, nil
 }

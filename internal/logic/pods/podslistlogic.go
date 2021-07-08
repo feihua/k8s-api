@@ -39,7 +39,7 @@ func (l *PodsListLogic) PodsList(req types.PodsListReq) (*types.PodsListResp, er
 		return nil, errorx.NewDefaultError(err.Error())
 	}
 	//获取POD
-	pods, err := clientSet.CoreV1().Pods("").List(context.TODO(), metaV1.ListOptions{})
+	pods, err := clientSet.CoreV1().Pods(req.Namespace).List(context.TODO(), metaV1.ListOptions{})
 	if err != nil {
 		return nil, errorx.NewDefaultError(err.Error())
 	}

@@ -3,16 +3,14 @@ package logic
 import (
 	"context"
 	"fmt"
+	"github.com/tal-tech/go-zero/core/logx"
+	apiV1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
-	"log"
-	"time"
-
+	"k8s_test/internal/common/errorx"
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
-
-	"github.com/tal-tech/go-zero/core/logx"
 )
 
 type NamespaceAddLogic struct {
@@ -35,26 +33,30 @@ func (l *NamespaceAddLogic) NamespaceAdd(req types.NamespaceAddReq) (*types.Name
 	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
 
 	if err != nil {
-		log.Fatal(err)
+		return nil, errorx.NewDefaultError(err.Error())
 	}
-	clientset, err := kubernetes.NewForConfig(config)
+	clientSet, err := kubernetes.NewForConfig(config)
 	if err != nil {
-		log.Fatal(err)
-	}
-	// 1. namespace 列表
-	namespaceClient := clientset.CoreV1().Namespaces()
-	namespaceResult, err := namespaceClient.List(context.TODO(), metaV1.ListOptions{})
-	if err != nil {
-		log.Fatal(err)
-	}
-	now := time.Now()
-
-	var namespaces []string
-	fmt.Println("namespaces:")
-	for _, namespace := range namespaceResult.Items {
-		namespaces = append(namespaces, namespace.Name)
-		fmt.Println(namespace.Name, now.Sub(namespace.CreationTimestamp.Time))
+		return nil, errorx.NewDefaultError(err.Error())
 	}
 
-	return &types.NamespaceAddResp{}, nil
+	namespaceClient := clientSet.CoreV1().Namespaces()
+	namespace := &apiV1.Namespace{
+		ObjectMeta: metaV1.ObjectMeta{
+			Name: req.Name,
+		},
+		Status: apiV1.NamespaceStatus{
+			Phase: apiV1.NamespaceActive,
+		},
+	}
+	result, err := namespaceClient.Create(context.TODO(), namespace, metaV1.CreateOptions{})
+	if err != nil {
+		return nil, errorx.NewDefaultError(err.Error())
+	}
+
+	fmt.Println(result)
+	return &types.NamespaceAddResp{
+		Code: 0,
+		Msg:  "successful",
+	}, nil
 }
