@@ -9,22 +9,22 @@ import (
 	"github.com/tal-tech/go-zero/core/logx"
 )
 
-type WatchLogic struct {
+type NodeListLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewWatchLogic(ctx context.Context, svcCtx *svc.ServiceContext) WatchLogic {
-	return WatchLogic{
+func NewNodeListLogic(ctx context.Context, svcCtx *svc.ServiceContext) NodeListLogic {
+	return NodeListLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *WatchLogic) Watch(req types.NamespaceListReq) (*types.NamespaceWatchResp, error) {
+func (l *NodeListLogic) NodeList(req types.NodesListReq) (*types.NodesListResp, error) {
 	// todo: add your logic here and delete this line
 
-	return &types.NamespaceWatchResp{}, nil
+	return &types.NodesListResp{}, nil
 }

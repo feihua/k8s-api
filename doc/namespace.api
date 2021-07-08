@@ -6,72 +6,74 @@ info(
 )
 
 type (
-    NamespaceListReq {
-        Name string `json:"name,optional"`
-    }
-
-    NamespaceListResp {
-        Code int    `json:"code"`
-        Msg  string `json:"msg"`
-        Data []*NamespaceListData `json:"data"`
-    }
-
-    NamespaceListData {
-        Name string    `json:"name"`
-        Status string    `json:"status"`
-        CreationTimestamp  string `json:"creationTimestamp"`
-    }
-
     NamespaceAddReq {
         Name string `json:"name"`
     }
-
     NamespaceAddResp {
-        Code int    `json:"code"`
-        Msg  string `json:"msg"`
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+    }
+    NamespaceUpdateReq {
+        Name string `json:"name"`
+    }
+    NamespaceUpdateStatusResp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+    }
+    NamespaceUpdateStatusReq {
+        Name string `json:"name"`
+    }
+    NamespaceUpdateResp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
     }
     NamespaceDeleteReq {
         Name string `json:"name,options=you|me"`
     }
-
     NamespaceDeleteResp {
-        Code int    `json:"code"`
-        Msg  string `json:"msg"`
+        Code int `json:"code"`
+        Msg string `json:"msg"`
     }
-
     NamespaceGetReq {
         Name string `json:"name,options=you|me"`
     }
-
     NamespaceGetResp {
-        Code int    `json:"code"`
-        Msg  string `json:"msg"`
-        data  NamespaceGetData `json:"data"`
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        data NamespaceGetData `json:"data"`
     }
-
     NamespaceGetData {
-        Name string    `json:"name"`
-        ClusterName string    `json:"clusterName"`
-        Status string    `json:"status"`
-        CreationTimestamp  string `json:"creationTimestamp"`
+        Name string `json:"name"`
+        ClusterName string `json:"clusterName"`
+        Status string `json:"status"`
+        CreationTimestamp string `json:"creationTimestamp"`
     }
-
+    NamespaceListReq {
+        Name string `json:"name,optional"`
+    }
+    NamespaceListResp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Data []*NamespaceListData `json:"data"`
+    }
+    NamespaceListData {
+        Name string `json:"name"`
+        Status string `json:"status"`
+        CreationTimestamp string `json:"creationTimestamp"`
+    }
     NamespaceWatchReq {
         Name string `json:"name,options=you|me"`
     }
-
     NamespaceWatchResp {
-        Code int    `json:"code"`
-        Msg  string `json:"msg"`
+        Code int `json:"code"`
+        Msg string `json:"msg"`
     }
-
     NamespacePatchReq {
         Name string `json:"name,options=you|me"`
     }
-
     NamespacePatchResp {
-        Code int    `json:"code"`
-        Msg  string `json:"msg"`
+        Code int `json:"code"`
+        Msg string `json:"msg"`
     }
 )
 
@@ -79,16 +81,20 @@ type (
     group: namespace
 )
 service k8s-api {
-    @handler NamespaceList
-    post /api/namespace/list (NamespaceListReq) returns (NamespaceListResp);
-    @handler NamespaceAdd
+    @handler NamespaceCreate
     post /api/namespace/create (NamespaceAddReq) returns (NamespaceAddResp);
+    @handler NamespaceUpdate
+    post /api/namespace/update (NamespaceUpdateReq) returns (NamespaceUpdateResp);
+    @handler NamespaceUpdateStatus
+    post /api/namespace/updateStatus (NamespaceUpdateStatusReq) returns (NamespaceUpdateStatusResp);
     @handler NamespaceDelete
     post /api/namespace/delete (NamespaceDeleteReq) returns (NamespaceDeleteResp);
-    @handler Get
-    post /api/namespace/get (NamespaceListReq) returns (NamespaceGetResp);
-    @handler Watch
-    post /api/namespace/watch (NamespaceListReq) returns (NamespaceWatchResp);
-    @handler Patch
-    post /api/namespace/patch (NamespaceListReq) returns (NamespacePatchResp);
+    @handler NamespaceGet
+    post /api/namespace/get (NamespaceGetReq) returns (NamespaceGetResp);
+    @handler NamespaceList
+    post /api/namespace/list (NamespaceListReq) returns (NamespaceListResp);
+    @handler NamespaceWatch
+    post /api/namespace/watch (NamespaceWatchReq) returns (NamespaceWatchResp);
+    @handler NamespacePatch
+    post /api/namespace/patch (NamespaceWatchReq) returns (NamespacePatchResp);
 }

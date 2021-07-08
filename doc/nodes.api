@@ -6,56 +6,96 @@ info(
 )
 
 type (
+    NodeAddReq {
+        Name string `json:"name,options=you|me"`
+    }
+    NodeAddResp {
+        Message string `json:"message"`
+    }
+    NodeUpdateReq {
+        Name string `json:"name,options=you|me"`
+    }
+    NodeUpdateResp {
+        Message string `json:"message"`
+    }
+    NodeUpdateStatusReq {
+        Name string `json:"name,options=you|me"`
+    }
+    NodeUpdateStatusResp {
+        Message string `json:"message"`
+    }
+    NodeListReq {
+        Namespace string `json:"namespace,optional"`
+    }
+    NodeDeleteReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    NodeDeleteResp {
+        Message string `json:"message"`
+    }
+    NodeDeleteCollectionReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    NodeDeleteCollectionResp {
+        Message string `json:"message"`
+    }
+    NodeGetReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    NodeGetResp {
+        Message string `json:"message"`
+    }
     NodesListReq {
         Name string `json:"name,optional"`
     }
 
     NodesListResp {
-        Code int    `json:"code"`
-        Msg  string `json:"msg"`
+        Code int `json:"code"`
+        Msg string `json:"msg"`
         Data []*NodesListData `json:"data"`
     }
 
     NodesListData {
-        Name string    `json:"name"`
-        Status string    `json:"status"`
-        Memory string    `json:"memory"`
-        NodeInfo NodeData    `json:"nodeInfo"`
-        Images []*ImagesData    `json:"Images"`
-        CreationTimestamp  string `json:"creationTimestamp"`
+        Name string `json:"name"`
+        Status string `json:"status"`
+        Memory string `json:"memory"`
+        NodeInfo NodeData `json:"nodeInfo"`
+        Images []*ImagesData `json:"Images"`
+        CreationTimestamp string `json:"creationTimestamp"`
     }
 
     NodeData {
-        MachineID string    `json:"machineID"`
-        SystemUUID string    `json:"systemUUID"`
-        BootID string    `json:"bootID"`
-        KernelVersion string    `json:"kernelVersion"`
-        OSImage string    `json:"oSImage"`
-        ContainerRuntimeVersion string    `json:"containerRuntimeVersion"`
-        KubeletVersion string    `json:"kubeletVersion"`
-        KubeProxyVersion string    `json:"kubeProxyVersion"`
-        OperatingSystem string    `json:"operatingSystem"`
-        Architecture string    `json:"architecture"`
+        MachineID string `json:"machineID"`
+        SystemUUID string `json:"systemUUID"`
+        BootID string `json:"bootID"`
+        KernelVersion string `json:"kernelVersion"`
+        OSImage string `json:"oSImage"`
+        ContainerRuntimeVersion string `json:"containerRuntimeVersion"`
+        KubeletVersion string `json:"kubeletVersion"`
+        KubeProxyVersion string `json:"kubeProxyVersion"`
+        OperatingSystem string `json:"operatingSystem"`
+        Architecture string `json:"architecture"`
     }
 
     ImagesData {
-        Name string    `json:"name"`
-        Size int64    `json:"size"`
-
+        Name string `json:"name"`
+        Size int64 `json:"size"`
     }
-
-    NodesAddReq {
+    NodeWatchReq {
         Name string `json:"name,options=you|me"`
     }
 
-    NodesAddResp {
+    NodeWatchResp {
         Message string `json:"message"`
     }
-    NodesDeleteReq {
+    NodePatchReq {
         Name string `json:"name,options=you|me"`
     }
 
-    NodesDeleteResp {
+    NodePatchResp {
         Message string `json:"message"`
     }
 )
@@ -64,6 +104,22 @@ type (
     group: nodes
 )
 service k8s-api {
-    @handler NodesList
+    @handler NodeCreate
+    post /api/nodes/create (NodeAddReq) returns (NodeAddResp);
+    @handler NodeUpdate
+    post /api/nodes/update (NodeUpdateReq) returns (NodeUpdateResp);
+    @handler NodeUpdateStatus
+    post /api/nodes/updateStatus (NodeUpdateStatusReq) returns (NodeUpdateStatusResp);
+    @handler NodeDelete
+    post /api/nodes/delete (NodeDeleteReq) returns (NodeDeleteResp);
+    @handler NodeDeleteCollection
+    post /api/nodes/deleteCollection (NodeDeleteCollectionReq) returns (NodeDeleteCollectionResp);
+    @handler NodeGet
+    post /api/nodes/get (NodeGetReq) returns (NodeGetResp);
+    @handler NodeList
     post /api/nodes/list (NodesListReq) returns (NodesListResp);
+    @handler NodeWatch
+    post /api/nodes/watch (NodeWatchReq) returns (NodeWatchResp);
+    @handler NodePatch
+    post /api/nodes/patch (NodePatchReq) returns (NodePatchResp);
 }

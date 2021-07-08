@@ -6,19 +6,22 @@ info(
 )
 
 type (
-    IngressListReq {
-        Name string `json:"name,options=you|me"`
-    }
-
-    IngressListResp {
-        Message string `json:"message"`
-    }
-
     IngressAddReq {
         Name string `json:"name,options=you|me"`
     }
-
     IngressAddResp {
+        Message string `json:"message"`
+    }
+    IngressUpdateReq {
+        Name string `json:"name,options=you|me"`
+    }
+    IngressUpdateResp {
+        Message string `json:"message"`
+    }
+    IngressUpdateStatusReq {
+        Name string `json:"name,options=you|me"`
+    }
+    IngressUpdateStatusResp {
         Message string `json:"message"`
     }
     IngressDeleteReq {
@@ -28,15 +31,78 @@ type (
     IngressDeleteResp {
         Message string `json:"message"`
     }
+    IngressDeleteCollectionReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    IngressDeleteCollectionResp {
+        Message string `json:"message"`
+    }
+    IngressGetReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    IngressGetResp {
+        Message string `json:"message"`
+    }
+    IngressListReq {
+        Namespace string `json:"namespace,optional"`
+    }
+
+    IngressListResp {
+        Code int    `json:"code"`
+        Msg  string `json:"msg"`
+        Data []*IngressListData `json:"data"`
+    }
+
+    IngressListData {
+        Name string `json:"name"`
+        Namespace string `json:"namespace"`
+        Labels string `json:"labels"`
+        Selector string `json:"selector"`
+        Type string `json:"type"`
+        ClusterIP string `json:"clusterIP"`
+        Protocol string `json:"protocol"`
+        Ports int32 `json:"ports"`
+        TargetPort int32 `json:"targetPort"`
+        NodePort int32 `json:"nodePort"`
+        CreationTimestamp string `json:"creationTimestamp"`
+    }
+    IngressWatchReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    IngressWatchResp {
+        Message string `json:"message"`
+    }
+    IngressPatchReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    IngressPatchResp {
+        Message string `json:"message"`
+    }
+
 )
 @server(
     group: ingress
 )
 service k8s-api {
+    @handler IngressCreate
+    post /api/ingress/create (IngressAddReq) returns (IngressAddResp);
+    @handler IngressUpdate
+    post /api/ingress/update (IngressUpdateReq) returns (IngressUpdateResp);
+    @handler IngressUpdateStatus
+    post /api/ingress/updateStatus (IngressUpdateStatusReq) returns (IngressUpdateStatusResp);
+    @handler IngressDelete
+    post /api/ingress/delete (IngressDeleteReq) returns (IngressDeleteResp);
+    @handler IngressGet
+    post /api/ingress/get (IngressGetReq) returns (IngressGetResp);
     @handler IngressList
     post /api/ingress/list (IngressListReq) returns (IngressListResp);
-    @handler IngressAdd
-    post /api/ingress/add (IngressAddReq) returns (IngressAddResp);
-    @handler IngressDelete
-    post /api/ingress/delete (IngressDeleteReq) returns (IngressDeleteReq);
+    @handler IngressWatch
+    post /api/ingress/watch (IngressWatchReq) returns (IngressWatchResp);
+    @handler IngressPatch
+    post /api/ingress/patch (IngressPatchReq) returns (IngressPatchResp);
+
 }

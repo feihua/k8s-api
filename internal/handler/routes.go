@@ -10,6 +10,7 @@ import (
 	nodes "k8s_test/internal/handler/nodes"
 	pods "k8s_test/internal/handler/pods"
 	serve "k8s_test/internal/handler/serve"
+	statefulset "k8s_test/internal/handler/statefulset"
 	"k8s_test/internal/svc"
 
 	"github.com/tal-tech/go-zero/rest"
@@ -20,13 +21,8 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/deployment/list",
-				Handler: deployment.DeploymentListHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/deployment/add",
-				Handler: deployment.DeploymentAddHandler(serverCtx),
+				Path:    "/api/deployment/create",
+				Handler: deployment.DeploymentCreateHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
@@ -35,14 +31,79 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
+				Path:    "/api/deployment/updateStatus",
+				Handler: deployment.DeploymentUpdateStatusHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/api/deployment/delete",
 				Handler: deployment.DeploymentDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/deployment/deleteCollection",
+				Handler: deployment.DeploymentDeleteCollectionHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/deployment/get",
+				Handler: deployment.DeploymentGetHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/deployment/list",
+				Handler: deployment.DeploymentListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/deployment/watch",
+				Handler: deployment.DeploymentWatchHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/deployment/patch",
+				Handler: deployment.DeploymentPatchHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/deployment/getScale",
+				Handler: deployment.DeploymentGetScaleHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/deployment/updateScale",
+				Handler: deployment.DeploymentUpdateScaleHandler(serverCtx),
 			},
 		},
 	)
 
 	engine.AddRoutes(
 		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/ingress/create",
+				Handler: ingress.IngressCreateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/ingress/update",
+				Handler: ingress.IngressUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/ingress/updateStatus",
+				Handler: ingress.IngressUpdateStatusHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/ingress/delete",
+				Handler: ingress.IngressDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/ingress/get",
+				Handler: ingress.IngressGetHandler(serverCtx),
+			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/api/ingress/list",
@@ -50,13 +111,13 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/ingress/add",
-				Handler: ingress.IngressAddHandler(serverCtx),
+				Path:    "/api/ingress/watch",
+				Handler: ingress.IngressWatchHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/ingress/delete",
-				Handler: ingress.IngressDeleteHandler(serverCtx),
+				Path:    "/api/ingress/patch",
+				Handler: ingress.IngressPatchHandler(serverCtx),
 			},
 		},
 	)
@@ -65,13 +126,18 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/namespace/list",
-				Handler: namespace.NamespaceListHandler(serverCtx),
+				Path:    "/api/namespace/create",
+				Handler: namespace.NamespaceCreateHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/namespace/create",
-				Handler: namespace.NamespaceAddHandler(serverCtx),
+				Path:    "/api/namespace/update",
+				Handler: namespace.NamespaceUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/namespace/updateStatus",
+				Handler: namespace.NamespaceUpdateStatusHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
@@ -81,23 +147,53 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 			{
 				Method:  http.MethodPost,
 				Path:    "/api/namespace/get",
-				Handler: namespace.GetHandler(serverCtx),
+				Handler: namespace.NamespaceGetHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/namespace/list",
+				Handler: namespace.NamespaceListHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/api/namespace/watch",
-				Handler: namespace.WatchHandler(serverCtx),
+				Handler: namespace.NamespaceWatchHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/api/namespace/patch",
-				Handler: namespace.PatchHandler(serverCtx),
+				Handler: namespace.NamespacePatchHandler(serverCtx),
 			},
 		},
 	)
 
 	engine.AddRoutes(
 		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/service/create",
+				Handler: serve.ServiceCreateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/service/update",
+				Handler: serve.ServiceUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/service/updateStatus",
+				Handler: serve.ServiceUpdateStatusHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/service/delete",
+				Handler: serve.ServiceDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/service/get",
+				Handler: serve.ServiceGetHandler(serverCtx),
+			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/api/service/list",
@@ -105,23 +201,73 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/service/add",
-				Handler: serve.ServiceAddHandler(serverCtx),
+				Path:    "/api/service/watch",
+				Handler: serve.ServiceWatchHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/service/delete",
-				Handler: serve.ServiceDeleteHandler(serverCtx),
+				Path:    "/api/service/patch",
+				Handler: serve.ServicePatchHandler(serverCtx),
 			},
 		},
 	)
 
 	engine.AddRoutes(
 		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/pods/create",
+				Handler: pods.PodCreateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/pods/update",
+				Handler: pods.PodUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/pods/updateStatus",
+				Handler: pods.PodUpdateStatusHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/pods/delete",
+				Handler: pods.PodDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/pods/deleteCollection",
+				Handler: pods.PodDeleteCollectionHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/pods/get",
+				Handler: pods.PodGetHandler(serverCtx),
+			},
 			{
 				Method:  http.MethodPost,
 				Path:    "/api/pods/list",
-				Handler: pods.PodsListHandler(serverCtx),
+				Handler: pods.PodListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/pods/watch",
+				Handler: pods.PodWatchHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/pods/patch",
+				Handler: pods.PodPatchHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/pods/getEphemeralContainers",
+				Handler: pods.PodGetEphemeralContainersHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/pods/updateEphemeralContainers",
+				Handler: pods.PodUpdateEphemeralContainersHandler(serverCtx),
 			},
 		},
 	)
@@ -130,8 +276,93 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
+				Path:    "/api/nodes/create",
+				Handler: nodes.NodeCreateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/nodes/update",
+				Handler: nodes.NodeUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/nodes/updateStatus",
+				Handler: nodes.NodeUpdateStatusHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/nodes/delete",
+				Handler: nodes.NodeDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/nodes/deleteCollection",
+				Handler: nodes.NodeDeleteCollectionHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/nodes/get",
+				Handler: nodes.NodeGetHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
 				Path:    "/api/nodes/list",
-				Handler: nodes.NodesListHandler(serverCtx),
+				Handler: nodes.NodeListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/nodes/watch",
+				Handler: nodes.NodeWatchHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/nodes/patch",
+				Handler: nodes.NodePatchHandler(serverCtx),
+			},
+		},
+	)
+
+	engine.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/statefulset/create",
+				Handler: statefulset.StatefulSetCreateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/statefulset/update",
+				Handler: statefulset.StatefulSetUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/statefulset/updateStatus",
+				Handler: statefulset.StatefulSetUpdateStatusHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/statefulset/delete",
+				Handler: statefulset.StatefulSetDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/statefulset/get",
+				Handler: statefulset.StatefulSetGetHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/statefulset/list",
+				Handler: statefulset.StatefulSetListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/statefulset/watch",
+				Handler: statefulset.StatefulSetWatchHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/statefulset/patch",
+				Handler: statefulset.StatefulSetPatchHandler(serverCtx),
 			},
 		},
 	)

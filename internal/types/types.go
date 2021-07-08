@@ -9,11 +9,35 @@ type DeploymentAddResp struct {
 	Message string `json:"message"`
 }
 
+type DeploymentDeleteCollectionReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type DeploymentDeleteCollectionResp struct {
+	Message string `json:"message"`
+}
+
 type DeploymentDeleteReq struct {
 	Name string `json:"name,options=you|me"`
 }
 
 type DeploymentDeleteResp struct {
+	Message string `json:"message"`
+}
+
+type DeploymentGetReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type DeploymentGetResp struct {
+	Message string `json:"message"`
+}
+
+type DeploymentGetScaleReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type DeploymentGetScaleResp struct {
 	Message string `json:"message"`
 }
 
@@ -40,11 +64,43 @@ type DeploymentListResp struct {
 	Data []*DeploymentListData `json:"data"`
 }
 
+type DeploymentPatchReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type DeploymentPatchResp struct {
+	Message string `json:"message"`
+}
+
 type DeploymentUpdateReq struct {
 	Name string `json:"name,options=you|me"`
 }
 
 type DeploymentUpdateResp struct {
+	Message string `json:"message"`
+}
+
+type DeploymentUpdateScaleReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type DeploymentUpdateScaleResp struct {
+	Message string `json:"message"`
+}
+
+type DeploymentUpdateStatusReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type DeploymentUpdateStatusResp struct {
+	Message string `json:"message"`
+}
+
+type DeploymentWatchReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type DeploymentWatchResp struct {
 	Message string `json:"message"`
 }
 
@@ -61,6 +117,14 @@ type IngressAddResp struct {
 	Message string `json:"message"`
 }
 
+type IngressDeleteCollectionReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type IngressDeleteCollectionResp struct {
+	Message string `json:"message"`
+}
+
 type IngressDeleteReq struct {
 	Name string `json:"name,options=you|me"`
 }
@@ -69,11 +133,67 @@ type IngressDeleteResp struct {
 	Message string `json:"message"`
 }
 
-type IngressListReq struct {
+type IngressGetReq struct {
 	Name string `json:"name,options=you|me"`
 }
 
+type IngressGetResp struct {
+	Message string `json:"message"`
+}
+
+type IngressListData struct {
+	Name              string `json:"name"`
+	Namespace         string `json:"namespace"`
+	Labels            string `json:"labels"`
+	Selector          string `json:"selector"`
+	Type              string `json:"type"`
+	ClusterIP         string `json:"clusterIP"`
+	Protocol          string `json:"protocol"`
+	Ports             int32  `json:"ports"`
+	TargetPort        int32  `json:"targetPort"`
+	NodePort          int32  `json:"nodePort"`
+	CreationTimestamp string `json:"creationTimestamp"`
+}
+
+type IngressListReq struct {
+	Namespace string `json:"namespace,optional"`
+}
+
 type IngressListResp struct {
+	Code int                `json:"code"`
+	Msg  string             `json:"msg"`
+	Data []*IngressListData `json:"data"`
+}
+
+type IngressPatchReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type IngressPatchResp struct {
+	Message string `json:"message"`
+}
+
+type IngressUpdateReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type IngressUpdateResp struct {
+	Message string `json:"message"`
+}
+
+type IngressUpdateStatusReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type IngressUpdateStatusResp struct {
+	Message string `json:"message"`
+}
+
+type IngressWatchReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type IngressWatchResp struct {
 	Message string `json:"message"`
 }
 
@@ -137,6 +257,24 @@ type NamespacePatchResp struct {
 	Msg  string `json:"msg"`
 }
 
+type NamespaceUpdateReq struct {
+	Name string `json:"name"`
+}
+
+type NamespaceUpdateResp struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
+type NamespaceUpdateStatusReq struct {
+	Name string `json:"name"`
+}
+
+type NamespaceUpdateStatusResp struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
 type NamespaceWatchReq struct {
 	Name string `json:"name,options=you|me"`
 }
@@ -144,6 +282,14 @@ type NamespaceWatchReq struct {
 type NamespaceWatchResp struct {
 	Code int    `json:"code"`
 	Msg  string `json:"msg"`
+}
+
+type NodeAddReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type NodeAddResp struct {
+	Message string `json:"message"`
 }
 
 type NodeData struct {
@@ -159,19 +305,63 @@ type NodeData struct {
 	Architecture            string `json:"architecture"`
 }
 
-type NodesAddReq struct {
+type NodeDeleteCollectionReq struct {
 	Name string `json:"name,options=you|me"`
 }
 
-type NodesAddResp struct {
+type NodeDeleteCollectionResp struct {
 	Message string `json:"message"`
 }
 
-type NodesDeleteReq struct {
+type NodeDeleteReq struct {
 	Name string `json:"name,options=you|me"`
 }
 
-type NodesDeleteResp struct {
+type NodeDeleteResp struct {
+	Message string `json:"message"`
+}
+
+type NodeGetReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type NodeGetResp struct {
+	Message string `json:"message"`
+}
+
+type NodeListReq struct {
+	Namespace string `json:"namespace,optional"`
+}
+
+type NodePatchReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type NodePatchResp struct {
+	Message string `json:"message"`
+}
+
+type NodeUpdateReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type NodeUpdateResp struct {
+	Message string `json:"message"`
+}
+
+type NodeUpdateStatusReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type NodeUpdateStatusResp struct {
+	Message string `json:"message"`
+}
+
+type NodeWatchReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type NodeWatchResp struct {
 	Message string `json:"message"`
 }
 
@@ -194,19 +384,87 @@ type NodesListResp struct {
 	Data []*NodesListData `json:"data"`
 }
 
-type PodsAddReq struct {
+type PodAddReq struct {
 	Name string `json:"name,options=you|me"`
 }
 
-type PodsAddResp struct {
+type PodAddResp struct {
 	Message string `json:"message"`
 }
 
-type PodsDeleteReq struct {
+type PodDeleteCollectionReq struct {
 	Name string `json:"name,options=you|me"`
 }
 
-type PodsDeleteResp struct {
+type PodDeleteCollectionResp struct {
+	Message string `json:"message"`
+}
+
+type PodDeleteReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type PodDeleteResp struct {
+	Message string `json:"message"`
+}
+
+type PodGetEphemeralContainersReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type PodGetEphemeralContainersResp struct {
+	Message string `json:"message"`
+}
+
+type PodGetReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type PodGetResp struct {
+	Message string `json:"message"`
+}
+
+type PodListReq struct {
+	Namespace string `json:"namespace,optional"`
+}
+
+type PodPatchReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type PodPatchResp struct {
+	Message string `json:"message"`
+}
+
+type PodUpdateEphemeralContainersReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type PodUpdateEphemeralContainersResp struct {
+	Message string `json:"message"`
+}
+
+type PodUpdateReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type PodUpdateResp struct {
+	Message string `json:"message"`
+}
+
+type PodUpdateStatusReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type PodUpdateStatusResp struct {
+	Message string `json:"message"`
+}
+
+type PodWatchReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type PodWatchResp struct {
 	Message string `json:"message"`
 }
 
@@ -241,11 +499,27 @@ type ServiceAddResp struct {
 	Message string `json:"message"`
 }
 
+type ServiceDeleteCollectionReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type ServiceDeleteCollectionResp struct {
+	Message string `json:"message"`
+}
+
 type ServiceDeleteReq struct {
 	Name string `json:"name,options=you|me"`
 }
 
 type ServiceDeleteResp struct {
+	Message string `json:"message"`
+}
+
+type ServiceGetReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type ServiceGetResp struct {
 	Message string `json:"message"`
 }
 
@@ -271,4 +545,124 @@ type ServiceListResp struct {
 	Code int                `json:"code"`
 	Msg  string             `json:"msg"`
 	Data []*ServiceListData `json:"data"`
+}
+
+type ServicePatchReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type ServicePatchResp struct {
+	Message string `json:"message"`
+}
+
+type ServiceUpdateReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type ServiceUpdateResp struct {
+	Message string `json:"message"`
+}
+
+type ServiceUpdateStatusReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type ServiceUpdateStatusResp struct {
+	Message string `json:"message"`
+}
+
+type ServiceWatchReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type ServiceWatchResp struct {
+	Message string `json:"message"`
+}
+
+type StatefulSetAddReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type StatefulSetAddResp struct {
+	Message string `json:"message"`
+}
+
+type StatefulSetDeleteCollectionReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type StatefulSetDeleteCollectionResp struct {
+	Message string `json:"message"`
+}
+
+type StatefulSetDeleteReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type StatefulSetDeleteResp struct {
+	Message string `json:"message"`
+}
+
+type StatefulSetGetReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type StatefulSetGetResp struct {
+	Message string `json:"message"`
+}
+
+type StatefulSetListData struct {
+	Name              string `json:"name"`
+	Namespace         string `json:"namespace"`
+	Labels            string `json:"labels"`
+	Selector          string `json:"selector"`
+	Type              string `json:"type"`
+	ClusterIP         string `json:"clusterIP"`
+	Protocol          string `json:"protocol"`
+	Ports             int32  `json:"ports"`
+	TargetPort        int32  `json:"targetPort"`
+	NodePort          int32  `json:"nodePort"`
+	CreationTimestamp string `json:"creationTimestamp"`
+}
+
+type StatefulSetListReq struct {
+	Namespace string `json:"namespace,optional"`
+}
+
+type StatefulSetListResp struct {
+	Code int                    `json:"code"`
+	Msg  string                 `json:"msg"`
+	Data []*StatefulSetListData `json:"data"`
+}
+
+type StatefulSetPatchReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type StatefulSetPatchResp struct {
+	Message string `json:"message"`
+}
+
+type StatefulSetUpdateReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type StatefulSetUpdateResp struct {
+	Message string `json:"message"`
+}
+
+type StatefulSetUpdateStatusReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type StatefulSetUpdateStatusResp struct {
+	Message string `json:"message"`
+}
+
+type StatefulSetWatchReq struct {
+	Name string `json:"name,options=you|me"`
+}
+
+type StatefulSetWatchResp struct {
+	Message string `json:"message"`
 }

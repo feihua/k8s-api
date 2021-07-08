@@ -43,7 +43,7 @@ func (l *IngressListLogic) IngressList(req types.IngressListReq) (*types.Ingress
 		log.Fatal(err)
 	}
 	// 1. namespace 列表
-	namespaceClient := clientset.CoreV1().Namespaces()
+	namespaceClient := clientset.ExtensionsV1beta1().Ingresses("")
 	namespaceResult, err := namespaceClient.List(context.TODO(), metaV1.ListOptions{})
 	if err != nil {
 		log.Fatal(err)

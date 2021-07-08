@@ -6,10 +6,48 @@ info(
 )
 
 type (
+    DeploymentAddReq {
+        Name string `json:"name,options=you|me"`
+    }
+    DeploymentAddResp {
+        Message string `json:"message"`
+    }
+    DeploymentUpdateReq {
+        Name string `json:"name,options=you|me"`
+    }
+    DeploymentUpdateResp {
+        Message string `json:"message"`
+    }
+    DeploymentUpdateStatusReq {
+        Name string `json:"name,options=you|me"`
+    }
+    DeploymentUpdateStatusResp {
+        Message string `json:"message"`
+    }
     DeploymentListReq {
         Namespace string `json:"namespace,optional"`
     }
+    DeploymentDeleteReq {
+        Name string `json:"name,options=you|me"`
+    }
 
+    DeploymentDeleteResp {
+        Message string `json:"message"`
+    }
+    DeploymentDeleteCollectionReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    DeploymentDeleteCollectionResp {
+        Message string `json:"message"`
+    }
+    DeploymentGetReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    DeploymentGetResp {
+        Message string `json:"message"`
+    }
     DeploymentListResp {
         Code int `json:"code"`
         Msg string `json:"msg"`
@@ -28,54 +66,61 @@ type (
         ObservedGeneration int64 `json:"observedGeneration"`
         CreationTimestamp string `json:"creationTimestamp"`
     }
-
-    DeploymentAddReq {
+    DeploymentWatchReq {
         Name string `json:"name,options=you|me"`
     }
 
-    DeploymentAddResp {
+    DeploymentWatchResp {
         Message string `json:"message"`
     }
-    DeploymentUpdateReq {
+    DeploymentPatchReq {
         Name string `json:"name,options=you|me"`
     }
 
-    DeploymentUpdateResp {
+    DeploymentPatchResp {
         Message string `json:"message"`
     }
-    DeploymentDeleteReq {
+    DeploymentGetScaleReq {
         Name string `json:"name,options=you|me"`
     }
 
-    DeploymentDeleteResp {
+    DeploymentGetScaleResp {
         Message string `json:"message"`
     }
+    DeploymentUpdateScaleReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    DeploymentUpdateScaleResp {
+        Message string `json:"message"`
+    }
+
+
 )
 @server(
     group: deployment
 )
 service k8s-api {
-    @handler DeploymentList
-    post /api/deployment/list (DeploymentListReq) returns (DeploymentListResp);
-    @handler DeploymentAdd
+    @handler DeploymentCreate
     post /api/deployment/create (DeploymentAddReq) returns (DeploymentAddResp);
     @handler DeploymentUpdate
     post /api/deployment/update (DeploymentUpdateReq) returns (DeploymentUpdateResp);
+    @handler DeploymentUpdateStatus
+    post /api/deployment/updateStatus (DeploymentUpdateStatusReq) returns (DeploymentUpdateStatusResp);
     @handler DeploymentDelete
     post /api/deployment/delete (DeploymentDeleteReq) returns (DeploymentDeleteResp);
-
-    @handler UpdateStatus
-    post /api/deployment/updateStatus (DeploymentUpdateReq) returns (DeploymentUpdateResp);
-    @handler DeleteCollection
-    post /api/deployment/deleteCollection (DeploymentDeleteReq) returns (DeploymentDeleteResp);
-    @handler Get
-    post /api/deployment/get (DeploymentDeleteReq) returns (DeploymentDeleteResp);
-    @handler Watch
-    post /api/deployment/watch (DeploymentDeleteReq) returns (DeploymentDeleteResp);
-    @handler Patch
-    post /api/deployment/patch (DeploymentDeleteReq) returns (DeploymentDeleteResp);
-    @handler GetScale
-    post /api/deployment/getScale (DeploymentDeleteReq) returns (DeploymentDeleteResp);
-    @handler UpdateScale
-    post /api/deployment/updateScale (DeploymentDeleteReq) returns (DeploymentDeleteResp);
+    @handler DeploymentDeleteCollection
+    post /api/deployment/deleteCollection (DeploymentDeleteCollectionReq) returns (DeploymentDeleteCollectionResp);
+    @handler DeploymentGet
+    post /api/deployment/get (DeploymentGetReq) returns (DeploymentGetResp);
+    @handler DeploymentList
+    post /api/deployment/list (DeploymentListReq) returns (DeploymentListResp);
+    @handler DeploymentWatch
+    post /api/deployment/watch (DeploymentWatchReq) returns (DeploymentWatchResp);
+    @handler DeploymentPatch
+    post /api/deployment/patch (DeploymentPatchReq) returns (DeploymentPatchResp);
+    @handler DeploymentGetScale
+    post /api/deployment/getScale (DeploymentGetScaleReq) returns (DeploymentGetScaleResp);
+    @handler DeploymentUpdateScale
+    post /api/deployment/updateScale (DeploymentUpdateScaleReq) returns (DeploymentUpdateScaleResp);
 }

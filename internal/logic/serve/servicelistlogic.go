@@ -41,18 +41,6 @@ func (l *ServiceListLogic) ServiceList(req types.ServiceListReq) (*types.Service
 
 	// 5. service 列表
 	fmt.Println("services:")
-	//for _, namespace := range namespaces {
-	//	serviceClient := clientSet.CoreV1().Services(namespace)
-	//	serviceResult, err := serviceClient.List(context.TODO(), metaV1.ListOptions{})
-	//	if err != nil {
-	//		log.Println(err)
-	//	} else {
-	//		for _, service := range serviceResult.Items {
-	//			fmt.Println(service.Name, service.Namespace, service.Labels, service.Spec.Selector, service.Spec.Type, service.Spec.ClusterIP, service.Spec.Ports, service.CreationTimestamp)
-	//		}
-	//	}
-	//}
-
 	serviceClient := clientSet.CoreV1().Services(req.Namespace)
 	serviceResult, err := serviceClient.List(context.TODO(), metaV1.ListOptions{})
 

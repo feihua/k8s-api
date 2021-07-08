@@ -1,0 +1,109 @@
+info(
+    title: "k8s admin"
+    desc: "k8s admin"
+    author: "koobe"
+    email: "koobe.liu@uaf.com.cn"
+)
+
+type (
+    StatefulSetAddReq {
+        Name string `json:"name,options=you|me"`
+    }
+    StatefulSetAddResp {
+        Message string `json:"message"`
+    }
+    StatefulSetUpdateReq {
+        Name string `json:"name,options=you|me"`
+    }
+    StatefulSetUpdateResp {
+        Message string `json:"message"`
+    }
+    StatefulSetUpdateStatusReq {
+        Name string `json:"name,options=you|me"`
+    }
+    StatefulSetUpdateStatusResp {
+        Message string `json:"message"`
+    }
+    StatefulSetListReq {
+        Namespace string `json:"namespace,optional"`
+    }
+    StatefulSetDeleteReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    StatefulSetDeleteResp {
+        Message string `json:"message"`
+    }
+    StatefulSetDeleteCollectionReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    StatefulSetDeleteCollectionResp {
+        Message string `json:"message"`
+    }
+    StatefulSetGetReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    StatefulSetGetResp {
+        Message string `json:"message"`
+    }
+    StatefulSetListReq {
+        Namespace string `json:"namespace,optional"`
+    }
+
+    StatefulSetListResp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Data []*StatefulSetListData `json:"data"`
+    }
+
+    StatefulSetListData {
+        Name string `json:"name"`
+        Namespace string `json:"namespace"`
+        Labels string `json:"labels"`
+        Selector string `json:"selector"`
+        Type string `json:"type"`
+        ClusterIP string `json:"clusterIP"`
+        Protocol string `json:"protocol"`
+        Ports int32 `json:"ports"`
+        TargetPort int32 `json:"targetPort"`
+        NodePort int32 `json:"nodePort"`
+        CreationTimestamp string `json:"creationTimestamp"`
+    }
+    StatefulSetWatchReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    StatefulSetWatchResp {
+        Message string `json:"message"`
+    }
+    StatefulSetPatchReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    StatefulSetPatchResp {
+        Message string `json:"message"`
+    }
+)
+@server(
+    group: statefulset
+)
+service k8s-api {
+    @handler StatefulSetCreate
+    post /api/statefulset/create (StatefulSetAddReq) returns (StatefulSetAddResp);
+    @handler StatefulSetUpdate
+    post /api/statefulset/update (StatefulSetUpdateReq) returns (StatefulSetUpdateResp);
+    @handler StatefulSetUpdateStatus
+    post /api/statefulset/updateStatus (StatefulSetUpdateStatusReq) returns (StatefulSetUpdateStatusResp);
+    @handler StatefulSetDelete
+    post /api/statefulset/delete (StatefulSetDeleteReq) returns (StatefulSetDeleteResp);
+    @handler StatefulSetGet
+    post /api/statefulset/get (StatefulSetGetReq) returns (StatefulSetGetResp);
+    @handler StatefulSetList
+    post /api/statefulset/list (StatefulSetListReq) returns (StatefulSetListResp);
+    @handler StatefulSetWatch
+    post /api/statefulset/watch (StatefulSetWatchReq) returns (StatefulSetWatchResp);
+    @handler StatefulSetPatch
+    post /api/statefulset/patch (StatefulSetPatchReq) returns (StatefulSetPatchResp);
+}

@@ -6,6 +6,46 @@ info(
 )
 
 type (
+    ServiceAddReq {
+        Name string `json:"name,options=you|me"`
+    }
+    ServiceAddResp {
+        Message string `json:"message"`
+    }
+    ServiceUpdateReq {
+        Name string `json:"name,options=you|me"`
+    }
+    ServiceUpdateResp {
+        Message string `json:"message"`
+    }
+    ServiceUpdateStatusReq {
+        Name string `json:"name,options=you|me"`
+    }
+    ServiceUpdateStatusResp {
+        Message string `json:"message"`
+    }
+
+    ServiceDeleteReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    ServiceDeleteResp {
+        Message string `json:"message"`
+    }
+    ServiceDeleteCollectionReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    ServiceDeleteCollectionResp {
+        Message string `json:"message"`
+    }
+    ServiceGetReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    ServiceGetResp {
+        Message string `json:"message"`
+    }
     ServiceListReq {
         Namespace string `json:"namespace,optional"`
     }
@@ -29,30 +69,41 @@ type (
         NodePort int32 `json:"nodePort"`
         CreationTimestamp string `json:"creationTimestamp"`
     }
-
-    ServiceAddReq {
+    ServiceWatchReq {
         Name string `json:"name,options=you|me"`
     }
 
-    ServiceAddResp {
+    ServiceWatchResp {
         Message string `json:"message"`
     }
-    ServiceDeleteReq {
+    ServicePatchReq {
         Name string `json:"name,options=you|me"`
     }
 
-    ServiceDeleteResp {
+    ServicePatchResp {
         Message string `json:"message"`
     }
+
 )
 @server(
     group: serve
 )
 service k8s-api {
-    @handler ServiceList
-    post /api/service/list (ServiceListReq) returns (ServiceListResp);
-    @handler ServiceAdd
-    post /api/service/add (ServiceAddReq) returns (ServiceAddResp);
+    @handler ServiceCreate
+    post /api/service/create (ServiceAddReq) returns (ServiceAddResp);
+    @handler ServiceUpdate
+    post /api/service/update (ServiceUpdateReq) returns (ServiceUpdateResp);
+    @handler ServiceUpdateStatus
+    post /api/service/updateStatus (ServiceUpdateStatusReq) returns (ServiceUpdateStatusResp);
     @handler ServiceDelete
     post /api/service/delete (ServiceDeleteReq) returns (ServiceDeleteResp);
+    @handler ServiceGet
+    post /api/service/get (ServiceGetReq) returns (ServiceGetResp);
+    @handler ServiceList
+    post /api/service/list (ServiceListReq) returns (ServiceListResp);
+    @handler ServiceWatch
+    post /api/service/watch (ServiceWatchReq) returns (ServiceWatchResp);
+    @handler ServicePatch
+    post /api/service/patch (ServicePatchReq) returns (ServicePatchResp);
+
 }

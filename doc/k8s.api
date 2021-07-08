@@ -4,6 +4,7 @@ import "namespace.api"
 import "service.api"
 import "pods.api"
 import "nodes.api"
+import "statefulset.api"
 
 info(
 	title: "k8s admin"

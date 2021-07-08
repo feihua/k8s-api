@@ -6,6 +6,48 @@ info(
 )
 
 type (
+    PodAddReq {
+        Name string `json:"name,options=you|me"`
+    }
+    PodAddResp {
+        Message string `json:"message"`
+    }
+    PodUpdateReq {
+        Name string `json:"name,options=you|me"`
+    }
+    PodUpdateResp {
+        Message string `json:"message"`
+    }
+    PodUpdateStatusReq {
+        Name string `json:"name,options=you|me"`
+    }
+    PodUpdateStatusResp {
+        Message string `json:"message"`
+    }
+    PodListReq {
+        Namespace string `json:"namespace,optional"`
+    }
+    PodDeleteReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    PodDeleteResp {
+        Message string `json:"message"`
+    }
+    PodDeleteCollectionReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    PodDeleteCollectionResp {
+        Message string `json:"message"`
+    }
+    PodGetReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    PodGetResp {
+        Message string `json:"message"`
+    }
     PodsListReq {
         Namespace string `json:"namespace,optional"`
     }
@@ -29,26 +71,64 @@ type (
         CreationTimestamp  string `json:"creationTimestamp"`
     }
 
-    PodsAddReq {
+
+    PodWatchReq {
         Name string `json:"name,options=you|me"`
     }
 
-    PodsAddResp {
+    PodWatchResp {
         Message string `json:"message"`
     }
-    PodsDeleteReq {
+    PodPatchReq {
         Name string `json:"name,options=you|me"`
     }
 
-    PodsDeleteResp {
+    PodPatchResp {
         Message string `json:"message"`
     }
+
+    PodGetEphemeralContainersReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    PodGetEphemeralContainersResp {
+        Message string `json:"message"`
+    }
+    PodUpdateEphemeralContainersReq {
+        Name string `json:"name,options=you|me"`
+    }
+
+    PodUpdateEphemeralContainersResp {
+        Message string `json:"message"`
+    }
+
 )
 
 @server(
     group: pods
 )
 service k8s-api {
-    @handler PodsList
+    @handler PodCreate
+    post /api/pods/create (PodAddReq) returns (PodAddResp);
+    @handler PodUpdate
+    post /api/pods/update (PodUpdateReq) returns (PodUpdateResp);
+    @handler PodUpdateStatus
+    post /api/pods/updateStatus (PodUpdateStatusReq) returns (PodUpdateStatusResp);
+    @handler PodDelete
+    post /api/pods/delete (PodDeleteReq) returns (PodDeleteResp);
+    @handler PodDeleteCollection
+    post /api/pods/deleteCollection (PodDeleteCollectionReq) returns (PodDeleteCollectionResp);
+    @handler PodGet
+    post /api/pods/get (PodGetReq) returns (PodGetResp);
+    @handler PodList
     post /api/pods/list (PodsListReq) returns (PodsListResp);
+    @handler PodWatch
+    post /api/pods/watch (PodWatchReq) returns (PodWatchResp);
+    @handler PodPatch
+    post /api/pods/patch (PodPatchReq) returns (PodPatchResp);
+    @handler PodGetEphemeralContainers
+    post /api/pods/getEphemeralContainers (PodGetEphemeralContainersReq) returns (PodGetEphemeralContainersResp);
+    @handler PodUpdateEphemeralContainers
+    post /api/pods/updateEphemeralContainers (PodUpdateEphemeralContainersReq) returns (PodUpdateEphemeralContainersResp);
+    
 }
