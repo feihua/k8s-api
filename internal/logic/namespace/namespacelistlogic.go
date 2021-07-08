@@ -10,8 +10,6 @@ import (
 
 	"fmt"
 	"github.com/tal-tech/go-zero/core/logx"
-	"log"
-
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
@@ -38,7 +36,7 @@ func (l *NamespaceListLogic) NamespaceList(req types.NamespaceListReq) (*types.N
 	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
 
 	if err != nil {
-		log.Fatal(err)
+		return nil, errorx.NewDefaultError(err.Error())
 	}
 	clientSet, err := kubernetes.NewForConfig(config)
 	if err != nil {

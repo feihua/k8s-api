@@ -6,6 +6,7 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
+	"k8s_test/internal/common/errorx"
 	"k8s_test/internal/utils"
 	"log"
 
@@ -35,11 +36,11 @@ func (l *DeploymentUpdateLogic) DeploymentUpdate(req types.DeploymentUpdateReq) 
 	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
 
 	if err != nil {
-		log.Fatal(err)
+		return nil, errorx.NewDefaultError(err.Error())
 	}
 	clientset, err := kubernetes.NewForConfig(config)
 	if err != nil {
-		log.Fatal(err)
+		return nil, errorx.NewDefaultError(err.Error())
 	}
 
 	deploymentClient := clientset.AppsV1().Deployments("default")

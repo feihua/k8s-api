@@ -7,6 +7,7 @@ import (
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
+	"k8s_test/internal/common/errorx"
 	"log"
 	"time"
 
@@ -36,17 +37,17 @@ func (l *IngressDeleteLogic) IngressDelete(req types.IngressDeleteReq) (*types.I
 	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
 
 	if err != nil {
-		log.Fatal(err)
+		return nil, errorx.NewDefaultError(err.Error())
 	}
 	clientset, err := kubernetes.NewForConfig(config)
 	if err != nil {
-		log.Fatal(err)
+		return nil, errorx.NewDefaultError(err.Error())
 	}
 	// 1. namespace 列表
 	namespaceClient := clientset.CoreV1().Namespaces()
 	namespaceResult, err := namespaceClient.List(context.TODO(), metaV1.ListOptions{})
 	if err != nil {
-		log.Fatal(err)
+		return nil, errorx.NewDefaultError(err.Error())
 	}
 	now := time.Now()
 

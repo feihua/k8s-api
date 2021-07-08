@@ -2,14 +2,13 @@ package logic
 
 import (
 	"context"
+	"github.com/tal-tech/go-zero/core/logx"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
+	"k8s_test/internal/common/errorx"
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
-	"log"
-
-	"github.com/tal-tech/go-zero/core/logx"
 )
 
 type NamespaceDeleteLogic struct {
@@ -32,12 +31,12 @@ func (l *NamespaceDeleteLogic) NamespaceDelete(req types.NamespaceDeleteReq) (*t
 	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
 
 	if err != nil {
-		log.Fatal(err)
+		return nil, errorx.NewDefaultError(err.Error())
 	}
 
 	forConfig, err := kubernetes.NewForConfig(config)
 	if err != nil {
-		log.Fatal(err)
+		return nil, errorx.NewDefaultError(err.Error())
 	}
 
 	namespaceClient := forConfig.CoreV1().Namespaces()
