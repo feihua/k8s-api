@@ -2,7 +2,7 @@
 package types
 
 type DeploymentAddReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type DeploymentAddResp struct {
@@ -10,7 +10,7 @@ type DeploymentAddResp struct {
 }
 
 type DeploymentDeleteCollectionReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type DeploymentDeleteCollectionResp struct {
@@ -18,7 +18,7 @@ type DeploymentDeleteCollectionResp struct {
 }
 
 type DeploymentDeleteReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type DeploymentDeleteResp struct {
@@ -26,7 +26,7 @@ type DeploymentDeleteResp struct {
 }
 
 type DeploymentGetReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type DeploymentGetResp struct {
@@ -34,7 +34,7 @@ type DeploymentGetResp struct {
 }
 
 type DeploymentGetScaleReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type DeploymentGetScaleResp struct {
@@ -65,7 +65,7 @@ type DeploymentListResp struct {
 }
 
 type DeploymentPatchReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type DeploymentPatchResp struct {
@@ -73,7 +73,7 @@ type DeploymentPatchResp struct {
 }
 
 type DeploymentUpdateReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type DeploymentUpdateResp struct {
@@ -81,7 +81,7 @@ type DeploymentUpdateResp struct {
 }
 
 type DeploymentUpdateScaleReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type DeploymentUpdateScaleResp struct {
@@ -89,7 +89,7 @@ type DeploymentUpdateScaleResp struct {
 }
 
 type DeploymentUpdateStatusReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type DeploymentUpdateStatusResp struct {
@@ -97,7 +97,7 @@ type DeploymentUpdateStatusResp struct {
 }
 
 type DeploymentWatchReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type DeploymentWatchResp struct {
@@ -110,7 +110,7 @@ type ImagesData struct {
 }
 
 type IngressAddReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type IngressAddResp struct {
@@ -118,7 +118,7 @@ type IngressAddResp struct {
 }
 
 type IngressDeleteCollectionReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type IngressDeleteCollectionResp struct {
@@ -126,32 +126,39 @@ type IngressDeleteCollectionResp struct {
 }
 
 type IngressDeleteReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type IngressDeleteResp struct {
 	Message string `json:"message"`
 }
 
+type IngressGetData struct {
+	Name              string `json:"name"`
+	Namespace         string `json:"namespace"`
+	Host              string `json:"host"`
+	ServiceName       string `json:"serviceName"`
+	ServicePort       int32  `json:"servicePort"`
+	CreationTimestamp string `json:"creationTimestamp"`
+}
+
 type IngressGetReq struct {
-	Name string `json:"name,options=you|me"`
+	Namespace string `json:"namespace,optional"`
+	Ingress   string `json:"ingress"`
 }
 
 type IngressGetResp struct {
-	Message string `json:"message"`
+	Code int            `json:"code"`
+	Msg  string         `json:"msg"`
+	Data IngressGetData `json:"data"`
 }
 
 type IngressListData struct {
 	Name              string `json:"name"`
 	Namespace         string `json:"namespace"`
-	Labels            string `json:"labels"`
-	Selector          string `json:"selector"`
-	Type              string `json:"type"`
-	ClusterIP         string `json:"clusterIP"`
-	Protocol          string `json:"protocol"`
-	Ports             int32  `json:"ports"`
-	TargetPort        int32  `json:"targetPort"`
-	NodePort          int32  `json:"nodePort"`
+	Host              string `json:"host"`
+	ServiceName       string `json:"serviceName"`
+	ServicePort       int32  `json:"servicePort"`
 	CreationTimestamp string `json:"creationTimestamp"`
 }
 
@@ -166,7 +173,7 @@ type IngressListResp struct {
 }
 
 type IngressPatchReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type IngressPatchResp struct {
@@ -174,7 +181,7 @@ type IngressPatchResp struct {
 }
 
 type IngressUpdateReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type IngressUpdateResp struct {
@@ -182,7 +189,7 @@ type IngressUpdateResp struct {
 }
 
 type IngressUpdateStatusReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type IngressUpdateStatusResp struct {
@@ -190,7 +197,7 @@ type IngressUpdateStatusResp struct {
 }
 
 type IngressWatchReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type IngressWatchResp struct {
@@ -207,7 +214,7 @@ type NamespaceAddResp struct {
 }
 
 type NamespaceDeleteReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type NamespaceDeleteResp struct {
@@ -223,7 +230,7 @@ type NamespaceGetData struct {
 }
 
 type NamespaceGetReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type NamespaceGetResp struct {
@@ -249,7 +256,7 @@ type NamespaceListResp struct {
 }
 
 type NamespacePatchReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type NamespacePatchResp struct {
@@ -276,7 +283,7 @@ type NamespaceUpdateStatusResp struct {
 }
 
 type NamespaceWatchReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type NamespaceWatchResp struct {
@@ -285,7 +292,7 @@ type NamespaceWatchResp struct {
 }
 
 type NodeAddReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type NodeAddResp struct {
@@ -306,7 +313,7 @@ type NodeData struct {
 }
 
 type NodeDeleteCollectionReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type NodeDeleteCollectionResp struct {
@@ -314,7 +321,7 @@ type NodeDeleteCollectionResp struct {
 }
 
 type NodeDeleteReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type NodeDeleteResp struct {
@@ -322,7 +329,7 @@ type NodeDeleteResp struct {
 }
 
 type NodeGetReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type NodeGetResp struct {
@@ -334,7 +341,7 @@ type NodeListReq struct {
 }
 
 type NodePatchReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type NodePatchResp struct {
@@ -342,7 +349,7 @@ type NodePatchResp struct {
 }
 
 type NodeUpdateReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type NodeUpdateResp struct {
@@ -350,7 +357,7 @@ type NodeUpdateResp struct {
 }
 
 type NodeUpdateStatusReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type NodeUpdateStatusResp struct {
@@ -358,7 +365,7 @@ type NodeUpdateStatusResp struct {
 }
 
 type NodeWatchReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type NodeWatchResp struct {
@@ -385,7 +392,7 @@ type NodesListResp struct {
 }
 
 type PodAddReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type PodAddResp struct {
@@ -393,7 +400,7 @@ type PodAddResp struct {
 }
 
 type PodDeleteCollectionReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type PodDeleteCollectionResp struct {
@@ -401,7 +408,7 @@ type PodDeleteCollectionResp struct {
 }
 
 type PodDeleteReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type PodDeleteResp struct {
@@ -409,7 +416,7 @@ type PodDeleteResp struct {
 }
 
 type PodGetEphemeralContainersReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type PodGetEphemeralContainersResp struct {
@@ -417,7 +424,7 @@ type PodGetEphemeralContainersResp struct {
 }
 
 type PodGetReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type PodGetResp struct {
@@ -429,7 +436,7 @@ type PodListReq struct {
 }
 
 type PodPatchReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type PodPatchResp struct {
@@ -437,7 +444,7 @@ type PodPatchResp struct {
 }
 
 type PodUpdateEphemeralContainersReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type PodUpdateEphemeralContainersResp struct {
@@ -445,7 +452,7 @@ type PodUpdateEphemeralContainersResp struct {
 }
 
 type PodUpdateReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type PodUpdateResp struct {
@@ -453,7 +460,7 @@ type PodUpdateResp struct {
 }
 
 type PodUpdateStatusReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type PodUpdateStatusResp struct {
@@ -461,7 +468,7 @@ type PodUpdateStatusResp struct {
 }
 
 type PodWatchReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type PodWatchResp struct {
@@ -492,7 +499,7 @@ type PodsListResp struct {
 }
 
 type ServiceAddReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type ServiceAddResp struct {
@@ -500,7 +507,7 @@ type ServiceAddResp struct {
 }
 
 type ServiceDeleteCollectionReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type ServiceDeleteCollectionResp struct {
@@ -508,7 +515,7 @@ type ServiceDeleteCollectionResp struct {
 }
 
 type ServiceDeleteReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type ServiceDeleteResp struct {
@@ -516,7 +523,7 @@ type ServiceDeleteResp struct {
 }
 
 type ServiceGetReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type ServiceGetResp struct {
@@ -548,7 +555,7 @@ type ServiceListResp struct {
 }
 
 type ServicePatchReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type ServicePatchResp struct {
@@ -556,7 +563,7 @@ type ServicePatchResp struct {
 }
 
 type ServiceUpdateReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type ServiceUpdateResp struct {
@@ -564,7 +571,7 @@ type ServiceUpdateResp struct {
 }
 
 type ServiceUpdateStatusReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type ServiceUpdateStatusResp struct {
@@ -572,7 +579,7 @@ type ServiceUpdateStatusResp struct {
 }
 
 type ServiceWatchReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type ServiceWatchResp struct {
@@ -580,7 +587,7 @@ type ServiceWatchResp struct {
 }
 
 type StatefulSetAddReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type StatefulSetAddResp struct {
@@ -588,7 +595,7 @@ type StatefulSetAddResp struct {
 }
 
 type StatefulSetDeleteCollectionReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type StatefulSetDeleteCollectionResp struct {
@@ -596,7 +603,7 @@ type StatefulSetDeleteCollectionResp struct {
 }
 
 type StatefulSetDeleteReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type StatefulSetDeleteResp struct {
@@ -604,7 +611,7 @@ type StatefulSetDeleteResp struct {
 }
 
 type StatefulSetGetReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type StatefulSetGetResp struct {
@@ -636,7 +643,7 @@ type StatefulSetListResp struct {
 }
 
 type StatefulSetPatchReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type StatefulSetPatchResp struct {
@@ -644,7 +651,7 @@ type StatefulSetPatchResp struct {
 }
 
 type StatefulSetUpdateReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type StatefulSetUpdateResp struct {
@@ -652,7 +659,7 @@ type StatefulSetUpdateResp struct {
 }
 
 type StatefulSetUpdateStatusReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type StatefulSetUpdateStatusResp struct {
@@ -660,7 +667,7 @@ type StatefulSetUpdateStatusResp struct {
 }
 
 type StatefulSetWatchReq struct {
-	Name string `json:"name,options=you|me"`
+	Name string `json:"name,optional"`
 }
 
 type StatefulSetWatchResp struct {

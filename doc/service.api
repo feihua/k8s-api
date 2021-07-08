@@ -7,40 +7,40 @@ info(
 
 type (
     ServiceAddReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     ServiceAddResp {
         Message string `json:"message"`
     }
     ServiceUpdateReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     ServiceUpdateResp {
         Message string `json:"message"`
     }
     ServiceUpdateStatusReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     ServiceUpdateStatusResp {
         Message string `json:"message"`
     }
 
     ServiceDeleteReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     ServiceDeleteResp {
         Message string `json:"message"`
     }
     ServiceDeleteCollectionReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     ServiceDeleteCollectionResp {
         Message string `json:"message"`
     }
     ServiceGetReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     ServiceGetResp {
@@ -70,14 +70,14 @@ type (
         CreationTimestamp string `json:"creationTimestamp"`
     }
     ServiceWatchReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     ServiceWatchResp {
         Message string `json:"message"`
     }
     ServicePatchReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     ServicePatchResp {

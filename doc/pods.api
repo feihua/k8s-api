@@ -7,19 +7,19 @@ info(
 
 type (
     PodAddReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     PodAddResp {
         Message string `json:"message"`
     }
     PodUpdateReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     PodUpdateResp {
         Message string `json:"message"`
     }
     PodUpdateStatusReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     PodUpdateStatusResp {
         Message string `json:"message"`
@@ -28,21 +28,21 @@ type (
         Namespace string `json:"namespace,optional"`
     }
     PodDeleteReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     PodDeleteResp {
         Message string `json:"message"`
     }
     PodDeleteCollectionReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     PodDeleteCollectionResp {
         Message string `json:"message"`
     }
     PodGetReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     PodGetResp {
@@ -73,14 +73,14 @@ type (
 
 
     PodWatchReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     PodWatchResp {
         Message string `json:"message"`
     }
     PodPatchReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     PodPatchResp {
@@ -88,14 +88,14 @@ type (
     }
 
     PodGetEphemeralContainersReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     PodGetEphemeralContainersResp {
         Message string `json:"message"`
     }
     PodUpdateEphemeralContainersReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     PodUpdateEphemeralContainersResp {

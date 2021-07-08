@@ -28,14 +28,14 @@ type (
         Msg string `json:"msg"`
     }
     NamespaceDeleteReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     NamespaceDeleteResp {
         Code int `json:"code"`
         Msg string `json:"msg"`
     }
     NamespaceGetReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     NamespaceGetResp {
         Code int `json:"code"`
@@ -62,14 +62,14 @@ type (
         CreationTimestamp string `json:"creationTimestamp"`
     }
     NamespaceWatchReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     NamespaceWatchResp {
         Code int `json:"code"`
         Msg string `json:"msg"`
     }
     NamespacePatchReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     NamespacePatchResp {
         Code int `json:"code"`

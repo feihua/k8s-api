@@ -7,19 +7,19 @@ info(
 
 type (
     NodeAddReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     NodeAddResp {
         Message string `json:"message"`
     }
     NodeUpdateReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     NodeUpdateResp {
         Message string `json:"message"`
     }
     NodeUpdateStatusReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     NodeUpdateStatusResp {
         Message string `json:"message"`
@@ -28,21 +28,21 @@ type (
         Namespace string `json:"namespace,optional"`
     }
     NodeDeleteReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     NodeDeleteResp {
         Message string `json:"message"`
     }
     NodeDeleteCollectionReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     NodeDeleteCollectionResp {
         Message string `json:"message"`
     }
     NodeGetReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     NodeGetResp {
@@ -85,14 +85,14 @@ type (
         Size int64 `json:"size"`
     }
     NodeWatchReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     NodeWatchResp {
         Message string `json:"message"`
     }
     NodePatchReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     NodePatchResp {

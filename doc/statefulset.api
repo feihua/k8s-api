@@ -7,19 +7,19 @@ info(
 
 type (
     StatefulSetAddReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     StatefulSetAddResp {
         Message string `json:"message"`
     }
     StatefulSetUpdateReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     StatefulSetUpdateResp {
         Message string `json:"message"`
     }
     StatefulSetUpdateStatusReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     StatefulSetUpdateStatusResp {
         Message string `json:"message"`
@@ -28,21 +28,21 @@ type (
         Namespace string `json:"namespace,optional"`
     }
     StatefulSetDeleteReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     StatefulSetDeleteResp {
         Message string `json:"message"`
     }
     StatefulSetDeleteCollectionReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     StatefulSetDeleteCollectionResp {
         Message string `json:"message"`
     }
     StatefulSetGetReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     StatefulSetGetResp {
@@ -72,14 +72,14 @@ type (
         CreationTimestamp string `json:"creationTimestamp"`
     }
     StatefulSetWatchReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     StatefulSetWatchResp {
         Message string `json:"message"`
     }
     StatefulSetPatchReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     StatefulSetPatchResp {

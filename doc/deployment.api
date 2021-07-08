@@ -7,19 +7,19 @@ info(
 
 type (
     DeploymentAddReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     DeploymentAddResp {
         Message string `json:"message"`
     }
     DeploymentUpdateReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     DeploymentUpdateResp {
         Message string `json:"message"`
     }
     DeploymentUpdateStatusReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
     DeploymentUpdateStatusResp {
         Message string `json:"message"`
@@ -28,21 +28,21 @@ type (
         Namespace string `json:"namespace,optional"`
     }
     DeploymentDeleteReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     DeploymentDeleteResp {
         Message string `json:"message"`
     }
     DeploymentDeleteCollectionReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     DeploymentDeleteCollectionResp {
         Message string `json:"message"`
     }
     DeploymentGetReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     DeploymentGetResp {
@@ -67,28 +67,28 @@ type (
         CreationTimestamp string `json:"creationTimestamp"`
     }
     DeploymentWatchReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     DeploymentWatchResp {
         Message string `json:"message"`
     }
     DeploymentPatchReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     DeploymentPatchResp {
         Message string `json:"message"`
     }
     DeploymentGetScaleReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     DeploymentGetScaleResp {
         Message string `json:"message"`
     }
     DeploymentUpdateScaleReq {
-        Name string `json:"name,options=you|me"`
+        Name string `json:"name,optional"`
     }
 
     DeploymentUpdateScaleResp {

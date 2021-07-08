@@ -35,7 +35,7 @@ func main() {
 		case *errorx.CodeError:
 			return http.StatusOK, e.Data()
 		default:
-			return http.StatusInternalServerError, nil
+			return http.StatusInternalServerError, e.Error()
 		}
 	})
 
