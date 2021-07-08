@@ -31,7 +31,7 @@ func NewIngressListLogic(ctx context.Context, svcCtx *svc.ServiceContext) Ingres
 }
 
 func (l *IngressListLogic) IngressList(req types.IngressListReq) (*types.IngressListResp, error) {
-	// k8s 配置
+
 	kubeConfig := "etc/config"
 	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
 
@@ -42,9 +42,8 @@ func (l *IngressListLogic) IngressList(req types.IngressListReq) (*types.Ingress
 	if err != nil {
 		log.Fatal(err)
 	}
-	// 1. namespace 列表
-	namespaceClient := clientset.ExtensionsV1beta1().Ingresses("")
-	namespaceResult, err := namespaceClient.List(context.TODO(), metaV1.ListOptions{})
+	ingressClient := clientset.ExtensionsV1beta1().Ingresses("")
+	namespaceResult, err := ingressClient.List(context.TODO(), metaV1.ListOptions{})
 	if err != nil {
 		log.Fatal(err)
 	}
