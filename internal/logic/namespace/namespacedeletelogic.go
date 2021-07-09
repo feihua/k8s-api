@@ -26,7 +26,7 @@ func NewNamespaceDeleteLogic(ctx context.Context, svcCtx *svc.ServiceContext) Na
 }
 
 func (l *NamespaceDeleteLogic) NamespaceDelete(req types.NamespaceDeleteReq) (*types.NamespaceDeleteResp, error) {
-	// k8s 配置
+
 	kubeConfig := "etc/config"
 	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
 
@@ -42,5 +42,8 @@ func (l *NamespaceDeleteLogic) NamespaceDelete(req types.NamespaceDeleteReq) (*t
 	namespaceClient := forConfig.CoreV1().Namespaces()
 	_ = namespaceClient.Delete(context.TODO(), req.Name, metaV1.DeleteOptions{})
 
-	return &types.NamespaceDeleteResp{}, nil
+	return &types.NamespaceDeleteResp{
+		Code: 0,
+		Msg:  "successful",
+	}, nil
 }
