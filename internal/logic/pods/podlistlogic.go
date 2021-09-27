@@ -39,37 +39,44 @@ func (l *PodListLogic) PodList(req types.PodsListReq) (*types.PodsListResp, erro
 	if err != nil {
 		return nil, errorx.NewDefaultError(err.Error())
 	}
-
-	var list []*types.PodsListData
-	podClient := clientSet.CoreV1().Pods(req.Namespace)
-	podResult, err := podClient.List(context.TODO(), metaV1.ListOptions{})
-
+	//获取POD
+	pods, err := clientSet.CoreV1().Pods(req.Namespace).List(context.TODO(), metaV1.ListOptions{})
 	if err != nil {
 		return nil, errorx.NewDefaultError(err.Error())
 	}
 
-	for _, pod := range podResult.Items {
-		fmt.Println(pod.Name, pod.Namespace, pod.CreationTimestamp)
-		list = append(list, &types.PodsListData{
+	var listData []*types.PodsListData
+	fmt.Println("pod:")
+	for _, pod := range pods.Items {
+		listData = append(listData, &types.PodsListData{
 			Name:              pod.Name,
-			Status:            "",
+			Status:            string(pod.Status.Phase),
 			Labels:            pod.Labels["run"],
 			Namespace:         pod.Namespace,
 			HostIP:            pod.Status.HostIP,
 			PodIP:             pod.Status.PodIP,
 			StartTime:         pod.Status.StartTime.Format("2006-01-02 15:04:05"),
-			RestartCount:      0,
-			Image:             "",
+			RestartCount:      pod.Status.ContainerStatuses[0].RestartCount,
+			Image:             pod.Status.ContainerStatuses[0].Image,
 			CreationTimestamp: pod.CreationTimestamp.Format("2006-01-02 15:04:05"),
 		})
 
-		logx.Info("de%v", pod)
+		fmt.Println(pod.Name)
+		fmt.Println(pod.CreationTimestamp)
+		fmt.Println(pod.Labels)
+		fmt.Println(pod.Namespace)
+		fmt.Println(pod.Status.HostIP)
+		fmt.Println(pod.Status.PodIP)
+		fmt.Println(pod.Status.StartTime)
+		fmt.Println(pod.Status.Phase)
+		fmt.Println(pod.Status.ContainerStatuses[0].RestartCount) //重启次数
+		fmt.Println(pod.Status.ContainerStatuses[0].Image)        //获取重启时间
 	}
 
 	return &types.PodsListResp{
 		Code: 0,
 		Msg:  "successful",
-		Data: list,
+		Data: listData,
 	}, nil
 
 }
