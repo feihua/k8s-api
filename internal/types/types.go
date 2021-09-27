@@ -26,7 +26,8 @@ type DeploymentDeleteResp struct {
 }
 
 type DeploymentGetReq struct {
-	Name string `json:"name,optional"`
+	Namespace  string `json:"namespace,optional"`
+	Deployment string `json:"deployment"`
 }
 
 type DeploymentGetResp struct {

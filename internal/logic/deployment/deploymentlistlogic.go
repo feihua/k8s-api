@@ -27,7 +27,6 @@ func NewDeploymentListLogic(ctx context.Context, svcCtx *svc.ServiceContext) Dep
 }
 
 func (l *DeploymentListLogic) DeploymentList(req types.DeploymentListReq) (*types.DeploymentListResp, error) {
-	// k8s 配置
 	kubeConfig := "etc/config"
 	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
 
@@ -38,9 +37,6 @@ func (l *DeploymentListLogic) DeploymentList(req types.DeploymentListReq) (*type
 	if err != nil {
 		return nil, errorx.NewDefaultError(err.Error())
 	}
-
-	// 2. deployment 列表
-	fmt.Println("deployments:")
 
 	var list []*types.DeploymentListData
 	deploymentClient := clientSet.AppsV1().Deployments(req.Namespace)
@@ -64,6 +60,8 @@ func (l *DeploymentListLogic) DeploymentList(req types.DeploymentListReq) (*type
 			ObservedGeneration: deployment.Status.ObservedGeneration,
 			CreationTimestamp:  deployment.CreationTimestamp.Format("2006-01-02 15:04:05"),
 		})
+
+		logx.Info("de%v", deployment)
 	}
 
 	return &types.DeploymentListResp{

@@ -42,7 +42,8 @@ type (
         Message string `json:"message"`
     }
     DeploymentGetReq {
-        Name string `json:"name,optional"`
+        Namespace string `json:"namespace,optional"`
+        Deployment string `json:"deployment"`
     }
 
     DeploymentGetResp {
