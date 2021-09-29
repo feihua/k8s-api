@@ -1,0 +1,103 @@
+info(
+    title: "k8s admin"
+    desc: "k8s admin"
+    author: "koobe"
+    email: "koobe.liu@uaf.com.cn"
+)
+
+type (
+    ConfigMapAddReq {
+        Name string `json:"name"`
+    }
+    ConfigMapAddResp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+    }
+    ConfigMapUpdateReq {
+        Name string `json:"name"`
+    }
+    ConfigMapUpdateStatusResp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+    }
+    ConfigMapUpdateStatusReq {
+        Name string `json:"name"`
+    }
+    ConfigMapUpdateResp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+    }
+    ConfigMapDeleteReq {
+        Name string `json:"name,optional"`
+    }
+    ConfigMapDeleteResp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+    }
+    ConfigMapGetReq {
+        Name string `json:"name,optional"`
+    }
+    ConfigMapGetResp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        data ConfigMapGetData `json:"data"`
+    }
+    ConfigMapGetData {
+        Name string `json:"name"`
+        ClusterName string `json:"clusterName"`
+        Status string `json:"status"`
+        CreationTimestamp string `json:"creationTimestamp"`
+    }
+    ConfigMapListReq {
+        Namespace string `json:"namespace,optional"`
+    }
+    ConfigMapListResp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Data []*ConfigMapListData `json:"data"`
+    }
+    ConfigMapListData {
+        Name string `json:"name"`
+        NameSpace string `json:"nameSpace"`
+        Labels map[string]string   `json:"labels"`
+        Annotations map[string]string   `json:"annotations"`
+        Data map[string]string   `json:"data"`
+        CreationTimestamp string `json:"creationTimestamp"`
+    }
+    ConfigMapWatchReq {
+        Name string `json:"name,optional"`
+    }
+    ConfigMapWatchResp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+    }
+    ConfigMapPatchReq {
+        Name string `json:"name,optional"`
+    }
+    ConfigMapPatchResp {
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+    }
+)
+
+@server(
+    group: configmap
+)
+service k8s-api {
+    @handler ConfigMapCreate
+    post /api/configMap/create (ConfigMapAddReq) returns (ConfigMapAddResp);
+    @handler ConfigMapUpdate
+    post /api/configMap/update (ConfigMapUpdateReq) returns (ConfigMapUpdateResp);
+    @handler ConfigMapUpdateStatus
+    post /api/configMap/updateStatus (ConfigMapUpdateStatusReq) returns (ConfigMapUpdateStatusResp);
+    @handler ConfigMapDelete
+    post /api/configMap/delete (ConfigMapDeleteReq) returns (ConfigMapDeleteResp);
+    @handler ConfigMapGet
+    post /api/configMap/get (ConfigMapGetReq) returns (ConfigMapGetResp);
+    @handler ConfigMapList
+    post /api/configMap/list (ConfigMapListReq) returns (ConfigMapListResp);
+    @handler ConfigMapWatch
+    post /api/configMap/watch (ConfigMapWatchReq) returns (ConfigMapWatchResp);
+    @handler ConfigMapPatch
+    post /api/configMap/patch (ConfigMapWatchReq) returns (ConfigMapPatchResp);
+}

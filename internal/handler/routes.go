@@ -4,6 +4,7 @@ package handler
 import (
 	"net/http"
 
+	configmap "k8s_test/internal/handler/configmap"
 	deployment "k8s_test/internal/handler/deployment"
 	ingress "k8s_test/internal/handler/ingress"
 	namespace "k8s_test/internal/handler/namespace"
@@ -409,6 +410,51 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/api/secret/patch",
 				Handler: secret.SecretPatchHandler(serverCtx),
+			},
+		},
+	)
+
+	engine.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/configMap/create",
+				Handler: configmap.ConfigMapCreateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/configMap/update",
+				Handler: configmap.ConfigMapUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/configMap/updateStatus",
+				Handler: configmap.ConfigMapUpdateStatusHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/configMap/delete",
+				Handler: configmap.ConfigMapDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/configMap/get",
+				Handler: configmap.ConfigMapGetHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/configMap/list",
+				Handler: configmap.ConfigMapListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/configMap/watch",
+				Handler: configmap.ConfigMapWatchHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/configMap/patch",
+				Handler: configmap.ConfigMapPatchHandler(serverCtx),
 			},
 		},
 	)

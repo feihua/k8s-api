@@ -6,6 +6,7 @@ import "pods.api"
 import "nodes.api"
 import "statefulset.api"
 import "secret.api"
+import "configmap.api"
 
 info(
 	title: "k8s admin"
