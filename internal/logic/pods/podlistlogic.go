@@ -49,16 +49,23 @@ func (l *PodListLogic) PodList(req types.PodsListReq) (*types.PodsListResp, erro
 	fmt.Println("pod:")
 	for _, pod := range pods.Items {
 		listData = append(listData, &types.PodsListData{
-			Name:              pod.Name,
-			Status:            string(pod.Status.Phase),
-			Labels:            pod.Labels["run"],
-			Namespace:         pod.Namespace,
-			HostIP:            pod.Status.HostIP,
-			PodIP:             pod.Status.PodIP,
-			StartTime:         pod.Status.StartTime.Format("2006-01-02 15:04:05"),
-			RestartCount:      pod.Status.ContainerStatuses[0].RestartCount,
-			Image:             pod.Status.ContainerStatuses[0].Image,
-			CreationTimestamp: pod.CreationTimestamp.Format("2006-01-02 15:04:05"),
+			Name:               pod.Name,
+			Status:             string(pod.Status.Phase),
+			Labels:             pod.Labels,
+			NodeSelector:       nil,
+			Namespace:          pod.Namespace,
+			HostIP:             pod.Status.HostIP,
+			PodIP:              pod.Status.PodIP,
+			StartTime:          pod.Status.StartTime.Format("2006-01-02 15:04:05"),
+			RestartCount:       pod.Status.ContainerStatuses[0].RestartCount,
+			Image:              pod.Status.ContainerStatuses[0].Image,
+			CreationTimestamp:  pod.CreationTimestamp.Format("2006-01-02 15:04:05"),
+			RestartPolicy:      string(pod.Spec.RestartPolicy),
+			ServiceAccountName: pod.Spec.ServiceAccountName,
+			NodeName:           pod.Spec.NodeName,
+			HostNetwork:        pod.Spec.HostNetwork,
+			//ImagePullSecrets:   pod.Spec.ImagePullSecrets[0].Name,
+			Hostname: pod.Spec.Hostname,
 		})
 
 		fmt.Println(pod.Name)

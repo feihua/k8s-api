@@ -483,16 +483,23 @@ type PodWatchResp struct {
 }
 
 type PodsListData struct {
-	Name              string `json:"name"`
-	Status            string `json:"status"`
-	Labels            string `json:"labels"`
-	Namespace         string `json:"namespace"`
-	HostIP            string `json:"hostIP"`
-	PodIP             string `json:"podIP"`
-	StartTime         string `json:"startTime"`
-	RestartCount      int32  `json:"restartCount"`
-	Image             string `json:"image"`
-	CreationTimestamp string `json:"creationTimestamp"`
+	Name               string            `json:"name"`
+	Status             string            `json:"status"`
+	Labels             map[string]string `json:"labels"`
+	NodeSelector       map[string]string `json:"nodeSelector"`
+	Namespace          string            `json:"namespace"`
+	HostIP             string            `json:"hostIP"`
+	PodIP              string            `json:"podIP"`
+	StartTime          string            `json:"startTime"`
+	RestartCount       int32             `json:"restartCount"`
+	Image              string            `json:"image"`
+	CreationTimestamp  string            `json:"creationTimestamp"`
+	RestartPolicy      string            `json:"restartPolicy"`
+	ServiceAccountName string            `json:"serviceAccountName"`
+	NodeName           string            `json:"nodeName"`
+	HostNetwork        bool              `json:"hostNetwork"`
+	ImagePullSecrets   string            `json:"imagePullSecrets"`
+	Hostname           string            `json:"hostname"`
 }
 
 type PodsListReq struct {
