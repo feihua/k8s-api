@@ -59,8 +59,9 @@ type (
     ServiceListData {
         Name string `json:"name"`
         Namespace string `json:"namespace"`
-        Labels string `json:"labels"`
-        Selector string `json:"selector"`
+        Labels map[string]string `json:"labels"`
+        Annotations map[string]string `json:"annotations"`
+        Selector map[string]string `json:"selector"`
         Type string `json:"type"`
         ClusterIP string `json:"clusterIP"`
         Protocol string `json:"protocol"`

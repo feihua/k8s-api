@@ -54,8 +54,9 @@ func (l *ServiceListLogic) ServiceList(req types.ServiceListReq) (*types.Service
 			list = append(list, &types.ServiceListData{
 				Name:              service.Name,
 				Namespace:         service.Namespace,
-				Labels:            service.Labels["run"],
-				Selector:          service.Spec.Selector["run"],
+				Labels:            service.Labels,
+				Annotations:       service.Annotations,
+				Selector:          service.Spec.Selector,
 				Type:              string(service.Spec.Type),
 				ClusterIP:         service.Spec.ClusterIP,
 				Protocol:          string(service.Spec.Ports[0].Protocol),
