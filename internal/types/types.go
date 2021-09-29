@@ -818,17 +818,12 @@ type StatefulSetGetResp struct {
 }
 
 type StatefulSetListData struct {
-	Name              string `json:"name"`
-	Namespace         string `json:"namespace"`
-	Labels            string `json:"labels"`
-	Selector          string `json:"selector"`
-	Type              string `json:"type"`
-	ClusterIP         string `json:"clusterIP"`
-	Protocol          string `json:"protocol"`
-	Ports             int32  `json:"ports"`
-	TargetPort        int32  `json:"targetPort"`
-	NodePort          int32  `json:"nodePort"`
-	CreationTimestamp string `json:"creationTimestamp"`
+	Name              string            `json:"name"`
+	NameSpace         string            `json:"nameSpace"`
+	ClusterName       string            `json:"clusterName"`
+	Labels            map[string]string `json:"labels"`
+	Annotations       map[string]string `json:"annotations"`
+	CreationTimestamp string            `json:"creationTimestamp"`
 }
 
 type StatefulSetListReq struct {
