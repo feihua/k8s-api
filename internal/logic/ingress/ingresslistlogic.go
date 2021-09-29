@@ -5,8 +5,6 @@ import (
 	"github.com/tal-tech/go-zero/core/logx"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/json"
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/tools/clientcmd"
 	"k8s_test/internal/common/errorx"
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
@@ -28,21 +26,11 @@ func NewIngressListLogic(ctx context.Context, svcCtx *svc.ServiceContext) Ingres
 
 func (l *IngressListLogic) IngressList(req types.IngressListReq) (*types.IngressListResp, error) {
 
-	kubeConfig := "etc/config"
-	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
+	client := l.svcCtx.ClientSet.ExtensionsV1beta1().Ingresses(req.Namespace)
+	ingressList, err := client.List(context.TODO(), metaV1.ListOptions{})
 
 	if err != nil {
-		return nil, errorx.NewDefaultError(err.Error())
-	}
-
-	forConfig, err := kubernetes.NewForConfig(config)
-	if err != nil {
-		return nil, errorx.NewDefaultError(err.Error())
-	}
-
-	ingressClient := forConfig.ExtensionsV1beta1().Ingresses(req.Namespace)
-	ingressList, err := ingressClient.List(context.TODO(), metaV1.ListOptions{})
-	if err != nil {
+		logx.WithContext(l.ctx).Errorf("查询ingress列表信息失败,请求参数:%s,异常:%s", req.Namespace, err.Error())
 		return nil, errorx.NewDefaultError(err.Error())
 	}
 
@@ -66,7 +54,8 @@ func (l *IngressListLogic) IngressList(req types.IngressListReq) (*types.Ingress
 		})
 
 	}
-
+	listStr, _ := json.Marshal(list)
+	logx.WithContext(l.ctx).Infof("查询ingress列表信息,请求参数：%s,响应：%s", req.Namespace, listStr)
 	return &types.IngressListResp{
 		Code: 0,
 		Msg:  "successful",

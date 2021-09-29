@@ -2,11 +2,9 @@ package logic
 
 import (
 	"context"
-	"fmt"
+	"encoding/json"
 	"github.com/tal-tech/go-zero/core/logx"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/tools/clientcmd"
 	"k8s_test/internal/common/errorx"
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
@@ -27,49 +25,39 @@ func NewDeploymentListLogic(ctx context.Context, svcCtx *svc.ServiceContext) Dep
 }
 
 func (l *DeploymentListLogic) DeploymentList(req types.DeploymentListReq) (*types.DeploymentListResp, error) {
-	kubeConfig := "etc/config"
-	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
+	client := l.svcCtx.ClientSet.AppsV1().Deployments(req.Namespace)
+	result, err := client.List(context.TODO(), metaV1.ListOptions{})
 
 	if err != nil {
-		return nil, errorx.NewDefaultError(err.Error())
-	}
-	clientSet, err := kubernetes.NewForConfig(config)
-	if err != nil {
+		logx.WithContext(l.ctx).Errorf("查询deployment列表信息失败,请求参数:%s,异常:%s", req.Namespace, err.Error())
 		return nil, errorx.NewDefaultError(err.Error())
 	}
 
 	var list []*types.DeploymentListData
-	deploymentClient := clientSet.AppsV1().Deployments(req.Namespace)
-	deploymentResult, err := deploymentClient.List(context.TODO(), metaV1.ListOptions{})
 
-	if err != nil {
-		return nil, errorx.NewDefaultError(err.Error())
-	}
-
-	for _, deployment := range deploymentResult.Items {
-		fmt.Println(deployment.Name, deployment.Namespace, deployment.CreationTimestamp)
+	for _, item := range result.Items {
 		list = append(list, &types.DeploymentListData{
-			Name:               deployment.Name,
-			Namespace:          deployment.Namespace,
-			Labels:             deployment.Labels,
-			Strategy:           string(deployment.Spec.Strategy.Type),
-			Replicas:           deployment.Status.Replicas,
-			UpdatedReplicas:    deployment.Status.UpdatedReplicas,
-			ReadyReplicas:      deployment.Status.ReadyReplicas,
-			AvailableReplicas:  deployment.Status.AvailableReplicas,
-			ObservedGeneration: deployment.Status.ObservedGeneration,
-			CreationTimestamp:  deployment.CreationTimestamp.Format("2006-01-02 15:04:05"),
-			Images:             deployment.Spec.Template.Spec.Containers[0].Image,
-			ImagePullPolicy:    string(deployment.Spec.Template.Spec.Containers[0].ImagePullPolicy),
-			Message:            deployment.Status.Conditions[0].Message,
-			Reason:             deployment.Status.Conditions[0].Reason,
-			Status:             string(deployment.Status.Conditions[0].Status),
-			LastUpdateTime:     deployment.Status.Conditions[0].LastUpdateTime.Format("2006-01-02 15:04:05"),
+			Name:               item.Name,
+			Namespace:          item.Namespace,
+			Labels:             item.Labels,
+			Strategy:           string(item.Spec.Strategy.Type),
+			Replicas:           item.Status.Replicas,
+			UpdatedReplicas:    item.Status.UpdatedReplicas,
+			ReadyReplicas:      item.Status.ReadyReplicas,
+			AvailableReplicas:  item.Status.AvailableReplicas,
+			ObservedGeneration: item.Status.ObservedGeneration,
+			CreationTimestamp:  item.CreationTimestamp.Format("2006-01-02 15:04:05"),
+			Images:             item.Spec.Template.Spec.Containers[0].Image,
+			ImagePullPolicy:    string(item.Spec.Template.Spec.Containers[0].ImagePullPolicy),
+			Message:            item.Status.Conditions[0].Message,
+			Reason:             item.Status.Conditions[0].Reason,
+			Status:             string(item.Status.Conditions[0].Status),
+			LastUpdateTime:     item.Status.Conditions[0].LastUpdateTime.Format("2006-01-02 15:04:05"),
 		})
 
-		logx.Info("de%v", deployment)
 	}
-
+	listStr, _ := json.Marshal(list)
+	logx.WithContext(l.ctx).Infof("查询deployment列表信息,请求参数：%s,响应：%s", req.Namespace, listStr)
 	return &types.DeploymentListResp{
 		Code: 0,
 		Msg:  "successful",

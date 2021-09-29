@@ -2,10 +2,8 @@ package logic
 
 import (
 	"context"
-	"fmt"
+	"encoding/json"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/tools/clientcmd"
 	"k8s_test/internal/common/errorx"
 
 	"k8s_test/internal/svc"
@@ -29,26 +27,16 @@ func NewPodListLogic(ctx context.Context, svcCtx *svc.ServiceContext) PodListLog
 }
 
 func (l *PodListLogic) PodList(req types.PodsListReq) (*types.PodsListResp, error) {
-	kubeConfig := "etc/config"
-	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
+	pods, err := l.svcCtx.ClientSet.CoreV1().Pods(req.Namespace).List(context.TODO(), metaV1.ListOptions{})
 
 	if err != nil {
-		return nil, errorx.NewDefaultError(err.Error())
-	}
-	clientSet, err := kubernetes.NewForConfig(config)
-	if err != nil {
-		return nil, errorx.NewDefaultError(err.Error())
-	}
-	//获取POD
-	pods, err := clientSet.CoreV1().Pods(req.Namespace).List(context.TODO(), metaV1.ListOptions{})
-	if err != nil {
+		logx.WithContext(l.ctx).Errorf("查询pod列表信息失败,请求参数:%s,异常:%s", req.Namespace, err.Error())
 		return nil, errorx.NewDefaultError(err.Error())
 	}
 
-	var listData []*types.PodsListData
-	fmt.Println("pod:")
+	var list []*types.PodsListData
 	for _, pod := range pods.Items {
-		listData = append(listData, &types.PodsListData{
+		list = append(list, &types.PodsListData{
 			Name:               pod.Name,
 			Status:             string(pod.Status.Phase),
 			Labels:             pod.Labels,
@@ -68,22 +56,13 @@ func (l *PodListLogic) PodList(req types.PodsListReq) (*types.PodsListResp, erro
 			Hostname: pod.Spec.Hostname,
 		})
 
-		fmt.Println(pod.Name)
-		fmt.Println(pod.CreationTimestamp)
-		fmt.Println(pod.Labels)
-		fmt.Println(pod.Namespace)
-		fmt.Println(pod.Status.HostIP)
-		fmt.Println(pod.Status.PodIP)
-		fmt.Println(pod.Status.StartTime)
-		fmt.Println(pod.Status.Phase)
-		fmt.Println(pod.Status.ContainerStatuses[0].RestartCount) //重启次数
-		fmt.Println(pod.Status.ContainerStatuses[0].Image)        //获取重启时间
 	}
-
+	listStr, _ := json.Marshal(list)
+	logx.WithContext(l.ctx).Infof("查询pod列表信息,请求参数：%s,响应：%s", req.Namespace, listStr)
 	return &types.PodsListResp{
 		Code: 0,
 		Msg:  "successful",
-		Data: listData,
+		Data: list,
 	}, nil
 
 }

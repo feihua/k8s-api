@@ -2,12 +2,9 @@ package logic
 
 import (
 	"context"
+	"encoding/json"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/tools/clientcmd"
 	"k8s_test/internal/common/errorx"
-	"log"
-
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
 
@@ -29,37 +26,28 @@ func NewConfigMapListLogic(ctx context.Context, svcCtx *svc.ServiceContext) Conf
 }
 
 func (l *ConfigMapListLogic) ConfigMapList(req types.ConfigMapListReq) (*types.ConfigMapListResp, error) {
-	// k8s 配置
-	kubeConfig := "etc/config"
-	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
+	client := l.svcCtx.ClientSet.CoreV1().ConfigMaps(req.Namespace)
+	result, err := client.List(context.TODO(), metaV1.ListOptions{})
 
 	if err != nil {
+		logx.WithContext(l.ctx).Errorf("查询configmap列表信息失败,请求参数:%s,异常:%s", req.Namespace, err.Error())
 		return nil, errorx.NewDefaultError(err.Error())
 	}
-	clientSet, err := kubernetes.NewForConfig(config)
-	if err != nil {
-		return nil, errorx.NewDefaultError(err.Error())
-	}
-
-	serviceClient := clientSet.CoreV1().ConfigMaps(req.Namespace)
-	serviceResult, err := serviceClient.List(context.TODO(), metaV1.ListOptions{})
 
 	var list []*types.ConfigMapListData
-	if err != nil {
-		log.Println(err)
-	} else {
-		for _, item := range serviceResult.Items {
-			list = append(list, &types.ConfigMapListData{
-				Name:              item.Name,
-				NameSpace:         item.Namespace,
-				Labels:            item.Labels,
-				Annotations:       item.Annotations,
-				CreationTimestamp: item.CreationTimestamp.Format("2006-01-02 15:04:05"),
-				Data:              item.Data,
-			})
-		}
+	for _, item := range result.Items {
+		list = append(list, &types.ConfigMapListData{
+			Name:              item.Name,
+			NameSpace:         item.Namespace,
+			Labels:            item.Labels,
+			Annotations:       item.Annotations,
+			CreationTimestamp: item.CreationTimestamp.Format("2006-01-02 15:04:05"),
+			Data:              item.Data,
+		})
 	}
 
+	listStr, _ := json.Marshal(list)
+	logx.WithContext(l.ctx).Infof("查询configmap列表信息,请求参数：%s,响应：%s", req.Namespace, listStr)
 	return &types.ConfigMapListResp{
 		Code: 0,
 		Msg:  "successful",
