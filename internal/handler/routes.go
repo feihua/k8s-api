@@ -9,6 +9,7 @@ import (
 	namespace "k8s_test/internal/handler/namespace"
 	nodes "k8s_test/internal/handler/nodes"
 	pods "k8s_test/internal/handler/pods"
+	secret "k8s_test/internal/handler/secret"
 	serve "k8s_test/internal/handler/serve"
 	statefulset "k8s_test/internal/handler/statefulset"
 	"k8s_test/internal/svc"
@@ -363,6 +364,51 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/api/statefulset/patch",
 				Handler: statefulset.StatefulSetPatchHandler(serverCtx),
+			},
+		},
+	)
+
+	engine.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/secret/create",
+				Handler: secret.SecretCreateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/secret/update",
+				Handler: secret.SecretUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/secret/updateStatus",
+				Handler: secret.SecretUpdateStatusHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/secret/delete",
+				Handler: secret.SecretDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/secret/get",
+				Handler: secret.SecretGetHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/secret/list",
+				Handler: secret.SecretListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/secret/watch",
+				Handler: secret.SecretWatchHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/secret/patch",
+				Handler: secret.SecretPatchHandler(serverCtx),
 			},
 		},
 	)

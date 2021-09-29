@@ -518,6 +518,94 @@ type PodsListResp struct {
 	Data []*PodsListData `json:"data"`
 }
 
+type SecretAddReq struct {
+	Name string `json:"name"`
+}
+
+type SecretAddResp struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
+type SecretDeleteReq struct {
+	Name string `json:"name,optional"`
+}
+
+type SecretDeleteResp struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
+type SecretGetData struct {
+	Name              string `json:"name"`
+	ClusterName       string `json:"clusterName"`
+	Status            string `json:"status"`
+	CreationTimestamp string `json:"creationTimestamp"`
+}
+
+type SecretGetReq struct {
+	Name string `json:"name,optional"`
+}
+
+type SecretGetResp struct {
+	Code int           `json:"code"`
+	Msg  string        `json:"msg"`
+	Data SecretGetData `json:"data"`
+}
+
+type SecretListData struct {
+	Name              string `json:"name"`
+	NameSpace         string `json:"nameSpace"`
+	Type              string `json:"type"`
+	CreationTimestamp string `json:"creationTimestamp"`
+}
+
+type SecretListReq struct {
+	Namespace string `json:"namespace,optional"`
+}
+
+type SecretListResp struct {
+	Code int               `json:"code"`
+	Msg  string            `json:"msg"`
+	Data []*SecretListData `json:"data"`
+}
+
+type SecretPatchReq struct {
+	Name string `json:"name,optional"`
+}
+
+type SecretPatchResp struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
+type SecretUpdateReq struct {
+	Name string `json:"name"`
+}
+
+type SecretUpdateResp struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
+type SecretUpdateStatusReq struct {
+	Name string `json:"name"`
+}
+
+type SecretUpdateStatusResp struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
+type SecretWatchReq struct {
+	Name string `json:"name,optional"`
+}
+
+type SecretWatchResp struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
 type ServiceAddReq struct {
 	Name string `json:"name,optional"`
 }
