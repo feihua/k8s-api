@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/tal-tech/go-zero/core/logx"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/util/json"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s_test/internal/common/errorx"
@@ -47,6 +48,8 @@ func (l *IngressListLogic) IngressList(req types.IngressListReq) (*types.Ingress
 
 	var list []*types.IngressListData
 	for _, ingress := range ingressList.Items {
+		rules, _ := json.Marshal(ingress.Spec.Rules)
+		address, _ := json.Marshal(ingress.Status.LoadBalancer.Ingress)
 		list = append(list, &types.IngressListData{
 			Name:              ingress.Name,
 			Namespace:         ingress.Namespace,
@@ -54,6 +57,12 @@ func (l *IngressListLogic) IngressList(req types.IngressListReq) (*types.Ingress
 			ServiceName:       ingress.Spec.Rules[0].IngressRuleValue.HTTP.Paths[0].Backend.ServiceName,
 			ServicePort:       ingress.Spec.Rules[0].IngressRuleValue.HTTP.Paths[0].Backend.ServicePort.IntVal,
 			CreationTimestamp: ingress.CreationTimestamp.Format("2006-01-02 15:04:05"),
+			Labels:            ingress.Labels,
+			Status:            ingress.Status.String(),
+			Rules:             string(rules),
+			Address:           string(address),
+			Annotations:       ingress.Annotations,
+			ResourceVersion:   ingress.ResourceVersion,
 		})
 
 	}

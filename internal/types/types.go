@@ -161,12 +161,18 @@ type IngressGetResp struct {
 }
 
 type IngressListData struct {
-	Name              string `json:"name"`
-	Namespace         string `json:"namespace"`
-	Host              string `json:"host"`
-	ServiceName       string `json:"serviceName"`
-	ServicePort       int32  `json:"servicePort"`
-	CreationTimestamp string `json:"creationTimestamp"`
+	Name              string            `json:"name"`
+	Namespace         string            `json:"namespace"`
+	Host              string            `json:"host"`
+	ServiceName       string            `json:"serviceName"`
+	ServicePort       int32             `json:"servicePort"`
+	CreationTimestamp string            `json:"creationTimestamp"`
+	Labels            map[string]string `json:"labels"`
+	Status            string            `json:"status"`
+	Rules             string            `json:"rules"`
+	Address           string            `json:"address"`
+	ResourceVersion   string            `json:"resourceVersion"`
+	Annotations       map[string]string `json:"annotations"`
 }
 
 type IngressListReq struct {
