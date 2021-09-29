@@ -51,7 +51,7 @@ func (l *DeploymentListLogic) DeploymentList(req types.DeploymentListReq) (*type
 		list = append(list, &types.DeploymentListData{
 			Name:               deployment.Name,
 			Namespace:          deployment.Namespace,
-			Labels:             deployment.Labels["run"],
+			Labels:             deployment.Labels,
 			Strategy:           string(deployment.Spec.Strategy.Type),
 			Replicas:           deployment.Status.Replicas,
 			UpdatedReplicas:    deployment.Status.UpdatedReplicas,
@@ -59,6 +59,12 @@ func (l *DeploymentListLogic) DeploymentList(req types.DeploymentListReq) (*type
 			AvailableReplicas:  deployment.Status.AvailableReplicas,
 			ObservedGeneration: deployment.Status.ObservedGeneration,
 			CreationTimestamp:  deployment.CreationTimestamp.Format("2006-01-02 15:04:05"),
+			Images:             deployment.Spec.Template.Spec.Containers[0].Image,
+			ImagePullPolicy:    string(deployment.Spec.Template.Spec.Containers[0].ImagePullPolicy),
+			Message:            deployment.Status.Conditions[0].Message,
+			Reason:             deployment.Status.Conditions[0].Reason,
+			Status:             string(deployment.Status.Conditions[0].Status),
+			LastUpdateTime:     deployment.Status.Conditions[0].LastUpdateTime.Format("2006-01-02 15:04:05"),
 		})
 
 		logx.Info("de%v", deployment)

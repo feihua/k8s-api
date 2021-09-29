@@ -58,7 +58,7 @@ type (
     DeploymentListData {
         Name string `json:"name"`
         Namespace string `json:"namespace"`
-        Labels string `json:"labels"`
+        Labels map[string]string `json:"labels"`
         Strategy string `json:"strategy"`
         Replicas int32 `json:"replicas"`
         UpdatedReplicas int32 `json:"updatedReplicas"`
@@ -66,6 +66,12 @@ type (
         AvailableReplicas int32 `json:"availableReplicas"`
         ObservedGeneration int64 `json:"observedGeneration"`
         CreationTimestamp string `json:"creationTimestamp"`
+        Images string `json:"images"`
+        ImagePullPolicy string `json:"imagePullPolicy"`
+        Message string `json:"message"`
+        Reason string `json:"reason"`
+        LastUpdateTime string `json:"lastUpdateTime"`
+        Status string `json:"status"`
     }
     DeploymentWatchReq {
         Name string `json:"name,optional"`
@@ -95,8 +101,6 @@ type (
     DeploymentUpdateScaleResp {
         Message string `json:"message"`
     }
-
-
 )
 @server(
     group: deployment
