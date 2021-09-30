@@ -2,9 +2,8 @@ package logic
 
 import (
 	"context"
+	"encoding/json"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/tools/clientcmd"
 	"k8s_test/internal/common/errorx"
 
 	"k8s_test/internal/svc"
@@ -28,34 +27,37 @@ func NewIngressGetLogic(ctx context.Context, svcCtx *svc.ServiceContext) Ingress
 }
 
 func (l *IngressGetLogic) IngressGet(req types.IngressGetReq) (*types.IngressGetResp, error) {
-	kubeConfig := "etc/config"
-	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
+	ingress, err := l.svcCtx.ClientSet.ExtensionsV1beta1().Ingresses(req.Namespace).Get(context.TODO(), req.Ingress, metaV1.GetOptions{})
 
 	if err != nil {
+		reqStr, _ := json.Marshal(req)
+		logx.WithContext(l.ctx).Errorf("查询单个ingress信息失败,请求参数:%s,异常:%s", reqStr, err.Error())
 		return nil, errorx.NewDefaultError(err.Error())
 	}
+	rules, _ := json.Marshal(ingress.Spec.Rules)
+	address, _ := json.Marshal(ingress.Status.LoadBalancer.Ingress)
 
-	forConfig, err := kubernetes.NewForConfig(config)
-	if err != nil {
-		return nil, errorx.NewDefaultError(err.Error())
+	data := types.IngressListData{
+		Name:              ingress.Name,
+		Namespace:         ingress.Namespace,
+		Host:              ingress.Spec.Rules[0].Host,
+		ServiceName:       ingress.Spec.Rules[0].IngressRuleValue.HTTP.Paths[0].Backend.ServiceName,
+		ServicePort:       ingress.Spec.Rules[0].IngressRuleValue.HTTP.Paths[0].Backend.ServicePort.IntVal,
+		CreationTimestamp: ingress.CreationTimestamp.Format("2006-01-02 15:04:05"),
+		Labels:            ingress.Labels,
+		Status:            ingress.Status.String(),
+		Rules:             string(rules),
+		Address:           string(address),
+		Annotations:       ingress.Annotations,
+		ResourceVersion:   ingress.ResourceVersion,
 	}
 
-	ingress, err := forConfig.ExtensionsV1beta1().Ingresses(req.Namespace).Get(context.TODO(), req.Ingress, metaV1.GetOptions{})
-
-	if err != nil {
-		return nil, errorx.NewDefaultError(err.Error())
-	}
-
+	reqStr, _ := json.Marshal(req)
+	dataStr, _ := json.Marshal(data)
+	logx.WithContext(l.ctx).Infof("查询单个ingress信息,请求参数：%s,响应：%s", reqStr, dataStr)
 	return &types.IngressGetResp{
 		Code: 0,
 		Msg:  "successful",
-		Data: types.IngressGetData{
-			Name:              ingress.Name,
-			Namespace:         ingress.Namespace,
-			Host:              ingress.Spec.Rules[0].Host,
-			ServiceName:       ingress.Spec.Rules[0].IngressRuleValue.HTTP.Paths[0].Backend.ServiceName,
-			ServicePort:       ingress.Spec.Rules[0].IngressRuleValue.HTTP.Paths[0].Backend.ServicePort.IntVal,
-			CreationTimestamp: ingress.CreationTimestamp.Format("2006-01-02 15:04:05"),
-		},
+		Data: data,
 	}, nil
 }

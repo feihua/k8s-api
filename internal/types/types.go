@@ -227,20 +227,13 @@ type IngressDeleteCollectionResp struct {
 }
 
 type IngressDeleteReq struct {
-	Name string `json:"name,optional"`
+	Namespace string `json:"namespace,optional"`
+	Ingress   string `json:"ingress"`
 }
 
 type IngressDeleteResp struct {
-	Message string `json:"message"`
-}
-
-type IngressGetData struct {
-	Name              string `json:"name"`
-	Namespace         string `json:"namespace"`
-	Host              string `json:"host"`
-	ServiceName       string `json:"serviceName"`
-	ServicePort       int32  `json:"servicePort"`
-	CreationTimestamp string `json:"creationTimestamp"`
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
 }
 
 type IngressGetReq struct {
@@ -249,9 +242,9 @@ type IngressGetReq struct {
 }
 
 type IngressGetResp struct {
-	Code int            `json:"code"`
-	Msg  string         `json:"msg"`
-	Data IngressGetData `json:"data"`
+	Code int             `json:"code"`
+	Msg  string          `json:"msg"`
+	Data IngressListData `json:"data"`
 }
 
 type IngressListData struct {

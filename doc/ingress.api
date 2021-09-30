@@ -25,11 +25,13 @@ type (
         Message string `json:"message"`
     }
     IngressDeleteReq {
-        Name string `json:"name,optional"`
+        Namespace string `json:"namespace,optional"`
+        Ingress string `json:"ingress"`
     }
 
     IngressDeleteResp {
-        Message string `json:"message"`
+        Code int `json:"code"`
+        Msg string `json:"msg"`
     }
     IngressDeleteCollectionReq {
         Name string `json:"name,optional"`
@@ -46,16 +48,9 @@ type (
     IngressGetResp {
         Code int `json:"code"`
         Msg string `json:"msg"`
-        Data IngressGetData `json:"data"`
+        Data IngressListData `json:"data"`
     }
-    IngressGetData {
-        Name string `json:"name"`
-        Namespace string `json:"namespace"`
-        Host string `json:"host"`
-        ServiceName string `json:"serviceName"`
-        ServicePort int32 `json:"servicePort"`
-        CreationTimestamp string `json:"creationTimestamp"`
-    }
+
     IngressListReq {
         Namespace string `json:"namespace,optional"`
     }
