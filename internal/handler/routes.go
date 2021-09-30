@@ -278,31 +278,6 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 		[]rest.Route{
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/nodes/create",
-				Handler: nodes.NodeCreateHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/nodes/update",
-				Handler: nodes.NodeUpdateHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/nodes/updateStatus",
-				Handler: nodes.NodeUpdateStatusHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/nodes/delete",
-				Handler: nodes.NodeDeleteHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/nodes/deleteCollection",
-				Handler: nodes.NodeDeleteCollectionHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
 				Path:    "/api/nodes/get",
 				Handler: nodes.NodeGetHandler(serverCtx),
 			},
@@ -310,16 +285,6 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/api/nodes/list",
 				Handler: nodes.NodeListHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/nodes/watch",
-				Handler: nodes.NodeWatchHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/nodes/patch",
-				Handler: nodes.NodePatchHandler(serverCtx),
 			},
 		},
 	)

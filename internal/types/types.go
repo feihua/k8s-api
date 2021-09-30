@@ -391,14 +391,6 @@ type NamespaceWatchResp struct {
 	Msg  string `json:"msg"`
 }
 
-type NodeAddReq struct {
-	Name string `json:"name,optional"`
-}
-
-type NodeAddResp struct {
-	Message string `json:"message"`
-}
-
 type NodeData struct {
 	MachineID               string `json:"machineID"`
 	SystemUUID              string `json:"systemUUID"`
@@ -412,64 +404,14 @@ type NodeData struct {
 	Architecture            string `json:"architecture"`
 }
 
-type NodeDeleteCollectionReq struct {
-	Name string `json:"name,optional"`
-}
-
-type NodeDeleteCollectionResp struct {
-	Message string `json:"message"`
-}
-
-type NodeDeleteReq struct {
-	Name string `json:"name,optional"`
-}
-
-type NodeDeleteResp struct {
-	Message string `json:"message"`
-}
-
 type NodeGetReq struct {
 	Name string `json:"name,optional"`
 }
 
 type NodeGetResp struct {
-	Message string `json:"message"`
-}
-
-type NodeListReq struct {
-	Namespace string `json:"namespace,optional"`
-}
-
-type NodePatchReq struct {
-	Name string `json:"name,optional"`
-}
-
-type NodePatchResp struct {
-	Message string `json:"message"`
-}
-
-type NodeUpdateReq struct {
-	Name string `json:"name,optional"`
-}
-
-type NodeUpdateResp struct {
-	Message string `json:"message"`
-}
-
-type NodeUpdateStatusReq struct {
-	Name string `json:"name,optional"`
-}
-
-type NodeUpdateStatusResp struct {
-	Message string `json:"message"`
-}
-
-type NodeWatchReq struct {
-	Name string `json:"name,optional"`
-}
-
-type NodeWatchResp struct {
-	Message string `json:"message"`
+	Code int           `json:"code"`
+	Msg  string        `json:"msg"`
+	Data NodesListData `json:"data"`
 }
 
 type NodesListData struct {

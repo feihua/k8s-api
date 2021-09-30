@@ -6,48 +6,17 @@ info(
 )
 
 type (
-    NodeAddReq {
-        Name string `json:"name,optional"`
-    }
-    NodeAddResp {
-        Message string `json:"message"`
-    }
-    NodeUpdateReq {
-        Name string `json:"name,optional"`
-    }
-    NodeUpdateResp {
-        Message string `json:"message"`
-    }
-    NodeUpdateStatusReq {
-        Name string `json:"name,optional"`
-    }
-    NodeUpdateStatusResp {
-        Message string `json:"message"`
-    }
-    NodeListReq {
-        Namespace string `json:"namespace,optional"`
-    }
-    NodeDeleteReq {
-        Name string `json:"name,optional"`
-    }
 
-    NodeDeleteResp {
-        Message string `json:"message"`
-    }
-    NodeDeleteCollectionReq {
-        Name string `json:"name,optional"`
-    }
-
-    NodeDeleteCollectionResp {
-        Message string `json:"message"`
-    }
     NodeGetReq {
         Name string `json:"name,optional"`
     }
 
     NodeGetResp {
-        Message string `json:"message"`
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Data NodesListData `json:"data"`
     }
+
     NodesListReq {
         Name string `json:"name,optional"`
     }
@@ -84,42 +53,17 @@ type (
         Name string `json:"name"`
         Size int64 `json:"size"`
     }
-    NodeWatchReq {
-        Name string `json:"name,optional"`
-    }
 
-    NodeWatchResp {
-        Message string `json:"message"`
-    }
-    NodePatchReq {
-        Name string `json:"name,optional"`
-    }
-
-    NodePatchResp {
-        Message string `json:"message"`
-    }
 )
 
 @server(
     group: nodes
 )
 service k8s-api {
-    @handler NodeCreate
-    post /api/nodes/create (NodeAddReq) returns (NodeAddResp);
-    @handler NodeUpdate
-    post /api/nodes/update (NodeUpdateReq) returns (NodeUpdateResp);
-    @handler NodeUpdateStatus
-    post /api/nodes/updateStatus (NodeUpdateStatusReq) returns (NodeUpdateStatusResp);
-    @handler NodeDelete
-    post /api/nodes/delete (NodeDeleteReq) returns (NodeDeleteResp);
-    @handler NodeDeleteCollection
-    post /api/nodes/deleteCollection (NodeDeleteCollectionReq) returns (NodeDeleteCollectionResp);
+
     @handler NodeGet
     post /api/nodes/get (NodeGetReq) returns (NodeGetResp);
     @handler NodeList
     post /api/nodes/list (NodesListReq) returns (NodesListResp);
-    @handler NodeWatch
-    post /api/nodes/watch (NodeWatchReq) returns (NodeWatchResp);
-    @handler NodePatch
-    post /api/nodes/patch (NodePatchReq) returns (NodePatchResp);
+
 }
