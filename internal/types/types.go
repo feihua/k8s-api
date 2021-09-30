@@ -108,11 +108,13 @@ type DeploymentDeleteCollectionResp struct {
 }
 
 type DeploymentDeleteReq struct {
-	Name string `json:"name,optional"`
+	Namespace  string `json:"namespace,optional"`
+	Deployment string `json:"deployment"`
 }
 
 type DeploymentDeleteResp struct {
-	Message string `json:"message"`
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
 }
 
 type DeploymentGetReq struct {
@@ -121,7 +123,9 @@ type DeploymentGetReq struct {
 }
 
 type DeploymentGetResp struct {
-	Message string `json:"message"`
+	Code int                `json:"code"`
+	Msg  string             `json:"msg"`
+	Data DeploymentListData `json:"data"`
 }
 
 type DeploymentGetScaleReq struct {

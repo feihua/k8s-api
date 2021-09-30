@@ -2,14 +2,11 @@ package logic
 
 import (
 	"context"
+	"github.com/tal-tech/go-zero/core/logx"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/tools/clientcmd"
+	"k8s_test/internal/common/errorx"
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
-	"log"
-
-	"github.com/tal-tech/go-zero/core/logx"
 )
 
 type DeploymentDeleteLogic struct {
@@ -27,21 +24,17 @@ func NewDeploymentDeleteLogic(ctx context.Context, svcCtx *svc.ServiceContext) D
 }
 
 func (l *DeploymentDeleteLogic) DeploymentDelete(req types.DeploymentDeleteReq) (*types.DeploymentDeleteResp, error) {
-	// k8s 配置
-	kubeConfig := "etc/config"
-	config, err2 := clientcmd.BuildConfigFromFlags("", kubeConfig)
 
-	if err2 != nil {
-		log.Fatal(err2)
-	}
-	newForConfig, err2 := kubernetes.NewForConfig(config)
-	if err2 != nil {
-		log.Fatal(err2)
+	deploymentClient := l.svcCtx.ClientSet.AppsV1().Deployments(req.Namespace)
+
+	err := deploymentClient.Delete(context.TODO(), req.Deployment, metaV1.DeleteOptions{})
+
+	if err != nil {
+		return nil, errorx.NewDefaultError(err.Error())
 	}
 
-	deploymentClient := newForConfig.AppsV1().Deployments("default")
-
-	deploymentClient.Delete(context.TODO(), "nginx", metaV1.DeleteOptions{})
-
-	return &types.DeploymentDeleteResp{}, nil
+	return &types.DeploymentDeleteResp{
+		Code: 0,
+		Msg:  "删除deployment: " + req.Deployment + "成功",
+	}, nil
 }

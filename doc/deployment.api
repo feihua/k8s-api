@@ -28,11 +28,13 @@ type (
         Namespace string `json:"namespace,optional"`
     }
     DeploymentDeleteReq {
-        Name string `json:"name,optional"`
+        Namespace string `json:"namespace,optional"`
+        Deployment string `json:"deployment"`
     }
 
     DeploymentDeleteResp {
-        Message string `json:"message"`
+        Code int `json:"code"`
+        Msg string `json:"msg"`
     }
     DeploymentDeleteCollectionReq {
         Name string `json:"name,optional"`
@@ -47,7 +49,9 @@ type (
     }
 
     DeploymentGetResp {
-        Message string `json:"message"`
+        Code int `json:"code"`
+        Msg string `json:"msg"`
+        Data DeploymentListData `json:"data"`
     }
     DeploymentListResp {
         Code int `json:"code"`
