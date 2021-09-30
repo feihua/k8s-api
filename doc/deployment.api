@@ -77,20 +77,6 @@ type (
         LastUpdateTime string `json:"lastUpdateTime"`
         Status string `json:"status"`
     }
-    DeploymentWatchReq {
-        Name string `json:"name,optional"`
-    }
-
-    DeploymentWatchResp {
-        Message string `json:"message"`
-    }
-    DeploymentPatchReq {
-        Name string `json:"name,optional"`
-    }
-
-    DeploymentPatchResp {
-        Message string `json:"message"`
-    }
     DeploymentGetScaleReq {
         Name string `json:"name,optional"`
     }
@@ -124,10 +110,6 @@ service k8s-api {
     post /api/deployment/get (DeploymentGetReq) returns (DeploymentGetResp);
     @handler DeploymentList
     post /api/deployment/list (DeploymentListReq) returns (DeploymentListResp);
-    @handler DeploymentWatch
-    post /api/deployment/watch (DeploymentWatchReq) returns (DeploymentWatchResp);
-    @handler DeploymentPatch
-    post /api/deployment/patch (DeploymentPatchReq) returns (DeploymentPatchResp);
     @handler DeploymentGetScale
     post /api/deployment/getScale (DeploymentGetScaleReq) returns (DeploymentGetScaleResp);
     @handler DeploymentUpdateScale

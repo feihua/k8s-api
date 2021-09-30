@@ -75,20 +75,7 @@ type (
         NodePort int32 `json:"nodePort"`
         CreationTimestamp string `json:"creationTimestamp"`
     }
-    ServiceWatchReq {
-        Name string `json:"name,optional"`
-    }
 
-    ServiceWatchResp {
-        Message string `json:"message"`
-    }
-    ServicePatchReq {
-        Name string `json:"name,optional"`
-    }
-
-    ServicePatchResp {
-        Message string `json:"message"`
-    }
 
 )
 @server(
@@ -107,9 +94,6 @@ service k8s-api {
     post /api/service/get (ServiceGetReq) returns (ServiceGetResp);
     @handler ServiceList
     post /api/service/list (ServiceListReq) returns (ServiceListResp);
-    @handler ServiceWatch
-    post /api/service/watch (ServiceWatchReq) returns (ServiceWatchResp);
-    @handler ServicePatch
-    post /api/service/patch (ServicePatchReq) returns (ServicePatchResp);
+
 
 }

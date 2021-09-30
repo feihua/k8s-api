@@ -64,20 +64,7 @@ type (
         Data map[string]string   `json:"data"`
         CreationTimestamp string `json:"creationTimestamp"`
     }
-    ConfigMapWatchReq {
-        Name string `json:"name,optional"`
-    }
-    ConfigMapWatchResp {
-        Code int `json:"code"`
-        Msg string `json:"msg"`
-    }
-    ConfigMapPatchReq {
-        Name string `json:"name,optional"`
-    }
-    ConfigMapPatchResp {
-        Code int `json:"code"`
-        Msg string `json:"msg"`
-    }
+
 )
 
 @server(
@@ -96,8 +83,5 @@ service k8s-api {
     post /api/configMap/get (ConfigMapGetReq) returns (ConfigMapGetResp);
     @handler ConfigMapList
     post /api/configMap/list (ConfigMapListReq) returns (ConfigMapListResp);
-    @handler ConfigMapWatch
-    post /api/configMap/watch (ConfigMapWatchReq) returns (ConfigMapWatchResp);
-    @handler ConfigMapPatch
-    post /api/configMap/patch (ConfigMapWatchReq) returns (ConfigMapPatchResp);
+
 }

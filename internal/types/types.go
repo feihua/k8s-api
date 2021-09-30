@@ -55,15 +55,6 @@ type ConfigMapListResp struct {
 	Data []*ConfigMapListData `json:"data"`
 }
 
-type ConfigMapPatchReq struct {
-	Name string `json:"name,optional"`
-}
-
-type ConfigMapPatchResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
-}
-
 type ConfigMapUpdateReq struct {
 	Name string `json:"name"`
 }
@@ -78,15 +69,6 @@ type ConfigMapUpdateStatusReq struct {
 }
 
 type ConfigMapUpdateStatusResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
-}
-
-type ConfigMapWatchReq struct {
-	Name string `json:"name,optional"`
-}
-
-type ConfigMapWatchResp struct {
 	Code int    `json:"code"`
 	Msg  string `json:"msg"`
 }
@@ -165,14 +147,6 @@ type DeploymentListResp struct {
 	Data []*DeploymentListData `json:"data"`
 }
 
-type DeploymentPatchReq struct {
-	Name string `json:"name,optional"`
-}
-
-type DeploymentPatchResp struct {
-	Message string `json:"message"`
-}
-
 type DeploymentUpdateReq struct {
 	Name string `json:"name,optional"`
 }
@@ -194,14 +168,6 @@ type DeploymentUpdateStatusReq struct {
 }
 
 type DeploymentUpdateStatusResp struct {
-	Message string `json:"message"`
-}
-
-type DeploymentWatchReq struct {
-	Name string `json:"name,optional"`
-}
-
-type DeploymentWatchResp struct {
 	Message string `json:"message"`
 }
 
@@ -272,14 +238,6 @@ type IngressListResp struct {
 	Data []*IngressListData `json:"data"`
 }
 
-type IngressPatchReq struct {
-	Name string `json:"name,optional"`
-}
-
-type IngressPatchResp struct {
-	Message string `json:"message"`
-}
-
 type IngressUpdateReq struct {
 	Name string `json:"name,optional"`
 }
@@ -293,14 +251,6 @@ type IngressUpdateStatusReq struct {
 }
 
 type IngressUpdateStatusResp struct {
-	Message string `json:"message"`
-}
-
-type IngressWatchReq struct {
-	Name string `json:"name,optional"`
-}
-
-type IngressWatchResp struct {
 	Message string `json:"message"`
 }
 
@@ -446,14 +396,6 @@ type PodListReq struct {
 	Namespace string `json:"namespace,optional"`
 }
 
-type PodPatchReq struct {
-	Name string `json:"name,optional"`
-}
-
-type PodPatchResp struct {
-	Message string `json:"message"`
-}
-
 type PodUpdateEphemeralContainersReq struct {
 	Name string `json:"name,optional"`
 }
@@ -475,14 +417,6 @@ type PodUpdateStatusReq struct {
 }
 
 type PodUpdateStatusResp struct {
-	Message string `json:"message"`
-}
-
-type PodWatchReq struct {
-	Name string `json:"name,optional"`
-}
-
-type PodWatchResp struct {
 	Message string `json:"message"`
 }
 
@@ -568,15 +502,6 @@ type SecretListResp struct {
 	Data []*SecretListData `json:"data"`
 }
 
-type SecretPatchReq struct {
-	Name string `json:"name,optional"`
-}
-
-type SecretPatchResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
-}
-
 type SecretUpdateReq struct {
 	Name string `json:"name"`
 }
@@ -591,15 +516,6 @@ type SecretUpdateStatusReq struct {
 }
 
 type SecretUpdateStatusResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
-}
-
-type SecretWatchReq struct {
-	Name string `json:"name,optional"`
-}
-
-type SecretWatchResp struct {
 	Code int    `json:"code"`
 	Msg  string `json:"msg"`
 }
@@ -666,14 +582,6 @@ type ServiceListResp struct {
 	Data []*ServiceListData `json:"data"`
 }
 
-type ServicePatchReq struct {
-	Name string `json:"name,optional"`
-}
-
-type ServicePatchResp struct {
-	Message string `json:"message"`
-}
-
 type ServiceUpdateReq struct {
 	Name string `json:"name,optional"`
 }
@@ -687,14 +595,6 @@ type ServiceUpdateStatusReq struct {
 }
 
 type ServiceUpdateStatusResp struct {
-	Message string `json:"message"`
-}
-
-type ServiceWatchReq struct {
-	Name string `json:"name,optional"`
-}
-
-type ServiceWatchResp struct {
 	Message string `json:"message"`
 }
 
@@ -749,14 +649,6 @@ type StatefulSetListResp struct {
 	Data []*StatefulSetListData `json:"data"`
 }
 
-type StatefulSetPatchReq struct {
-	Name string `json:"name,optional"`
-}
-
-type StatefulSetPatchResp struct {
-	Message string `json:"message"`
-}
-
 type StatefulSetUpdateReq struct {
 	Name string `json:"name,optional"`
 }
@@ -770,13 +662,5 @@ type StatefulSetUpdateStatusReq struct {
 }
 
 type StatefulSetUpdateStatusResp struct {
-	Message string `json:"message"`
-}
-
-type StatefulSetWatchReq struct {
-	Name string `json:"name,optional"`
-}
-
-type StatefulSetWatchResp struct {
 	Message string `json:"message"`
 }

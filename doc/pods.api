@@ -84,20 +84,6 @@ type (
     }
 
 
-    PodWatchReq {
-        Name string `json:"name,optional"`
-    }
-
-    PodWatchResp {
-        Message string `json:"message"`
-    }
-    PodPatchReq {
-        Name string `json:"name,optional"`
-    }
-
-    PodPatchResp {
-        Message string `json:"message"`
-    }
 
     PodGetEphemeralContainersReq {
         Name string `json:"name,optional"`
@@ -134,10 +120,6 @@ service k8s-api {
     post /api/pods/get (PodGetReq) returns (PodGetResp);
     @handler PodList
     post /api/pods/list (PodsListReq) returns (PodsListResp);
-    @handler PodWatch
-    post /api/pods/watch (PodWatchReq) returns (PodWatchResp);
-    @handler PodPatch
-    post /api/pods/patch (PodPatchReq) returns (PodPatchResp);
     @handler PodGetEphemeralContainers
     post /api/pods/getEphemeralContainers (PodGetEphemeralContainersReq) returns (PodGetEphemeralContainersResp);
     @handler PodUpdateEphemeralContainers

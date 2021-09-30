@@ -58,16 +58,6 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/deployment/watch",
-				Handler: deployment.DeploymentWatchHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/deployment/patch",
-				Handler: deployment.DeploymentPatchHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
 				Path:    "/api/deployment/getScale",
 				Handler: deployment.DeploymentGetScaleHandler(serverCtx),
 			},
@@ -110,16 +100,6 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/api/ingress/list",
 				Handler: ingress.IngressListHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/ingress/watch",
-				Handler: ingress.IngressWatchHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/ingress/patch",
-				Handler: ingress.IngressPatchHandler(serverCtx),
 			},
 		},
 	)
@@ -181,16 +161,6 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/api/service/list",
 				Handler: serve.ServiceListHandler(serverCtx),
 			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/service/watch",
-				Handler: serve.ServiceWatchHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/service/patch",
-				Handler: serve.ServicePatchHandler(serverCtx),
-			},
 		},
 	)
 
@@ -230,16 +200,6 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/api/pods/list",
 				Handler: pods.PodListHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/pods/watch",
-				Handler: pods.PodWatchHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/pods/patch",
-				Handler: pods.PodPatchHandler(serverCtx),
 			},
 			{
 				Method:  http.MethodPost,
@@ -301,16 +261,6 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/api/statefulset/list",
 				Handler: statefulset.StatefulSetListHandler(serverCtx),
 			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/statefulset/watch",
-				Handler: statefulset.StatefulSetWatchHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/statefulset/patch",
-				Handler: statefulset.StatefulSetPatchHandler(serverCtx),
-			},
 		},
 	)
 
@@ -346,16 +296,6 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/api/secret/list",
 				Handler: secret.SecretListHandler(serverCtx),
 			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/secret/watch",
-				Handler: secret.SecretWatchHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/secret/patch",
-				Handler: secret.SecretPatchHandler(serverCtx),
-			},
 		},
 	)
 
@@ -390,16 +330,6 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/api/configMap/list",
 				Handler: configmap.ConfigMapListHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/configMap/watch",
-				Handler: configmap.ConfigMapWatchHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/configMap/patch",
-				Handler: configmap.ConfigMapPatchHandler(serverCtx),
 			},
 		},
 	)

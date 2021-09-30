@@ -75,20 +75,7 @@ type (
         ResourceVersion string `json:"resourceVersion"`
         Annotations map[string]string `json:"annotations"`
     }
-    IngressWatchReq {
-        Name string `json:"name,optional"`
-    }
 
-    IngressWatchResp {
-        Message string `json:"message"`
-    }
-    IngressPatchReq {
-        Name string `json:"name,optional"`
-    }
-
-    IngressPatchResp {
-        Message string `json:"message"`
-    }
 
 )
 @server(
@@ -107,9 +94,6 @@ service k8s-api {
     post /api/ingress/get (IngressGetReq) returns (IngressGetResp);
     @handler IngressList
     post /api/ingress/list (IngressListReq) returns (IngressListResp);
-    @handler IngressWatch
-    post /api/ingress/watch (IngressWatchReq) returns (IngressWatchResp);
-    @handler IngressPatch
-    post /api/ingress/patch (IngressPatchReq) returns (IngressPatchResp);
+
 
 }

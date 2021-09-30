@@ -24,9 +24,7 @@ type (
     StatefulSetUpdateStatusResp {
         Message string `json:"message"`
     }
-    StatefulSetListReq {
-        Namespace string `json:"namespace,optional"`
-    }
+
     StatefulSetDeleteReq {
         Name string `json:"name,optional"`
     }
@@ -66,20 +64,7 @@ type (
         Annotations map[string]string   `json:"annotations"`
         CreationTimestamp string `json:"creationTimestamp"`
     }
-    StatefulSetWatchReq {
-        Name string `json:"name,optional"`
-    }
 
-    StatefulSetWatchResp {
-        Message string `json:"message"`
-    }
-    StatefulSetPatchReq {
-        Name string `json:"name,optional"`
-    }
-
-    StatefulSetPatchResp {
-        Message string `json:"message"`
-    }
 )
 @server(
     group: statefulset
@@ -97,8 +82,5 @@ service k8s-api {
     post /api/statefulset/get (StatefulSetGetReq) returns (StatefulSetGetResp);
     @handler StatefulSetList
     post /api/statefulset/list (StatefulSetListReq) returns (StatefulSetListResp);
-    @handler StatefulSetWatch
-    post /api/statefulset/watch (StatefulSetWatchReq) returns (StatefulSetWatchResp);
-    @handler StatefulSetPatch
-    post /api/statefulset/patch (StatefulSetPatchReq) returns (StatefulSetPatchResp);
+
 }
