@@ -133,16 +133,6 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/namespace/update",
-				Handler: namespace.NamespaceUpdateHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/namespace/updateStatus",
-				Handler: namespace.NamespaceUpdateStatusHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
 				Path:    "/api/namespace/delete",
 				Handler: namespace.NamespaceDeleteHandler(serverCtx),
 			},
@@ -155,16 +145,6 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/api/namespace/list",
 				Handler: namespace.NamespaceListHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/namespace/watch",
-				Handler: namespace.NamespaceWatchHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/api/namespace/patch",
-				Handler: namespace.NamespacePatchHandler(serverCtx),
 			},
 		},
 	)

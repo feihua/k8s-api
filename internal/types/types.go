@@ -355,42 +355,6 @@ type NamespaceListResp struct {
 	Data []*NamespaceListData `json:"data"`
 }
 
-type NamespacePatchReq struct {
-	Name string `json:"name,optional"`
-}
-
-type NamespacePatchResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
-}
-
-type NamespaceUpdateReq struct {
-	Name string `json:"name"`
-}
-
-type NamespaceUpdateResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
-}
-
-type NamespaceUpdateStatusReq struct {
-	Name string `json:"name"`
-}
-
-type NamespaceUpdateStatusResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
-}
-
-type NamespaceWatchReq struct {
-	Name string `json:"name,optional"`
-}
-
-type NamespaceWatchResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
-}
-
 type NodeData struct {
 	MachineID               string `json:"machineID"`
 	SystemUUID              string `json:"systemUUID"`

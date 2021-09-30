@@ -13,20 +13,6 @@ type (
         Code int `json:"code"`
         Msg string `json:"msg"`
     }
-    NamespaceUpdateReq {
-        Name string `json:"name"`
-    }
-    NamespaceUpdateStatusResp {
-        Code int `json:"code"`
-        Msg string `json:"msg"`
-    }
-    NamespaceUpdateStatusReq {
-        Name string `json:"name"`
-    }
-    NamespaceUpdateResp {
-        Code int `json:"code"`
-        Msg string `json:"msg"`
-    }
     NamespaceDeleteReq {
         Name string `json:"name,optional"`
     }
@@ -61,20 +47,7 @@ type (
         Status string `json:"status"`
         CreationTimestamp string `json:"creationTimestamp"`
     }
-    NamespaceWatchReq {
-        Name string `json:"name,optional"`
-    }
-    NamespaceWatchResp {
-        Code int `json:"code"`
-        Msg string `json:"msg"`
-    }
-    NamespacePatchReq {
-        Name string `json:"name,optional"`
-    }
-    NamespacePatchResp {
-        Code int `json:"code"`
-        Msg string `json:"msg"`
-    }
+
 )
 
 @server(
@@ -83,18 +56,11 @@ type (
 service k8s-api {
     @handler NamespaceCreate
     post /api/namespace/create (NamespaceAddReq) returns (NamespaceAddResp);
-    @handler NamespaceUpdate
-    post /api/namespace/update (NamespaceUpdateReq) returns (NamespaceUpdateResp);
-    @handler NamespaceUpdateStatus
-    post /api/namespace/updateStatus (NamespaceUpdateStatusReq) returns (NamespaceUpdateStatusResp);
     @handler NamespaceDelete
     post /api/namespace/delete (NamespaceDeleteReq) returns (NamespaceDeleteResp);
     @handler NamespaceGet
     post /api/namespace/get (NamespaceGetReq) returns (NamespaceGetResp);
     @handler NamespaceList
     post /api/namespace/list (NamespaceListReq) returns (NamespaceListResp);
-    @handler NamespaceWatch
-    post /api/namespace/watch (NamespaceWatchReq) returns (NamespaceWatchResp);
-    @handler NamespacePatch
-    post /api/namespace/patch (NamespaceWatchReq) returns (NamespacePatchResp);
+
 }
