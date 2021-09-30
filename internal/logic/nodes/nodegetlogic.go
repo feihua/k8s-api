@@ -3,7 +3,6 @@ package logic
 import (
 	"context"
 	"encoding/json"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s_test/internal/common/errorx"
 
 	"k8s_test/internal/svc"
@@ -27,7 +26,7 @@ func NewNodeGetLogic(ctx context.Context, svcCtx *svc.ServiceContext) NodeGetLog
 }
 
 func (l *NodeGetLogic) NodeGet(req types.NodeGetReq) (*types.NodeGetResp, error) {
-	node, err := l.svcCtx.ClientSet.CoreV1().Nodes().Get(context.TODO(), req.Name, metaV1.GetOptions{})
+	node, err := l.svcCtx.NodeGet(req.Name)
 	if err != nil {
 		logx.WithContext(l.ctx).Errorf("查询单个node信息异常:%s", err.Error())
 		return nil, errorx.NewDefaultError(err.Error())

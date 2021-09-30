@@ -3,7 +3,6 @@ package logic
 import (
 	"context"
 	"encoding/json"
-	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s_test/internal/common/errorx"
 
 	"k8s_test/internal/svc"
@@ -27,7 +26,7 @@ func NewNodeListLogic(ctx context.Context, svcCtx *svc.ServiceContext) NodeListL
 }
 
 func (l *NodeListLogic) NodeList(req types.NodesListReq) (*types.NodesListResp, error) {
-	nodes, err := l.svcCtx.ClientSet.CoreV1().Nodes().List(context.TODO(), metaV1.ListOptions{})
+	nodes, err := l.svcCtx.NodeList()
 	if err != nil {
 		logx.WithContext(l.ctx).Errorf("查询node列表信息异常:%s", err.Error())
 		return nil, errorx.NewDefaultError(err.Error())
