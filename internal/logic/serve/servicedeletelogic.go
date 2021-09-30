@@ -4,9 +4,6 @@ import (
 	"context"
 	"github.com/tal-tech/go-zero/core/logx"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/tools/clientcmd"
-	"k8s_test/internal/common/errorx"
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
 )
@@ -26,21 +23,11 @@ func NewServiceDeleteLogic(ctx context.Context, svcCtx *svc.ServiceContext) Serv
 }
 
 func (l *ServiceDeleteLogic) ServiceDelete(req types.ServiceDeleteReq) (*types.ServiceDeleteResp, error) {
-	// k8s 配置
-	kubeConfig := "etc/config"
-	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
 
-	if err != nil {
-		return nil, errorx.NewDefaultError(err.Error())
-	}
+	l.svcCtx.ClientSet.CoreV1().Services(req.Namespace).Delete(context.TODO(), req.Service, metaV1.DeleteOptions{})
 
-	newForConfig, err := kubernetes.NewForConfig(config)
-	if err != nil {
-		return nil, errorx.NewDefaultError(err.Error())
-	}
-
-	serviceClient := newForConfig.CoreV1().Services("default")
-	_ = serviceClient.Delete(context.TODO(), "nginx", metaV1.DeleteOptions{})
-
-	return &types.ServiceDeleteResp{}, nil
+	return &types.ServiceDeleteResp{
+		Code: 0,
+		Msg:  "删除service: " + req.Service + "成功",
+	}, nil
 }

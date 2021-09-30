@@ -2,11 +2,9 @@ package logic
 
 import (
 	"context"
-	"fmt"
+	"encoding/json"
 	apiV1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/tools/clientcmd"
 	"k8s_test/internal/common/errorx"
 
 	"k8s_test/internal/svc"
@@ -30,19 +28,6 @@ func NewNamespaceCreateLogic(ctx context.Context, svcCtx *svc.ServiceContext) Na
 }
 
 func (l *NamespaceCreateLogic) NamespaceCreate(req types.NamespaceAddReq) (*types.NamespaceAddResp, error) {
-	// k8s 配置
-	kubeConfig := "etc/config"
-	config, err := clientcmd.BuildConfigFromFlags("", kubeConfig)
-
-	if err != nil {
-		return nil, errorx.NewDefaultError(err.Error())
-	}
-	clientSet, err := kubernetes.NewForConfig(config)
-	if err != nil {
-		return nil, errorx.NewDefaultError(err.Error())
-	}
-
-	namespaceClient := clientSet.CoreV1().Namespaces()
 	namespace := &apiV1.Namespace{
 		ObjectMeta: metaV1.ObjectMeta{
 			Name: req.Name,
@@ -51,12 +36,16 @@ func (l *NamespaceCreateLogic) NamespaceCreate(req types.NamespaceAddReq) (*type
 			Phase: apiV1.NamespaceActive,
 		},
 	}
-	result, err := namespaceClient.Create(context.TODO(), namespace, metaV1.CreateOptions{})
+
+	client := l.svcCtx.ClientSet.CoreV1().Namespaces()
+	result, err := client.Create(context.TODO(), namespace, metaV1.CreateOptions{})
+
 	if err != nil {
+		resultStr, _ := json.Marshal(result)
+		logx.WithContext(l.ctx).Errorf("创建namespace信息失败,请求参数:%s,异常:%s", resultStr, err.Error())
 		return nil, errorx.NewDefaultError(err.Error())
 	}
 
-	fmt.Println(result)
 	return &types.NamespaceAddResp{
 		Code: 0,
 		Msg:  "successful",

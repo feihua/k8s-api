@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"encoding/json"
 	"github.com/tal-tech/go-zero/core/logx"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s_test/internal/common/errorx"
@@ -30,6 +31,8 @@ func (l *DeploymentDeleteLogic) DeploymentDelete(req types.DeploymentDeleteReq) 
 	err := deploymentClient.Delete(context.TODO(), req.Deployment, metaV1.DeleteOptions{})
 
 	if err != nil {
+		reqStr, _ := json.Marshal(req)
+		logx.WithContext(l.ctx).Errorf("查询单个deployment信息失败,请求参数:%s,异常:%s", reqStr, err.Error())
 		return nil, errorx.NewDefaultError(err.Error())
 	}
 

@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"encoding/json"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s_test/internal/common/errorx"
 	"k8s_test/internal/svc"
@@ -30,6 +31,8 @@ func (l *IngressDeleteLogic) IngressDelete(req types.IngressDeleteReq) (*types.I
 	err := client.Delete(context.TODO(), req.Ingress, metaV1.DeleteOptions{})
 
 	if err != nil {
+		reqStr, _ := json.Marshal(req)
+		logx.WithContext(l.ctx).Errorf("查询单个ingress信息失败,请求参数:%s,异常:%s", reqStr, err.Error())
 		return nil, errorx.NewDefaultError(err.Error())
 	}
 

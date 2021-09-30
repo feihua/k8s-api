@@ -28,11 +28,13 @@ type (
         Namespace string `json:"namespace,optional"`
     }
     PodDeleteReq {
-        Name string `json:"name,optional"`
+        Namespace string `json:"namespace,optional"`
+        Pod string `json:"pod"`
     }
 
     PodDeleteResp {
-        Message string `json:"message"`
+        Code int    `json:"code"`
+        Msg  string `json:"msg"`
     }
     PodDeleteCollectionReq {
         Name string `json:"name,optional"`
@@ -42,11 +44,14 @@ type (
         Message string `json:"message"`
     }
     PodGetReq {
-        Name string `json:"name,optional"`
+        Namespace string `json:"namespace,optional"`
+        Pod string `json:"pod"`
     }
 
     PodGetResp {
-        Message string `json:"message"`
+        Code int    `json:"code"`
+        Msg  string `json:"msg"`
+        Data PodsListData `json:"data"`
     }
     PodsListReq {
         Namespace string `json:"namespace,optional"`

@@ -508,11 +508,13 @@ type PodDeleteCollectionResp struct {
 }
 
 type PodDeleteReq struct {
-	Name string `json:"name,optional"`
+	Namespace string `json:"namespace,optional"`
+	Pod       string `json:"pod"`
 }
 
 type PodDeleteResp struct {
-	Message string `json:"message"`
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
 }
 
 type PodGetEphemeralContainersReq struct {
@@ -524,11 +526,14 @@ type PodGetEphemeralContainersResp struct {
 }
 
 type PodGetReq struct {
-	Name string `json:"name,optional"`
+	Namespace string `json:"namespace,optional"`
+	Pod       string `json:"pod"`
 }
 
 type PodGetResp struct {
-	Message string `json:"message"`
+	Code int          `json:"code"`
+	Msg  string       `json:"msg"`
+	Data PodsListData `json:"data"`
 }
 
 type PodListReq struct {
@@ -710,19 +715,24 @@ type ServiceDeleteCollectionResp struct {
 }
 
 type ServiceDeleteReq struct {
-	Name string `json:"name,optional"`
+	Namespace string `json:"namespace,optional"`
+	Service   string `json:"service"`
 }
 
 type ServiceDeleteResp struct {
-	Message string `json:"message"`
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
 }
 
 type ServiceGetReq struct {
-	Name string `json:"name,optional"`
+	Namespace string `json:"namespace,optional"`
+	Service   string `json:"service"`
 }
 
 type ServiceGetResp struct {
-	Message string `json:"message"`
+	Code int             `json:"code"`
+	Msg  string          `json:"msg"`
+	Data ServiceListData `json:"data"`
 }
 
 type ServiceListData struct {
