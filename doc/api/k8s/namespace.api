@@ -79,6 +79,6 @@ service k8s-api {
     @handler NamespaceList
     post /api/namespace/list (NamespaceListReq) returns (NamespaceListResp);
     @handler NamespaceListWith
-    post /api/namespace/listWith (NamespaceListReq) returns ([]*map[string]string);
+    post /api/namespace/listWith (NamespaceListReq) returns (NamespaceListRespWith);
 
 }

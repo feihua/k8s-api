@@ -6,11 +6,11 @@ info(
 )
 
 type (
-    loginReq struct {
+    LoginReq struct {
         UserName string `json:"userName"`
         Password string `json:"password"`
     }
-    loginData struct {
+    LoginData struct {
         Status string `json:"status"`
         CurrentAuthority string `json:"currentAuthority"`
         Id int64 `json:"userId"`
@@ -20,11 +20,11 @@ type (
         RefreshAfter int64 `json:"refreshAfter"`
     }
 
-    loginResp struct {
+    LoginResp struct {
         Code int64 `json:"code"`
         Message string `json:"message"`
         Type string `json:"type"`
-        Data loginData `json:"data"`
+        Data LoginData `json:"data"`
     }
 
     ListMenuTree struct {
@@ -237,5 +237,5 @@ service k8s-api {
 )
 service k8s-api {
     @handler UserLogin
-    post /api/sys/user/login (loginReq) returns (loginResp)
+    post /api/sys/user/login (LoginReq) returns (LoginResp)
 }
