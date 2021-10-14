@@ -1,0 +1,106 @@
+info(
+    title: "k8s admin"
+    desc: "k8s admin"
+    author: "koobe"
+    email: "koobe.liu@uaf.com.cn"
+)
+
+type (
+    IngressAddReq {
+        Name string `json:"name,optional"`
+    }
+    IngressAddResp {
+        Message string `json:"message"`
+    }
+    IngressUpdateReq {
+        Name string `json:"name,optional"`
+    }
+    IngressUpdateResp {
+        Message string `json:"message"`
+    }
+    IngressUpdateStatusReq {
+        Name string `json:"name,optional"`
+    }
+    IngressUpdateStatusResp {
+        Message string `json:"message"`
+    }
+    IngressDeleteReq {
+        Namespace string `json:"namespace,optional"`
+        Ingress string `json:"ingress"`
+    }
+
+    IngressDeleteResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+    }
+    IngressDeleteCollectionReq {
+        Name string `json:"name,optional"`
+    }
+
+    IngressDeleteCollectionResp {
+        Message string `json:"message"`
+    }
+    IngressGetReq {
+        Namespace string `json:"namespace,optional"`
+        Ingress string `json:"ingress"`
+    }
+
+    IngressGetResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+        Data IngressListItem `json:"data"`
+    }
+
+    IngressListReq {
+        Namespace string `json:"namespace,default=default"`
+    }
+
+    IngressListResp {
+        Code int    `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+        Data IngressListData `json:"data"`
+    }
+
+    IngressListData {
+        Items []*IngressListItem `json:"items"`
+        Total int64 `json:"total"`
+    }
+    IngressListItem {
+        Name string `json:"name"`
+        Namespace string `json:"namespace"`
+        Host string `json:"host"`
+        ServiceName string `json:"serviceName"`
+        ServicePort int32 `json:"servicePort"`
+        CreationTimestamp string `json:"creationTimestamp"`
+        Labels map[string]string `json:"labels"`
+        Status string `json:"status"`
+        Rules string `json:"rules"`
+        Address string `json:"address"`
+        ResourceVersion string `json:"resourceVersion"`
+        Annotations map[string]string `json:"annotations"`
+    }
+
+
+)
+@server(
+    group: ingress
+)
+service k8s-api {
+    @handler IngressCreate
+    post /api/ingress/create (IngressAddReq) returns (IngressAddResp);
+    @handler IngressUpdate
+    post /api/ingress/update (IngressUpdateReq) returns (IngressUpdateResp);
+    @handler IngressUpdateStatus
+    post /api/ingress/updateStatus (IngressUpdateStatusReq) returns (IngressUpdateStatusResp);
+    @handler IngressDelete
+    post /api/ingress/delete (IngressDeleteReq) returns (IngressDeleteResp);
+    @handler IngressGet
+    post /api/ingress/get (IngressGetReq) returns (IngressGetResp);
+    @handler IngressList
+    post /api/ingress/list (IngressListReq) returns (IngressListResp);
+
+
+}

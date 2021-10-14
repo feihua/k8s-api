@@ -34,9 +34,9 @@ func (l *ConfigMapListLogic) ConfigMapList(req types.ConfigMapListReq) (*types.C
 		return nil, errorx.NewDefaultError(err.Error())
 	}
 
-	var list []*types.ConfigMapListData
+	var list []*types.ConfigMapListItem
 	for _, item := range result.Items {
-		list = append(list, &types.ConfigMapListData{
+		list = append(list, &types.ConfigMapListItem{
 			Name:              item.Name,
 			NameSpace:         item.Namespace,
 			Labels:            item.Labels,
@@ -49,9 +49,12 @@ func (l *ConfigMapListLogic) ConfigMapList(req types.ConfigMapListReq) (*types.C
 	listStr, _ := json.Marshal(list)
 	logx.WithContext(l.ctx).Infof("查询configmap列表信息,请求参数：%s,响应：%s", req.Namespace, listStr)
 	return &types.ConfigMapListResp{
-		Code: 0,
-		Msg:  "successful",
-		Data: list,
+		Code:    0,
+		Message: "successful",
+		Data: types.ConfigMapListData{
+			Items: list,
+			Total: int64(len(list)),
+		},
 	}, nil
 
 }

@@ -1,0 +1,92 @@
+info(
+    title: "k8s admin"
+    desc: "k8s admin"
+    author: "koobe"
+    email: "koobe.liu@uaf.com.cn"
+)
+
+type (
+    StatefulSetAddReq {
+        Name string `json:"name,optional"`
+    }
+    StatefulSetAddResp {
+        Message string `json:"message"`
+    }
+    StatefulSetUpdateReq {
+        Name string `json:"name,optional"`
+    }
+    StatefulSetUpdateResp {
+        Message string `json:"message"`
+    }
+    StatefulSetUpdateStatusReq {
+        Name string `json:"name,optional"`
+    }
+    StatefulSetUpdateStatusResp {
+        Message string `json:"message"`
+    }
+
+    StatefulSetDeleteReq {
+        Name string `json:"name,optional"`
+    }
+
+    StatefulSetDeleteResp {
+        Message string `json:"message"`
+    }
+    StatefulSetDeleteCollectionReq {
+        Name string `json:"name,optional"`
+    }
+
+    StatefulSetDeleteCollectionResp {
+        Message string `json:"message"`
+    }
+    StatefulSetGetReq {
+        Name string `json:"name,optional"`
+    }
+
+    StatefulSetGetResp {
+        Message string `json:"message"`
+    }
+    StatefulSetListReq {
+        Namespace string `json:"namespace,default=default"`
+    }
+
+    StatefulSetListResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+        Data StatefulSetListData `json:"data"`
+    }
+
+    StatefulSetListData {
+        Items []*StatefulSetListItem `json:"items"`
+        Total int64 `json:"total"`
+    }
+    StatefulSetListItem {
+        Name string `json:"name"`
+        NameSpace string `json:"nameSpace"`
+        ClusterName string `json:"clusterName"`
+        Labels map[string]string   `json:"labels"`
+        LabelsStr string   `json:"labelsStr"`
+        Annotations map[string]string   `json:"annotations"`
+        CreationTimestamp string `json:"creationTimestamp"`
+    }
+
+)
+@server(
+    group: statefulset
+)
+service k8s-api {
+    @handler StatefulSetCreate
+    post /api/statefulset/create (StatefulSetAddReq) returns (StatefulSetAddResp);
+    @handler StatefulSetUpdate
+    post /api/statefulset/update (StatefulSetUpdateReq) returns (StatefulSetUpdateResp);
+    @handler StatefulSetUpdateStatus
+    post /api/statefulset/updateStatus (StatefulSetUpdateStatusReq) returns (StatefulSetUpdateStatusResp);
+    @handler StatefulSetDelete
+    post /api/statefulset/delete (StatefulSetDeleteReq) returns (StatefulSetDeleteResp);
+    @handler StatefulSetGet
+    post /api/statefulset/get (StatefulSetGetReq) returns (StatefulSetGetResp);
+    @handler StatefulSetList
+    post /api/statefulset/list (StatefulSetListReq) returns (StatefulSetListResp);
+
+}

@@ -36,7 +36,7 @@ func (l *DeploymentGetLogic) DeploymentGet(req types.DeploymentGetReq) (*types.D
 		return nil, errorx.NewDefaultError(err.Error())
 	}
 
-	data := types.DeploymentListData{
+	data := types.DeploymentListItem{
 		Name:               result.Name,
 		Namespace:          result.Namespace,
 		Labels:             result.Labels,
@@ -59,9 +59,9 @@ func (l *DeploymentGetLogic) DeploymentGet(req types.DeploymentGetReq) (*types.D
 	dataStr, _ := json.Marshal(data)
 	logx.WithContext(l.ctx).Infof("查询单个deployment信息,请求参数：%s,响应：%s", reqStr, dataStr)
 	return &types.DeploymentGetResp{
-		Code: 0,
-		Msg:  "successful",
-		Data: data,
+		Code:    0,
+		Message: "successful",
+		Data:    data,
 	}, nil
 
 }

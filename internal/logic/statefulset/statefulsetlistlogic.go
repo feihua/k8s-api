@@ -28,28 +28,33 @@ func (l *StatefulSetListLogic) StatefulSetList(req types.StatefulSetListReq) (*t
 	client := l.svcCtx.ClientSet.AppsV1().StatefulSets(req.Namespace)
 	result, err := client.List(context.TODO(), metaV1.ListOptions{})
 
-	var list []*types.StatefulSetListData
+	var list []*types.StatefulSetListItem
 	if err != nil {
 		logx.WithContext(l.ctx).Errorf("查询statefulSets列表信息失败,请求参数:%s,异常:%s", req.Namespace, err.Error())
 		return nil, errorx.NewDefaultError(err.Error())
 	}
 
 	for _, item := range result.Items {
-		list = append(list, &types.StatefulSetListData{
+		labelsStr, _ := json.Marshal(item.Labels)
+		list = append(list, &types.StatefulSetListItem{
 			Name:              item.Name,
 			NameSpace:         item.Namespace,
 			ClusterName:       item.ClusterName,
 			Labels:            item.Labels,
 			Annotations:       item.Annotations,
+			LabelsStr:         string(labelsStr),
 			CreationTimestamp: item.CreationTimestamp.Format("2006-01-02 15:04:05"),
 		})
 	}
 	listStr, _ := json.Marshal(list)
 	logx.WithContext(l.ctx).Infof("查询statefulSets列表信息,请求参数：%s,响应：%s", req.Namespace, listStr)
 	return &types.StatefulSetListResp{
-		Code: 0,
-		Msg:  "successful",
-		Data: list,
+		Code:    0,
+		Message: "successful",
+		Data: types.StatefulSetListData{
+			Items: list,
+			Total: int64(len(list)),
+		},
 	}, nil
 
 }

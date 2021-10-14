@@ -32,45 +32,30 @@ func (l *NodeListLogic) NodeList(req types.NodesListReq) (*types.NodesListResp, 
 		return nil, errorx.NewDefaultError(err.Error())
 	}
 
-	var list []*types.NodesListData
+	var list []*types.NodesListItem
 	for _, node := range nodes.Items {
 
-		var imagesData []*types.ImagesData
-		images := node.Status.Images
-		for _, image := range images {
-			imagesData = append(imagesData, &types.ImagesData{
-				Name: image.Names[0],
-				Size: image.SizeBytes,
-			})
-		}
-
 		nodeInfo := node.Status.NodeInfo
-		list = append(list, &types.NodesListData{
-			Name:   node.Name,
-			Status: string(node.Status.Conditions[len(node.Status.Conditions)-1].Type),
-			Memory: node.Status.Allocatable.Memory().String(),
-			NodeInfo: types.NodeData{
-				MachineID:               nodeInfo.MachineID,
-				SystemUUID:              nodeInfo.SystemUUID,
-				BootID:                  nodeInfo.BootID,
-				KernelVersion:           nodeInfo.KernelVersion,
-				OSImage:                 nodeInfo.OSImage,
-				ContainerRuntimeVersion: nodeInfo.ContainerRuntimeVersion,
-				KubeletVersion:          nodeInfo.KubeletVersion,
-				KubeProxyVersion:        nodeInfo.KubeProxyVersion,
-				OperatingSystem:         nodeInfo.OperatingSystem,
-				Architecture:            nodeInfo.Architecture,
-			},
-			Images:            imagesData,
-			CreationTimestamp: node.CreationTimestamp.Format("2006-01-02 15:04:05"),
+		list = append(list, &types.NodesListItem{
+			Name:                    node.Name,
+			Status:                  string(node.Status.Conditions[len(node.Status.Conditions)-1].Type),
+			OSImage:                 nodeInfo.OSImage,
+			ContainerRuntimeVersion: nodeInfo.ContainerRuntimeVersion,
+			KubeletVersion:          nodeInfo.KubeletVersion,
+			Architecture:            nodeInfo.Architecture,
+			CreationTimestamp:       node.CreationTimestamp.Format("2006-01-02 15:04:05"),
 		})
 
 	}
 	listStr, _ := json.Marshal(list)
 	logx.WithContext(l.ctx).Infof("查询node列表信息响应：%s", listStr)
 	return &types.NodesListResp{
-		Code: 0,
-		Msg:  "successful",
-		Data: list,
+		Code:    0,
+		Message: "ok",
+		Type:    "success",
+		Data: types.NodesListData{
+			Items: list,
+			Total: int64(len(list)),
+		},
 	}, nil
 }

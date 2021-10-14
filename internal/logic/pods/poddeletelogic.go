@@ -28,7 +28,7 @@ func (l *PodDeleteLogic) PodDelete(req types.PodDeleteReq) (*types.PodDeleteResp
 	l.svcCtx.ClientSet.CoreV1().Pods(req.Namespace).Delete(context.TODO(), req.Pod, metaV1.DeleteOptions{})
 
 	return &types.PodDeleteResp{
-		Code: 0,
-		Msg:  "删除pod: " + req.Pod + "成功",
+		Code:    0,
+		Message: "删除pod: " + req.Pod + "成功",
 	}, nil
 }

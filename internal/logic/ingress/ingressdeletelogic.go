@@ -37,7 +37,7 @@ func (l *IngressDeleteLogic) IngressDelete(req types.IngressDeleteReq) (*types.I
 	}
 
 	return &types.IngressDeleteResp{
-		Code: 0,
-		Msg:  "删除ingress: " + req.Ingress + "成功",
+		Code:    0,
+		Message: "删除ingress: " + req.Ingress + "成功",
 	}, nil
 }

@@ -1,0 +1,125 @@
+info(
+    title: "k8s admin"
+    desc: "k8s admin"
+    author: "koobe"
+    email: "koobe.liu@uaf.com.cn"
+)
+
+type (
+    DeploymentAddReq {
+        Name string `json:"name,optional"`
+    }
+    DeploymentAddResp {
+        Message string `json:"message"`
+    }
+    DeploymentUpdateReq {
+        Name string `json:"name,optional"`
+    }
+    DeploymentUpdateResp {
+        Message string `json:"message"`
+    }
+    DeploymentUpdateStatusReq {
+        Name string `json:"name,optional"`
+    }
+    DeploymentUpdateStatusResp {
+        Message string `json:"message"`
+    }
+    DeploymentListReq {
+        Namespace string `json:"namespace,default=default"`
+    }
+    DeploymentDeleteReq {
+        Namespace string `json:"namespace,optional"`
+        Deployment string `json:"deployment"`
+    }
+
+    DeploymentDeleteResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+    }
+    DeploymentDeleteCollectionReq {
+        Name string `json:"name,optional"`
+    }
+
+    DeploymentDeleteCollectionResp {
+        Message string `json:"message"`
+    }
+    DeploymentGetReq {
+        Namespace string `json:"namespace,optional"`
+        Deployment string `json:"deployment"`
+    }
+
+    DeploymentGetResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+        Data DeploymentListItem `json:"data"`
+    }
+    DeploymentListResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+        Data DeploymentListData `json:"data"`
+    }
+
+    DeploymentListData {
+        Items []*DeploymentListItem `json:"items"`
+        Total int64 `json:"total"`
+    }
+
+    DeploymentListItem {
+        Name string `json:"name"`
+        Namespace string `json:"namespace"`
+        Labels map[string]string `json:"labels"`
+        Strategy string `json:"strategy"`
+        Replicas int32 `json:"replicas"`
+        UpdatedReplicas int32 `json:"updatedReplicas"`
+        ReadyReplicas int32 `json:"readyReplicas"`
+        AvailableReplicas int32 `json:"availableReplicas"`
+        ObservedGeneration int64 `json:"observedGeneration"`
+        CreationTimestamp string `json:"creationTimestamp"`
+        Images string `json:"images"`
+        ImagePullPolicy string `json:"imagePullPolicy"`
+        Message string `json:"message"`
+        Reason string `json:"reason"`
+        LastUpdateTime string `json:"lastUpdateTime"`
+        Status string `json:"status"`
+    }
+    DeploymentGetScaleReq {
+        Name string `json:"name,optional"`
+    }
+
+    DeploymentGetScaleResp {
+        Message string `json:"message"`
+    }
+    DeploymentUpdateScaleReq {
+        Name string `json:"name,optional"`
+    }
+
+    DeploymentUpdateScaleResp {
+        Message string `json:"message"`
+    }
+)
+@server(
+    group: deployment
+)
+service k8s-api {
+    @handler DeploymentCreate
+    post /api/deployment/create (DeploymentAddReq) returns (DeploymentAddResp);
+    @handler DeploymentUpdate
+    post /api/deployment/update (DeploymentUpdateReq) returns (DeploymentUpdateResp);
+    @handler DeploymentUpdateStatus
+    post /api/deployment/updateStatus (DeploymentUpdateStatusReq) returns (DeploymentUpdateStatusResp);
+    @handler DeploymentDelete
+    post /api/deployment/delete (DeploymentDeleteReq) returns (DeploymentDeleteResp);
+    @handler DeploymentDeleteCollection
+    post /api/deployment/deleteCollection (DeploymentDeleteCollectionReq) returns (DeploymentDeleteCollectionResp);
+    @handler DeploymentGet
+    post /api/deployment/get (DeploymentGetReq) returns (DeploymentGetResp);
+    @handler DeploymentList
+    post /api/deployment/list (DeploymentListReq) returns (DeploymentListResp);
+    @handler DeploymentGetScale
+    post /api/deployment/getScale (DeploymentGetScaleReq) returns (DeploymentGetScaleResp);
+    @handler DeploymentUpdateScale
+    post /api/deployment/updateScale (DeploymentUpdateScaleReq) returns (DeploymentUpdateScaleResp);
+}

@@ -6,6 +6,7 @@ import (
 	"k8s_test/internal/common/errorx"
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
+	"time"
 
 	"github.com/tal-tech/go-zero/core/logx"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -33,12 +34,13 @@ func (l *NamespaceListLogic) NamespaceList(req types.NamespaceListReq) (*types.N
 		logx.WithContext(l.ctx).Errorf("查询namespace列表信息,异常:%s", err.Error())
 		return nil, errorx.NewDefaultError(err.Error())
 	}
-	//now := time.Now()
-	var list []*types.NamespaceListData
+	now := time.Now()
+	var list []*types.NamespaceListItem
 	for _, namespace := range result.Items {
-		list = append(list, &types.NamespaceListData{
+		list = append(list, &types.NamespaceListItem{
 			Name:              namespace.Name,
 			Status:            string(namespace.Status.Phase),
+			Age:               now.Sub(namespace.CreationTimestamp.Time).String(),
 			CreationTimestamp: namespace.CreationTimestamp.Format("2006-01-02 15:04:05"),
 		})
 		//fmt.Println(namespace.Name, now.Sub(namespace.CreationTimestamp.Time))
@@ -47,8 +49,11 @@ func (l *NamespaceListLogic) NamespaceList(req types.NamespaceListReq) (*types.N
 	listStr, _ := json.Marshal(list)
 	logx.WithContext(l.ctx).Infof("查询namespace列表信息响应：%s", listStr)
 	return &types.NamespaceListResp{
-		Code: 0,
-		Msg:  "successful",
-		Data: list,
+		Code:    0,
+		Message: "successful",
+		Data: types.NamespaceListData{
+			Items: list,
+			Total: int64(len(list)),
+		},
 	}, nil
 }

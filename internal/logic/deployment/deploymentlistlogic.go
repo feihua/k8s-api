@@ -33,10 +33,10 @@ func (l *DeploymentListLogic) DeploymentList(req types.DeploymentListReq) (*type
 		return nil, errorx.NewDefaultError(err.Error())
 	}
 
-	var list []*types.DeploymentListData
+	var list []*types.DeploymentListItem
 
 	for _, item := range result.Items {
-		list = append(list, &types.DeploymentListData{
+		list = append(list, &types.DeploymentListItem{
 			Name:               item.Name,
 			Namespace:          item.Namespace,
 			Labels:             item.Labels,
@@ -59,8 +59,11 @@ func (l *DeploymentListLogic) DeploymentList(req types.DeploymentListReq) (*type
 	listStr, _ := json.Marshal(list)
 	logx.WithContext(l.ctx).Infof("查询deployment列表信息,请求参数：%s,响应：%s", req.Namespace, listStr)
 	return &types.DeploymentListResp{
-		Code: 0,
-		Msg:  "successful",
-		Data: list,
+		Code:    0,
+		Message: "successful",
+		Data: types.DeploymentListData{
+			Items: list,
+			Total: int64(len(list)),
+		},
 	}, nil
 }

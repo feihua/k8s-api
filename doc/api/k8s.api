@@ -1,0 +1,23 @@
+import "k8s/deployment.api"
+import "k8s/ingress.api"
+import "k8s/namespace.api"
+import "k8s/service.api"
+import "k8s/pods.api"
+import "k8s/nodes.api"
+import "k8s/statefulset.api"
+import "k8s/secret.api"
+import "k8s/configmap.api"
+
+import "sys/user.api"
+import "sys/role.api"
+import "sys/menu.api"
+import "sys/dict.api"
+import "sys/dept.api"
+import "sys/job.api"
+
+info(
+	title: "k8s admin"
+	desc: "k8s admin"
+	author: "koobe"
+	email: "koobe.liu@uaf.com.cn"
+)

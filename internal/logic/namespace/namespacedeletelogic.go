@@ -27,7 +27,7 @@ func (l *NamespaceDeleteLogic) NamespaceDelete(req types.NamespaceDeleteReq) (*t
 	_ = l.svcCtx.ClientSet.CoreV1().Namespaces().Delete(context.TODO(), req.Name, metaV1.DeleteOptions{})
 
 	return &types.NamespaceDeleteResp{
-		Code: 0,
-		Msg:  "successful",
+		Code:    0,
+		Message: "successful",
 	}, nil
 }

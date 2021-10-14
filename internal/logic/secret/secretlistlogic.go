@@ -44,9 +44,9 @@ func (l *SecretListLogic) SecretList(req types.SecretListReq) (*types.SecretList
 		return nil, errorx.NewDefaultError(err.Error())
 	}
 
-	var list []*types.SecretListData
+	var list []*types.SecretListItem
 	for _, item := range result.Items {
-		list = append(list, &types.SecretListData{
+		list = append(list, &types.SecretListItem{
 			Name:              item.Name,
 			NameSpace:         item.Namespace,
 			Type:              TypeSelect[string(item.Type)],
@@ -56,9 +56,12 @@ func (l *SecretListLogic) SecretList(req types.SecretListReq) (*types.SecretList
 	listStr, _ := json.Marshal(list)
 	logx.WithContext(l.ctx).Infof("查询secret列表信息,请求参数：%s,响应：%s", req.Namespace, listStr)
 	return &types.SecretListResp{
-		Code: 0,
-		Msg:  "successful",
-		Data: list,
+		Code:    0,
+		Message: "successful",
+		Data: types.SecretListData{
+			Items: list,
+			Total: int64(len(list)),
+		},
 	}, nil
 
 }

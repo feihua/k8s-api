@@ -37,7 +37,7 @@ func (l *DeploymentDeleteLogic) DeploymentDelete(req types.DeploymentDeleteReq) 
 	}
 
 	return &types.DeploymentDeleteResp{
-		Code: 0,
-		Msg:  "删除deployment: " + req.Deployment + "成功",
+		Code:    0,
+		Message: "删除deployment: " + req.Deployment + "成功",
 	}, nil
 }

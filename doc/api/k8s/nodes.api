@@ -1,0 +1,89 @@
+info(
+    title: "k8s admin"
+    desc: "k8s admin"
+    author: "koobe"
+    email: "koobe.liu@uaf.com.cn"
+)
+
+type (
+
+    NodeGetReq {
+        Name string `json:"name,optional"`
+    }
+
+    NodeGetResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+        Data NodesItem `json:"data"`
+    }
+
+    NodesItem {
+        Name string `json:"name"`
+        Status string `json:"status"`
+        Memory string `json:"memory"`
+        NodeInfo NodeData `json:"nodeInfo"`
+        Images []*ImagesData `json:"Images"`
+        CreationTimestamp string `json:"creationTimestamp"`
+    }
+    NodeData {
+        MachineID string `json:"machineID"`
+        SystemUUID string `json:"systemUUID"`
+        BootID string `json:"bootID"`
+        KernelVersion string `json:"kernelVersion"`
+        OSImage string `json:"oSImage"`
+        ContainerRuntimeVersion string `json:"containerRuntimeVersion"`
+        KubeletVersion string `json:"kubeletVersion"`
+        KubeProxyVersion string `json:"kubeProxyVersion"`
+        OperatingSystem string `json:"operatingSystem"`
+        Architecture string `json:"architecture"`
+    }
+
+    ImagesData {
+        Name string `json:"name"`
+        Size int64 `json:"size"`
+    }
+
+    NodesListReq {
+        Name string `json:"name,optional"`
+    }
+
+    NodesListResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+        Data NodesListData `json:"data"`
+    }
+
+    NodesListData {
+        Items []*NodesListItem `json:"items"`
+        Total int64 `json:"total"`
+    }
+
+    NodesListItem {
+        Name string `json:"name"`
+        Status string `json:"status"`
+        OSImage string `json:"oSImage"`
+        ContainerRuntimeVersion string `json:"containerRuntimeVersion"`
+        KubeletVersion string `json:"kubeletVersion"`
+        Architecture string `json:"architecture"`
+        CreationTimestamp string `json:"creationTimestamp"`
+    }
+
+
+
+
+
+)
+
+@server(
+    group: nodes
+)
+service k8s-api {
+
+    @handler NodeGet
+    post /api/nodes/get (NodeGetReq) returns (NodeGetResp);
+    @handler NodeList
+    post /api/nodes/list (NodesListReq) returns (NodesListResp);
+
+}

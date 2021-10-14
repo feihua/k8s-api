@@ -34,11 +34,11 @@ func (l *IngressListLogic) IngressList(req types.IngressListReq) (*types.Ingress
 		return nil, errorx.NewDefaultError(err.Error())
 	}
 
-	var list []*types.IngressListData
+	var list []*types.IngressListItem
 	for _, ingress := range ingressList.Items {
 		rules, _ := json.Marshal(ingress.Spec.Rules)
 		address, _ := json.Marshal(ingress.Status.LoadBalancer.Ingress)
-		list = append(list, &types.IngressListData{
+		list = append(list, &types.IngressListItem{
 			Name:              ingress.Name,
 			Namespace:         ingress.Namespace,
 			Host:              ingress.Spec.Rules[0].Host,
@@ -57,8 +57,11 @@ func (l *IngressListLogic) IngressList(req types.IngressListReq) (*types.Ingress
 	listStr, _ := json.Marshal(list)
 	logx.WithContext(l.ctx).Infof("查询ingress列表信息,请求参数：%s,响应：%s", req.Namespace, listStr)
 	return &types.IngressListResp{
-		Code: 0,
-		Msg:  "successful",
-		Data: list,
+		Code:    0,
+		Message: "successful",
+		Data: types.IngressListData{
+			Items: list,
+			Total: int64(len(list)),
+		},
 	}, nil
 }

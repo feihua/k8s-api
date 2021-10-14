@@ -34,9 +34,9 @@ func (l *PodListLogic) PodList(req types.PodsListReq) (*types.PodsListResp, erro
 		return nil, errorx.NewDefaultError(err.Error())
 	}
 
-	var list []*types.PodsListData
+	var list []*types.PodsListItem
 	for _, pod := range pods.Items {
-		list = append(list, &types.PodsListData{
+		list = append(list, &types.PodsListItem{
 			Name:               pod.Name,
 			Status:             string(pod.Status.Phase),
 			Labels:             pod.Labels,
@@ -60,9 +60,12 @@ func (l *PodListLogic) PodList(req types.PodsListReq) (*types.PodsListResp, erro
 	listStr, _ := json.Marshal(list)
 	logx.WithContext(l.ctx).Infof("查询pod列表信息,请求参数：%s,响应：%s", req.Namespace, listStr)
 	return &types.PodsListResp{
-		Code: 0,
-		Msg:  "successful",
-		Data: list,
+		Code:    0,
+		Message: "successful",
+		Data: types.PodsListData{
+			Items: list,
+			Total: int64(len(list)),
+		},
 	}, nil
 
 }

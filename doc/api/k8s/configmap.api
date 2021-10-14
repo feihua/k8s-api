@@ -1,0 +1,97 @@
+info(
+    title: "k8s admin"
+    desc: "k8s admin"
+    author: "koobe"
+    email: "koobe.liu@uaf.com.cn"
+)
+
+type (
+    ConfigMapAddReq {
+        Name string `json:"name"`
+    }
+    ConfigMapAddResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+    }
+    ConfigMapUpdateReq {
+        Name string `json:"name"`
+    }
+    ConfigMapUpdateStatusResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+    }
+    ConfigMapUpdateStatusReq {
+        Name string `json:"name"`
+    }
+    ConfigMapUpdateResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+    }
+    ConfigMapDeleteReq {
+        Name string `json:"name,optional"`
+    }
+    ConfigMapDeleteResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+    }
+    ConfigMapGetReq {
+        Name string `json:"name,optional"`
+    }
+    ConfigMapGetResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+        data ConfigMapListItem `json:"data"`
+    }
+    ConfigMapGetData {
+        Name string `json:"name"`
+        ClusterName string `json:"clusterName"`
+        Status string `json:"status"`
+        CreationTimestamp string `json:"creationTimestamp"`
+    }
+    ConfigMapListReq {
+        Namespace string `json:"namespace,default=default"`
+    }
+    ConfigMapListResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+        Data ConfigMapListData `json:"data"`
+    }
+    ConfigMapListData {
+        Items []*ConfigMapListItem `json:"items"`
+        Total int64 `json:"total"`
+    }
+    ConfigMapListItem {
+        Name string `json:"name"`
+        NameSpace string `json:"nameSpace"`
+        Labels map[string]string   `json:"labels"`
+        Annotations map[string]string   `json:"annotations"`
+        Data map[string]string   `json:"data"`
+        CreationTimestamp string `json:"creationTimestamp"`
+    }
+
+)
+
+@server(
+    group: configmap
+)
+service k8s-api {
+    @handler ConfigMapCreate
+    post /api/configMap/create (ConfigMapAddReq) returns (ConfigMapAddResp);
+    @handler ConfigMapUpdate
+    post /api/configMap/update (ConfigMapUpdateReq) returns (ConfigMapUpdateResp);
+    @handler ConfigMapUpdateStatus
+    post /api/configMap/updateStatus (ConfigMapUpdateStatusReq) returns (ConfigMapUpdateStatusResp);
+    @handler ConfigMapDelete
+    post /api/configMap/delete (ConfigMapDeleteReq) returns (ConfigMapDeleteResp);
+    @handler ConfigMapGet
+    post /api/configMap/get (ConfigMapGetReq) returns (ConfigMapGetResp);
+    @handler ConfigMapList
+    post /api/configMap/list (ConfigMapListReq) returns (ConfigMapListResp);
+
+}

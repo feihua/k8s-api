@@ -1,0 +1,106 @@
+info(
+    title: "k8s admin"
+    desc: "k8s admin"
+    author: "koobe"
+    email: "koobe.liu@uaf.com.cn"
+)
+
+type (
+    ServiceAddReq {
+        Name string `json:"name,optional"`
+    }
+    ServiceAddResp {
+        Message string `json:"message"`
+    }
+    ServiceUpdateReq {
+        Name string `json:"name,optional"`
+    }
+    ServiceUpdateResp {
+        Message string `json:"message"`
+    }
+    ServiceUpdateStatusReq {
+        Name string `json:"name,optional"`
+    }
+    ServiceUpdateStatusResp {
+        Message string `json:"message"`
+    }
+
+    ServiceDeleteReq {
+        Namespace string `json:"namespace,optional"`
+        Service string `json:"service"`
+    }
+
+    ServiceDeleteResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+    }
+    ServiceDeleteCollectionReq {
+        Name string `json:"name,optional"`
+    }
+
+    ServiceDeleteCollectionResp {
+        Message string `json:"message"`
+    }
+    ServiceGetReq {
+        Namespace string `json:"namespace,optional"`
+        Service string `json:"service"`
+    }
+
+    ServiceGetResp {
+        Code int    `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+        Data ServiceListItem `json:"data"`
+    }
+    ServiceListReq {
+        Namespace string `json:"namespace,default=default"`
+    }
+
+    ServiceListResp {
+        Code int64    `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+        Data ServiceListData `json:"data"`
+    }
+
+    ServiceListData {
+        Items []*ServiceListItem `json:"items"`
+        Total int64 `json:"total"`
+    }
+    ServiceListItem {
+        Name string `json:"name"`
+        Namespace string `json:"namespace"`
+        Labels map[string]string `json:"labels"`
+        Annotations map[string]string `json:"annotations"`
+        Selector map[string]string `json:"selector"`
+        Type string `json:"type"`
+        ClusterIP string `json:"clusterIP"`
+        Protocol string `json:"protocol"`
+        Ports int32 `json:"ports"`
+        TargetPort int32 `json:"targetPort"`
+        NodePort int32 `json:"nodePort"`
+        CreationTimestamp string `json:"creationTimestamp"`
+    }
+
+
+)
+@server(
+    group: serve
+)
+service k8s-api {
+    @handler ServiceCreate
+    post /api/service/create (ServiceAddReq) returns (ServiceAddResp);
+    @handler ServiceUpdate
+    post /api/service/update (ServiceUpdateReq) returns (ServiceUpdateResp);
+    @handler ServiceUpdateStatus
+    post /api/service/updateStatus (ServiceUpdateStatusReq) returns (ServiceUpdateStatusResp);
+    @handler ServiceDelete
+    post /api/service/delete (ServiceDeleteReq) returns (ServiceDeleteResp);
+    @handler ServiceGet
+    post /api/service/get (ServiceGetReq) returns (ServiceGetResp);
+    @handler ServiceList
+    post /api/service/list (ServiceListReq) returns (ServiceListResp);
+
+
+}

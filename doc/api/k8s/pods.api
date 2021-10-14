@@ -1,0 +1,135 @@
+info(
+    title: "k8s admin"
+    desc: "k8s admin"
+    author: "koobe"
+    email: "koobe.liu@uaf.com.cn"
+)
+
+type (
+    PodAddReq {
+        Name string `json:"name,optional"`
+    }
+    PodAddResp {
+        Message string `json:"message"`
+    }
+    PodUpdateReq {
+        Name string `json:"name,optional"`
+    }
+    PodUpdateResp {
+        Message string `json:"message"`
+    }
+    PodUpdateStatusReq {
+        Name string `json:"name,optional"`
+    }
+    PodUpdateStatusResp {
+        Message string `json:"message"`
+    }
+    PodListReq {
+        Namespace string `json:"namespace,optional"`
+    }
+    PodDeleteReq {
+        Namespace string `json:"namespace,optional"`
+        Pod string `json:"pod"`
+    }
+
+    PodDeleteResp {
+        Code int    `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+    }
+    PodDeleteCollectionReq {
+        Name string `json:"name,optional"`
+    }
+
+    PodDeleteCollectionResp {
+        Message string `json:"message"`
+    }
+    PodGetReq {
+        Namespace string `json:"namespace,optional"`
+        Pod string `json:"pod"`
+    }
+
+    PodGetResp {
+        Code int    `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+        Data PodsListItem `json:"data"`
+    }
+    PodsListReq {
+        Namespace string `json:"namespace,default=default"`
+    }
+
+    PodsListResp {
+        Code int    `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+        Data PodsListData `json:"data"`
+    }
+
+    PodsListData {
+        Items []*PodsListItem `json:"items"`
+        Total int64 `json:"total"`
+    }
+    PodsListItem {
+        Name string    `json:"name"`
+        Status string    `json:"status"`
+        Labels map[string]string   `json:"labels"`
+        NodeSelector map[string]string   `json:"nodeSelector"`
+        Namespace string    `json:"namespace"`
+        HostIP string    `json:"hostIP"`
+        PodIP string    `json:"podIP"`
+        StartTime string    `json:"startTime"`
+        RestartCount int32    `json:"restartCount"`
+        Image string    `json:"image"`
+        CreationTimestamp  string `json:"creationTimestamp"`
+        RestartPolicy  string `json:"restartPolicy"`
+        ServiceAccountName  string `json:"serviceAccountName"`
+        NodeName  string `json:"nodeName"`
+        HostNetwork  bool `json:"hostNetwork"`
+        ImagePullSecrets  string `json:"imagePullSecrets"`
+        Hostname  string `json:"hostname"`
+    }
+
+
+
+    PodGetEphemeralContainersReq {
+        Name string `json:"name,optional"`
+    }
+
+    PodGetEphemeralContainersResp {
+        Message string `json:"message"`
+    }
+    PodUpdateEphemeralContainersReq {
+        Name string `json:"name,optional"`
+    }
+
+    PodUpdateEphemeralContainersResp {
+        Message string `json:"message"`
+    }
+
+)
+
+@server(
+    group: pods
+)
+service k8s-api {
+    @handler PodCreate
+    post /api/pods/create (PodAddReq) returns (PodAddResp);
+    @handler PodUpdate
+    post /api/pods/update (PodUpdateReq) returns (PodUpdateResp);
+    @handler PodUpdateStatus
+    post /api/pods/updateStatus (PodUpdateStatusReq) returns (PodUpdateStatusResp);
+    @handler PodDelete
+    post /api/pods/delete (PodDeleteReq) returns (PodDeleteResp);
+    @handler PodDeleteCollection
+    post /api/pods/deleteCollection (PodDeleteCollectionReq) returns (PodDeleteCollectionResp);
+    @handler PodGet
+    post /api/pods/get (PodGetReq) returns (PodGetResp);
+    @handler PodList
+    post /api/pods/list (PodsListReq) returns (PodsListResp);
+    @handler PodGetEphemeralContainers
+    post /api/pods/getEphemeralContainers (PodGetEphemeralContainersReq) returns (PodGetEphemeralContainersResp);
+    @handler PodUpdateEphemeralContainers
+    post /api/pods/updateEphemeralContainers (PodUpdateEphemeralContainersReq) returns (PodUpdateEphemeralContainersResp);
+    
+}

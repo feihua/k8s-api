@@ -13,6 +13,12 @@ import (
 	secret "k8s_test/internal/handler/secret"
 	serve "k8s_test/internal/handler/serve"
 	statefulset "k8s_test/internal/handler/statefulset"
+	sysdept "k8s_test/internal/handler/sys/dept"
+	sysdict "k8s_test/internal/handler/sys/dict"
+	sysjob "k8s_test/internal/handler/sys/job"
+	sysmenu "k8s_test/internal/handler/sys/menu"
+	sysrole "k8s_test/internal/handler/sys/role"
+	sysuser "k8s_test/internal/handler/sys/user"
 	"k8s_test/internal/svc"
 
 	"github.com/tal-tech/go-zero/rest"
@@ -125,6 +131,11 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/api/namespace/list",
 				Handler: namespace.NamespaceListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/namespace/listWith",
+				Handler: namespace.NamespaceListWithHandler(serverCtx),
 			},
 		},
 	)
@@ -330,6 +341,201 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/api/configMap/list",
 				Handler: configmap.ConfigMapListHandler(serverCtx),
+			},
+		},
+	)
+
+	engine.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodGet,
+				Path:    "/api/sys/user/currentUser",
+				Handler: sysuser.UserInfoHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/user/add",
+				Handler: sysuser.UserAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/user/list",
+				Handler: sysuser.UserListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/user/update",
+				Handler: sysuser.UserUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/user/delete",
+				Handler: sysuser.UserDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/user/reSetPassword",
+				Handler: sysuser.ReSetPasswordHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/user/UpdateUserStatus",
+				Handler: sysuser.UpdateUserStatusHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/user/selectAllData",
+				Handler: sysuser.SelectAllDataHandler(serverCtx),
+			},
+		},
+	)
+
+	engine.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/user/login",
+				Handler: sysuser.UserLoginHandler(serverCtx),
+			},
+		},
+	)
+
+	engine.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/role/add",
+				Handler: sysrole.RoleAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/role/getAllRoleList",
+				Handler: sysrole.RoleListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/role/update",
+				Handler: sysrole.RoleUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/role/delete",
+				Handler: sysrole.RoleDeleteHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/role/roleMenuIds",
+				Handler: sysrole.RoleMenuIdsHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/role/queryMenuByRoleId",
+				Handler: sysrole.QueryMenuByRoleIdHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/role/updateRoleMenu",
+				Handler: sysrole.UpdateRoleMenuHandler(serverCtx),
+			},
+		},
+	)
+
+	engine.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/menu/add",
+				Handler: sysmenu.MenuAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/menu/list",
+				Handler: sysmenu.MenuListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/menu/update",
+				Handler: sysmenu.MenuUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/menu/delete",
+				Handler: sysmenu.MenuDeleteHandler(serverCtx),
+			},
+		},
+	)
+
+	engine.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/dict/add",
+				Handler: sysdict.DictAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/dict/list",
+				Handler: sysdict.DictListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/dict/update",
+				Handler: sysdict.DictUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/dict/delete",
+				Handler: sysdict.DictDeleteHandler(serverCtx),
+			},
+		},
+	)
+
+	engine.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/dept/add",
+				Handler: sysdept.DeptAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/dept/list",
+				Handler: sysdept.DeptListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/dept/update",
+				Handler: sysdept.DeptUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/dept/delete",
+				Handler: sysdept.DeptDeleteHandler(serverCtx),
+			},
+		},
+	)
+
+	engine.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/job/add",
+				Handler: sysjob.JobAddHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/job/list",
+				Handler: sysjob.JobListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/job/update",
+				Handler: sysjob.JobUpdateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/job/delete",
+				Handler: sysjob.JobDeleteHandler(serverCtx),
 			},
 		},
 	)

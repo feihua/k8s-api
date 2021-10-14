@@ -1,0 +1,79 @@
+info(
+    title: "go zero admin"
+    desc: "go zero admin"
+    author: "koobe"
+    email: "koobe.liu@uaf.com.cn"
+)
+
+
+type (
+    addJobReq struct {
+        JobName        string `json:"jobName"`         // 职位名称
+        Remarks        string `json:"remarks"`         // 备注
+        OrderNum       int64  `json:"orderNum"`        // 排序
+    }
+    addJobResp struct {
+        Code string `json:"code"`
+        Message string `json:"message"`
+    }
+    ListJobReq struct {
+        Current int64 `json:"current,default=1"`
+        PageSize int64 `json:"pageSize,default=20"`
+        JobName string `json:"jobName,optional"`
+    }
+    ListJobData struct {
+        Items []*ListJobItem `json:"items"`
+        Total int64 `json:"total"`
+    }
+    ListJobItem struct {
+        Id int64 `json:"id"`                              // 编号
+        JobName string `json:"jobName"`                   // 职位名称
+        OrderNum int64 `json:"orderNum"`                  // 排序
+        CreateBy string `json:"createBy"`                 // 创建人
+        CreateTime string `json:"createTime"`             // 创建时间
+        LastUpdateBy string `json:"lastUpdateBy"`         // 更新人
+        LastUpdateTime string `json:"lastUpdateTime"`     // 更新时间
+        DelFlag int64 `json:"delFlag"`                    // 是否删除  -1：已删除  0：正常
+        Remarks        string `json:"remarks"`         // 备注
+    }
+    ListJobResp struct {
+        Code string `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+        Data ListJobData `json:"data"`
+    }
+    UpdateJobReq struct {
+        Id             int64          `json:"id"`               // 编号
+        JobName        string `json:"jobName"`         // 职位名称
+        OrderNum       int64  `json:"orderNum"`        // 排序
+        Remarks        string `json:"remarks"`         // 备注
+    }
+    UpdateJobResp struct {
+        Code string `json:"code"`
+        Message string `json:"message"`
+    }
+    DeleteJobReq struct {
+        Id int64 `json:"id"`
+    }
+    DeleteJobResp struct {
+        Code string `json:"code"`
+        Message string `json:"message"`
+    }
+)
+
+@server(
+    group: sys/job
+)
+service k8s-api {
+    @handler JobAdd
+    post /api/sys/job/add (addJobReq) returns (addJobResp)
+
+    @handler JobList
+    post /api/sys/job/list (ListJobReq) returns (ListJobResp)
+
+    @handler JobUpdate
+    post /api/sys/job/update (UpdateJobReq) returns (UpdateJobResp)
+
+    @handler JobDelete
+    post /api/sys/job/delete (DeleteJobReq) returns (DeleteJobResp)
+}

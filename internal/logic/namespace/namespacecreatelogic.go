@@ -47,7 +47,7 @@ func (l *NamespaceCreateLogic) NamespaceCreate(req types.NamespaceAddReq) (*type
 	}
 
 	return &types.NamespaceAddResp{
-		Code: 0,
-		Msg:  "successful",
+		Code:    0,
+		Message: "successful",
 	}, nil
 }

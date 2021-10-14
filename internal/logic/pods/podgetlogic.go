@@ -34,7 +34,7 @@ func (l *PodGetLogic) PodGet(req types.PodGetReq) (*types.PodGetResp, error) {
 		logx.WithContext(l.ctx).Errorf("查询单个pod信息失败,请求参数:%s,异常:%s", req.Namespace, err.Error())
 		return nil, errorx.NewDefaultError(err.Error())
 	}
-	data := types.PodsListData{
+	data := types.PodsListItem{
 		Name:               pod.Name,
 		Status:             string(pod.Status.Phase),
 		Labels:             pod.Labels,
@@ -58,9 +58,9 @@ func (l *PodGetLogic) PodGet(req types.PodGetReq) (*types.PodGetResp, error) {
 	logx.WithContext(l.ctx).Infof("查询单个pod信息,请求参数：%s,响应：%s", req.Namespace, dataStr)
 
 	return &types.PodGetResp{
-		Code: 0,
-		Msg:  "successful",
-		Data: data,
+		Code:    0,
+		Message: "successful",
+		Data:    data,
 	}, nil
 
 }

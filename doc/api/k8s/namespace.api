@@ -1,0 +1,84 @@
+info(
+    title: "k8s admin"
+    desc: "k8s admin"
+    author: "koobe"
+    email: "koobe.liu@uaf.com.cn"
+)
+
+type (
+    NamespaceAddReq {
+        Name string `json:"name"`
+    }
+    NamespaceAddResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+    }
+    NamespaceDeleteReq {
+        Name string `json:"name,optional"`
+    }
+    NamespaceDeleteResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+    }
+    NamespaceGetReq {
+        Name string `json:"name,optional"`
+    }
+    NamespaceGetResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+        data NamespaceGetData `json:"data"`
+    }
+    NamespaceGetData {
+        Name string `json:"name"`
+        ClusterName string `json:"clusterName"`
+        Status string `json:"status"`
+        Age string `json:"age"`
+        CreationTimestamp string `json:"creationTimestamp"`
+    }
+    NamespaceListReq {
+        Name string `json:"name,optional"`
+    }
+    NamespaceListResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+        Data NamespaceListData `json:"data"`
+    }
+    NamespaceListData {
+        Items []*NamespaceListItem `json:"items"`
+        Total int64 `json:"total"`
+    }
+    NamespaceListItem {
+        Name string `json:"name"`
+        Status string `json:"status"`
+        Age string `json:"age"`
+        CreationTimestamp string `json:"creationTimestamp"`
+    }
+
+    NamespaceListRespWith {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+        Data []*NamespaceListItem `json:"data"`
+    }
+)
+
+@server(
+    group: namespace
+)
+service k8s-api {
+    @handler NamespaceCreate
+    post /api/namespace/create (NamespaceAddReq) returns (NamespaceAddResp);
+    @handler NamespaceDelete
+    post /api/namespace/delete (NamespaceDeleteReq) returns (NamespaceDeleteResp);
+    @handler NamespaceGet
+    post /api/namespace/get (NamespaceGetReq) returns (NamespaceGetResp);
+    @handler NamespaceList
+    post /api/namespace/list (NamespaceListReq) returns (NamespaceListResp);
+    @handler NamespaceListWith
+    post /api/namespace/listWith (NamespaceListReq) returns ([]*map[string]string);
+
+}

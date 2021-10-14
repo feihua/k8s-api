@@ -42,7 +42,7 @@ func (l *NodeGetLogic) NodeGet(req types.NodeGetReq) (*types.NodeGetResp, error)
 	}
 
 	nodeInfo := node.Status.NodeInfo
-	data := types.NodesListData{
+	data := types.NodesItem{
 		Name:   node.Name,
 		Status: string(node.Status.Conditions[len(node.Status.Conditions)-1].Type),
 		Memory: node.Status.Allocatable.Memory().String(),
@@ -65,9 +65,9 @@ func (l *NodeGetLogic) NodeGet(req types.NodeGetReq) (*types.NodeGetResp, error)
 	dataStr, _ := json.Marshal(data)
 	logx.WithContext(l.ctx).Infof("查询单个node信息响应：%s", dataStr)
 	return &types.NodeGetResp{
-		Code: 0,
-		Msg:  "successful",
-		Data: data,
+		Code:    0,
+		Message: "successful",
+		Data:    data,
 	}, nil
 
 }

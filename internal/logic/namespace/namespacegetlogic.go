@@ -4,6 +4,7 @@ import (
 	"context"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s_test/internal/common/errorx"
+	"time"
 
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
@@ -33,16 +34,18 @@ func (l *NamespaceGetLogic) NamespaceGet(req types.NamespaceGetReq) (*types.Name
 		return nil, errorx.NewDefaultError(err.Error())
 	}
 
+	now := time.Now()
 	data := types.NamespaceGetData{
 		Name:              namespace.Name,
 		ClusterName:       namespace.ClusterName,
 		Status:            string(namespace.Status.Phase),
+		Age:               now.Sub(namespace.CreationTimestamp.Time).String(),
 		CreationTimestamp: namespace.CreationTimestamp.Format("2006-01-02 15:04:05"),
 	}
 
 	return &types.NamespaceGetResp{
-		Code: 0,
-		Msg:  "successful",
-		Data: data,
+		Code:    0,
+		Message: "successful",
+		Data:    data,
 	}, nil
 }

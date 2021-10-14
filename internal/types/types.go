@@ -6,8 +6,9 @@ type ConfigMapAddReq struct {
 }
 
 type ConfigMapAddResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
 }
 
 type ConfigMapDeleteReq struct {
@@ -15,8 +16,9 @@ type ConfigMapDeleteReq struct {
 }
 
 type ConfigMapDeleteResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
 }
 
 type ConfigMapGetData struct {
@@ -31,12 +33,18 @@ type ConfigMapGetReq struct {
 }
 
 type ConfigMapGetResp struct {
-	Code int              `json:"code"`
-	Msg  string           `json:"msg"`
-	Data ConfigMapGetData `json:"data"`
+	Code    int64             `json:"code"`
+	Message string            `json:"message"`
+	Type    string            `json:"type"`
+	Data    ConfigMapListItem `json:"data"`
 }
 
 type ConfigMapListData struct {
+	Items []*ConfigMapListItem `json:"items"`
+	Total int64                `json:"total"`
+}
+
+type ConfigMapListItem struct {
 	Name              string            `json:"name"`
 	NameSpace         string            `json:"nameSpace"`
 	Labels            map[string]string `json:"labels"`
@@ -46,13 +54,14 @@ type ConfigMapListData struct {
 }
 
 type ConfigMapListReq struct {
-	Namespace string `json:"namespace,optional"`
+	Namespace string `json:"namespace,default=default"`
 }
 
 type ConfigMapListResp struct {
-	Code int                  `json:"code"`
-	Msg  string               `json:"msg"`
-	Data []*ConfigMapListData `json:"data"`
+	Code    int64             `json:"code"`
+	Message string            `json:"message"`
+	Type    string            `json:"type"`
+	Data    ConfigMapListData `json:"data"`
 }
 
 type ConfigMapUpdateReq struct {
@@ -60,8 +69,9 @@ type ConfigMapUpdateReq struct {
 }
 
 type ConfigMapUpdateResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
 }
 
 type ConfigMapUpdateStatusReq struct {
@@ -69,8 +79,65 @@ type ConfigMapUpdateStatusReq struct {
 }
 
 type ConfigMapUpdateStatusResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
+}
+
+type DeleteDeptReq struct {
+	Id int64 `json:"id"`
+}
+
+type DeleteDeptResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type DeleteDictReq struct {
+	Id int64 `json:"id"`
+}
+
+type DeleteDictResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
+}
+
+type DeleteJobReq struct {
+	Id int64 `json:"id"`
+}
+
+type DeleteJobResp struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type DeleteMenuReq struct {
+	Id int64 `json:"id"`
+}
+
+type DeleteMenuResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type DeleteRoleReq struct {
+	Id int64 `json:"id"`
+}
+
+type DeleteRoleResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type DeleteUserReq struct {
+	Id int64 `json:"id"`
+}
+
+type DeleteUserResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
 }
 
 type DeploymentAddReq struct {
@@ -95,8 +162,9 @@ type DeploymentDeleteReq struct {
 }
 
 type DeploymentDeleteResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
 }
 
 type DeploymentGetReq struct {
@@ -105,9 +173,10 @@ type DeploymentGetReq struct {
 }
 
 type DeploymentGetResp struct {
-	Code int                `json:"code"`
-	Msg  string             `json:"msg"`
-	Data DeploymentListData `json:"data"`
+	Code    int64              `json:"code"`
+	Message string             `json:"message"`
+	Type    string             `json:"type"`
+	Data    DeploymentListItem `json:"data"`
 }
 
 type DeploymentGetScaleReq struct {
@@ -119,6 +188,11 @@ type DeploymentGetScaleResp struct {
 }
 
 type DeploymentListData struct {
+	Items []*DeploymentListItem `json:"items"`
+	Total int64                 `json:"total"`
+}
+
+type DeploymentListItem struct {
 	Name               string            `json:"name"`
 	Namespace          string            `json:"namespace"`
 	Labels             map[string]string `json:"labels"`
@@ -138,13 +212,14 @@ type DeploymentListData struct {
 }
 
 type DeploymentListReq struct {
-	Namespace string `json:"namespace,optional"`
+	Namespace string `json:"namespace,default=default"`
 }
 
 type DeploymentListResp struct {
-	Code int                   `json:"code"`
-	Msg  string                `json:"msg"`
-	Data []*DeploymentListData `json:"data"`
+	Code    int64              `json:"code"`
+	Message string             `json:"message"`
+	Type    string             `json:"type"`
+	Data    DeploymentListData `json:"data"`
 }
 
 type DeploymentUpdateReq struct {
@@ -169,6 +244,13 @@ type DeploymentUpdateStatusReq struct {
 
 type DeploymentUpdateStatusResp struct {
 	Message string `json:"message"`
+}
+
+type DeptAllResp struct {
+	Id       int64  `json:"id"`
+	Value    string `json:"value"`
+	Title    string `json:"title"`
+	ParentId int64  `json:"parentId"`
 }
 
 type ImagesData struct {
@@ -198,8 +280,9 @@ type IngressDeleteReq struct {
 }
 
 type IngressDeleteResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
 }
 
 type IngressGetReq struct {
@@ -208,12 +291,18 @@ type IngressGetReq struct {
 }
 
 type IngressGetResp struct {
-	Code int             `json:"code"`
-	Msg  string          `json:"msg"`
-	Data IngressListData `json:"data"`
+	Code    int64           `json:"code"`
+	Message string          `json:"message"`
+	Type    string          `json:"type"`
+	Data    IngressListItem `json:"data"`
 }
 
 type IngressListData struct {
+	Items []*IngressListItem `json:"items"`
+	Total int64              `json:"total"`
+}
+
+type IngressListItem struct {
 	Name              string            `json:"name"`
 	Namespace         string            `json:"namespace"`
 	Host              string            `json:"host"`
@@ -229,13 +318,14 @@ type IngressListData struct {
 }
 
 type IngressListReq struct {
-	Namespace string `json:"namespace,optional"`
+	Namespace string `json:"namespace,default=default"`
 }
 
 type IngressListResp struct {
-	Code int                `json:"code"`
-	Msg  string             `json:"msg"`
-	Data []*IngressListData `json:"data"`
+	Code    int             `json:"code"`
+	Message string          `json:"message"`
+	Type    string          `json:"type"`
+	Data    IngressListData `json:"data"`
 }
 
 type IngressUpdateReq struct {
@@ -254,13 +344,258 @@ type IngressUpdateStatusResp struct {
 	Message string `json:"message"`
 }
 
+type JobAllResp struct {
+	Id      int64  `json:"id"`
+	JobName string `json:"jobName"`
+}
+
+type ListDeptData struct {
+	Id             int64  `json:"id"`             // 编号
+	Name           string `json:"name"`           // 机构名称
+	ParentId       int64  `json:"parentId"`       // 上级机构ID，一级机构为0
+	OrderNum       int64  `json:"orderNum"`       // 排序
+	CreateBy       string `json:"createBy"`       // 创建人
+	CreateTime     string `json:"createTime"`     // 创建时间
+	LastUpdateBy   string `json:"lastUpdateBy"`   // 更新人
+	LastUpdateTime string `json:"lastUpdateTime"` // 更新时间
+	DelFlag        int64  `json:"delFlag"`        // 是否删除  -1：已删除  0：正常
+}
+
+type ListDeptReq struct {
+	Name     string `json:"name,optional"`
+	CreateBy string `json:"createBy,optional"`
+}
+
+type ListDeptResp struct {
+	Code    int64           `json:"code"`
+	Message string          `json:"message"`
+	Data    []*ListDeptData `json:"data"`
+	Success bool            `json:"success"`
+	Total   int64           `json:"total"`
+}
+
+type ListDictData struct {
+	Items []*ListDictItem `json:"items"`
+	Total int64           `json:"total"`
+}
+
+type ListDictItem struct {
+	Id             int64   `json:"id"`             // 编号
+	Value          string  `json:"value"`          // 数据值
+	Label          string  `json:"label"`          // 标签名
+	Type           string  `json:"type"`           // 类型
+	Description    string  `json:"description"`    // 描述
+	Sort           float64 `json:"sort"`           // 排序（升序）
+	CreateBy       string  `json:"createBy"`       // 创建人
+	CreateTime     string  `json:"createTime"`     // 创建时间
+	LastUpdateBy   string  `json:"lastUpdateBy"`   // 更新人
+	LastUpdateTime string  `json:"lastUpdateTime"` // 更新时间
+	Remarks        string  `json:"remarks"`        // 备注信息
+	DelFlag        int64   `json:"delFlag"`        // 是否删除  -1：已删除  0：正常
+}
+
+type ListDictReq struct {
+	Current  int64  `json:"current,default=1"`
+	PageSize int64  `json:"pageSize,default=20"`
+	Value    string `json:"value,optional"`
+	Label    string `json:"label,optional"`
+	DelFlag  int64  `json:"delFlag,optional"`
+	Type     string `json:"type,optional "`
+}
+
+type ListDictResp struct {
+	Code    int64        `json:"code"`
+	Message string       `json:"message"`
+	Type    string       `json:"type"`
+	Data    ListDictData `json:"data"`
+}
+
+type ListJobData struct {
+	Items []*ListJobItem `json:"items"`
+	Total int64          `json:"total"`
+}
+
+type ListJobItem struct {
+	Id             int64  `json:"id"`             // 编号
+	JobName        string `json:"jobName"`        // 职位名称
+	OrderNum       int64  `json:"orderNum"`       // 排序
+	CreateBy       string `json:"createBy"`       // 创建人
+	CreateTime     string `json:"createTime"`     // 创建时间
+	LastUpdateBy   string `json:"lastUpdateBy"`   // 更新人
+	LastUpdateTime string `json:"lastUpdateTime"` // 更新时间
+	DelFlag        int64  `json:"delFlag"`        // 是否删除  -1：已删除  0：正常
+	Remarks        string `json:"remarks"`        // 备注
+}
+
+type ListJobReq struct {
+	Current  int64  `json:"current,default=1"`
+	PageSize int64  `json:"pageSize,default=20"`
+	JobName  string `json:"jobName,optional"`
+}
+
+type ListJobResp struct {
+	Code    string      `json:"code"`
+	Message string      `json:"message"`
+	Type    string      `json:"type"`
+	Data    ListJobData `json:"data"`
+}
+
+type ListMenuData struct {
+	Key      string `json:"key"`      // 菜单名称
+	Title    string `json:"title"`    // 菜单名称
+	ParentId int64  `json:"parentId"` // 父菜单ID，一级菜单为0
+	Id       int64  `json:"id"`       // 父菜单ID，一级菜单为0
+	Label    string `json:"label"`    // 父菜单ID，一级菜单为0
+}
+
+type ListMenuReq struct {
+	Name string `json:"name,optional"`
+	Url  string `json:"url,optional "`
+}
+
+type ListMenuResp struct {
+	Code    int64         `json:"code"`
+	Message string        `json:"message"`
+	Type    string        `json:"type"`
+	Data    ListtMenuData `json:"data"`
+}
+
+type ListMenuTree struct {
+	Id       int64  `json:"id"`       // 编号
+	Path     string `json:"path"`     // 菜单路径
+	Name     string `json:"name"`     // 菜单名称
+	ParentId int64  `json:"parentId"` // 父菜单ID，一级菜单为0
+	Icon     string `json:"icon"`     // 菜单图标
+}
+
+type ListMenuTreeVue struct {
+	Id           int64        `json:"id"`
+	ParentId     int64        `json:"parentId"`
+	Title        string       `json:"title"`
+	Path         string       `json:"path"`
+	Name         string       `json:"name"`
+	Icon         string       `json:"icon"`
+	VueRedirect  string       `json:"redirect"`
+	VueComponent string       `json:"component"`
+	Meta         MenuTreeMeta `json:"meta"`
+}
+
+type ListRoleData struct {
+	Items []*ListRoleItem `json:"items"`
+	Total int64           `json:"total"`
+}
+
+type ListRoleItem struct {
+	Id         int64  `json:"id"`         // 编号
+	OrderNo    string `json:"orderNo"`    // 角色名称
+	RoleName   string `json:"roleName"`   // 角色名称
+	RoleValue  string `json:"roleValue"`  // 备注
+	CreateTime string `json:"createTime"` // 创建时间
+	Status     string `json:"status"`     // 角色名称
+	Remark     string `json:"remark"`     // 角色名称
+}
+
+type ListRoleReq struct {
+	Current  int64  `json:"current,default=1"`
+	PageSize int64  `json:"pageSize,default=20"`
+	Name     string `json:"name,optional "`
+	Status   int64  `json:"delFlag,optional "`
+}
+
+type ListRoleResp struct {
+	Code    int64        `json:"code"`
+	Message string       `json:"message"`
+	Type    string       `json:"type"`
+	Data    ListRoleData `json:"data"`
+}
+
+type ListUserData struct {
+	Items []*ListUserItem `json:"items"`
+	Total int64           `json:"total"`
+}
+
+type ListUserItem struct {
+	Id             int64  `json:"id"`             // 编号
+	Name           string `json:"name"`           // 用户名
+	NickName       string `json:"nickName"`       // 昵称
+	Avatar         string `json:"avatar"`         // 头像
+	Password       string `json:"password"`       // 密码
+	Salt           string `json:"salt"`           // 加密盐
+	Email          string `json:"email"`          // 邮箱
+	Mobile         string `json:"mobile"`         // 手机号
+	Status         int64  `json:"status"`         // 状态  0：禁用   1：正常
+	DeptId         int64  `json:"deptId"`         // 机构ID
+	CreateBy       string `json:"createBy"`       // 创建人
+	CreateTime     string `json:"createTime"`     // 创建时间
+	LastUpdateBy   string `json:"lastUpdateBy"`   // 更新人
+	LastUpdateTime string `json:"lastUpdateTime"` // 更新时间
+	DelFlag        int64  `json:"delFlag"`        // 是否删除  -1：已删除  0：正常
+	JobId          int64  `json:"jobId"`
+	RoleId         int64  `json:"roleId"`
+	RoleName       string `json:"roleName"`
+	JobName        string `json:"jobName"`
+	DeptName       string `json:"deptName"`
+}
+
+type ListUserReq struct {
+	Current  int64  `json:"current,default=1"`
+	PageSize int64  `json:"pageSize,default=20"`
+	Name     string `json:"name,optional"`
+	NickName string `json:"nickName,optional"`
+	Mobile   string `json:"mobile,optional"`
+	Email    string `json:"email,optional"`
+	Status   int64  `json:"status,optional"`
+	DeptId   int64  `json:"deptId,optional"`
+	JobId    int64  `json:"deptId,optional"`
+}
+
+type ListUserResp struct {
+	Code    int64        `json:"code"`
+	Message string       `json:"message"`
+	Type    string       `json:"type"`
+	Data    ListUserData `json:"data"`
+}
+
+type ListtMenuData struct {
+	Items []*ListtMenuItem `json:"items"`
+	Total int64            `json:"total"`
+}
+
+type ListtMenuItem struct {
+	Id             int64  `json:"id"`             // 编号
+	Key            string `json:"key"`            // 菜单名称
+	Name           string `json:"name"`           // 菜单名称
+	Title          string `json:"title"`          // 菜单名称
+	ParentId       int64  `json:"parentId"`       // 父菜单ID，一级菜单为0
+	Url            string `json:"url"`            // 菜单URL,类型：1.普通页面（如用户管理， /sysmodel/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀+目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+	Perms          string `json:"perms"`          // 授权(多个用逗号分隔，如：sysmodel:user:add,sysmodel:user:edit)
+	Type           int64  `json:"type"`           // 类型   0：目录   1：菜单   2：按钮
+	Icon           string `json:"icon"`           // 菜单图标
+	OrderNum       int64  `json:"orderNum"`       // 排序
+	CreateBy       string `json:"createBy"`       // 创建人
+	CreateTime     string `json:"createTime"`     // 创建时间
+	LastUpdateBy   string `json:"lastUpdateBy"`   // 更新人
+	LastUpdateTime string `json:"lastUpdateTime"` // 更新时间
+	DelFlag        int64  `json:"delFlag"`        // 是否删除  -1：已删除  0：正常
+	VuePath        string `json:"vuePath"`        // vue系统的path
+	VueComponent   string `json:"vueComponent"`   // vue的页面
+	VueIcon        string `json:"vueIcon"`        // vue的图标
+	VueRedirect    string `json:"vueRedirect"`    // vue的路由重定向
+}
+
+type MenuTreeMeta struct {
+	Title string `json:"title"`
+	Icon  string `json:"icon"`
+}
+
 type NamespaceAddReq struct {
 	Name string `json:"name"`
 }
 
 type NamespaceAddResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
 }
 
 type NamespaceDeleteReq struct {
@@ -268,14 +603,16 @@ type NamespaceDeleteReq struct {
 }
 
 type NamespaceDeleteResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
 }
 
 type NamespaceGetData struct {
 	Name              string `json:"name"`
 	ClusterName       string `json:"clusterName"`
 	Status            string `json:"status"`
+	Age               string `json:"age"`
 	CreationTimestamp string `json:"creationTimestamp"`
 }
 
@@ -284,14 +621,21 @@ type NamespaceGetReq struct {
 }
 
 type NamespaceGetResp struct {
-	Code int              `json:"code"`
-	Msg  string           `json:"msg"`
-	Data NamespaceGetData `json:"data"`
+	Code    int64            `json:"code"`
+	Message string           `json:"message"`
+	Type    string           `json:"type"`
+	Data    NamespaceGetData `json:"data"`
 }
 
 type NamespaceListData struct {
+	Items []*NamespaceListItem `json:"items"`
+	Total int64                `json:"total"`
+}
+
+type NamespaceListItem struct {
 	Name              string `json:"name"`
 	Status            string `json:"status"`
+	Age               string `json:"age"`
 	CreationTimestamp string `json:"creationTimestamp"`
 }
 
@@ -300,9 +644,17 @@ type NamespaceListReq struct {
 }
 
 type NamespaceListResp struct {
-	Code int                  `json:"code"`
-	Msg  string               `json:"msg"`
-	Data []*NamespaceListData `json:"data"`
+	Code    int64             `json:"code"`
+	Message string            `json:"message"`
+	Type    string            `json:"type"`
+	Data    NamespaceListData `json:"data"`
+}
+
+type NamespaceListRespWith struct {
+	Code    int64                `json:"code"`
+	Message string               `json:"message"`
+	Type    string               `json:"type"`
+	Data    []*NamespaceListItem `json:"data"`
 }
 
 type NodeData struct {
@@ -323,12 +675,13 @@ type NodeGetReq struct {
 }
 
 type NodeGetResp struct {
-	Code int           `json:"code"`
-	Msg  string        `json:"msg"`
-	Data NodesListData `json:"data"`
+	Code    int64     `json:"code"`
+	Message string    `json:"message"`
+	Type    string    `json:"type"`
+	Data    NodesItem `json:"data"`
 }
 
-type NodesListData struct {
+type NodesItem struct {
 	Name              string        `json:"name"`
 	Status            string        `json:"status"`
 	Memory            string        `json:"memory"`
@@ -337,14 +690,30 @@ type NodesListData struct {
 	CreationTimestamp string        `json:"creationTimestamp"`
 }
 
+type NodesListData struct {
+	Items []*NodesListItem `json:"items"`
+	Total int64            `json:"total"`
+}
+
+type NodesListItem struct {
+	Name                    string `json:"name"`
+	Status                  string `json:"status"`
+	OSImage                 string `json:"oSImage"`
+	ContainerRuntimeVersion string `json:"containerRuntimeVersion"`
+	KubeletVersion          string `json:"kubeletVersion"`
+	Architecture            string `json:"architecture"`
+	CreationTimestamp       string `json:"creationTimestamp"`
+}
+
 type NodesListReq struct {
 	Name string `json:"name,optional"`
 }
 
 type NodesListResp struct {
-	Code int              `json:"code"`
-	Msg  string           `json:"msg"`
-	Data []*NodesListData `json:"data"`
+	Code    int64         `json:"code"`
+	Message string        `json:"message"`
+	Type    string        `json:"type"`
+	Data    NodesListData `json:"data"`
 }
 
 type PodAddReq struct {
@@ -369,8 +738,9 @@ type PodDeleteReq struct {
 }
 
 type PodDeleteResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
 }
 
 type PodGetEphemeralContainersReq struct {
@@ -387,9 +757,10 @@ type PodGetReq struct {
 }
 
 type PodGetResp struct {
-	Code int          `json:"code"`
-	Msg  string       `json:"msg"`
-	Data PodsListData `json:"data"`
+	Code    int          `json:"code"`
+	Message string       `json:"message"`
+	Type    string       `json:"type"`
+	Data    PodsListItem `json:"data"`
 }
 
 type PodListReq struct {
@@ -421,6 +792,11 @@ type PodUpdateStatusResp struct {
 }
 
 type PodsListData struct {
+	Items []*PodsListItem `json:"items"`
+	Total int64           `json:"total"`
+}
+
+type PodsListItem struct {
 	Name               string            `json:"name"`
 	Status             string            `json:"status"`
 	Labels             map[string]string `json:"labels"`
@@ -441,13 +817,48 @@ type PodsListData struct {
 }
 
 type PodsListReq struct {
-	Namespace string `json:"namespace,optional"`
+	Namespace string `json:"namespace,default=default"`
 }
 
 type PodsListResp struct {
-	Code int             `json:"code"`
-	Msg  string          `json:"msg"`
-	Data []*PodsListData `json:"data"`
+	Code    int          `json:"code"`
+	Message string       `json:"message"`
+	Type    string       `json:"type"`
+	Data    PodsListData `json:"data"`
+}
+
+type ReSetPasswordReq struct {
+	Id int64 `json:"id"`
+}
+
+type ReSetPasswordResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type RoleAllResp struct {
+	Id     int64  `json:"id"`
+	Name   string `json:"name"`
+	Remark string `json:"remark"`
+}
+
+type RoleMenuIdsReq struct {
+}
+
+type RoleMenuIdsResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type RoleMenuReq struct {
+	Id int64 `json:"id,optional"`
+}
+
+type RoleMenuResp struct {
+	AllData  []*ListMenuData `json:"allData"`
+	RoleData []int64         `json:"userData"`
+	Code     int64           `json:"code"`
+	Message  string          `json:"message"`
 }
 
 type SecretAddReq struct {
@@ -455,8 +866,9 @@ type SecretAddReq struct {
 }
 
 type SecretAddResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
 }
 
 type SecretDeleteReq struct {
@@ -464,8 +876,9 @@ type SecretDeleteReq struct {
 }
 
 type SecretDeleteResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
 }
 
 type SecretGetData struct {
@@ -480,12 +893,18 @@ type SecretGetReq struct {
 }
 
 type SecretGetResp struct {
-	Code int           `json:"code"`
-	Msg  string        `json:"msg"`
-	Data SecretGetData `json:"data"`
+	Code    int64         `json:"code"`
+	Message string        `json:"message"`
+	Type    string        `json:"type"`
+	Data    SecretGetData `json:"data"`
 }
 
 type SecretListData struct {
+	Items []*SecretListItem `json:"items"`
+	Total int64             `json:"total"`
+}
+
+type SecretListItem struct {
 	Name              string `json:"name"`
 	NameSpace         string `json:"nameSpace"`
 	Type              string `json:"type"`
@@ -493,13 +912,14 @@ type SecretListData struct {
 }
 
 type SecretListReq struct {
-	Namespace string `json:"namespace,optional"`
+	Namespace string `json:"namespace,default=default"`
 }
 
 type SecretListResp struct {
-	Code int               `json:"code"`
-	Msg  string            `json:"msg"`
-	Data []*SecretListData `json:"data"`
+	Code    int64          `json:"code"`
+	Message string         `json:"message"`
+	Type    string         `json:"type"`
+	Data    SecretListData `json:"data"`
 }
 
 type SecretUpdateReq struct {
@@ -507,8 +927,9 @@ type SecretUpdateReq struct {
 }
 
 type SecretUpdateResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
 }
 
 type SecretUpdateStatusReq struct {
@@ -516,8 +937,22 @@ type SecretUpdateStatusReq struct {
 }
 
 type SecretUpdateStatusResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
+}
+
+type SelectDataReq struct {
+	Current  int64 `json:"current,default=1"`
+	PageSize int64 `json:"pageSize,default=20"`
+}
+
+type SelectDataResp struct {
+	Code    int64          `json:"code"`
+	Message string         `json:"message"`
+	RoleAll []*RoleAllResp `json:"roleAll"`
+	DeptAll []*DeptAllResp `json:"deptAll"`
+	JobAll  []*JobAllResp  `json:"jobAll"`
 }
 
 type ServiceAddReq struct {
@@ -542,8 +977,9 @@ type ServiceDeleteReq struct {
 }
 
 type ServiceDeleteResp struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
 }
 
 type ServiceGetReq struct {
@@ -552,12 +988,18 @@ type ServiceGetReq struct {
 }
 
 type ServiceGetResp struct {
-	Code int             `json:"code"`
-	Msg  string          `json:"msg"`
-	Data ServiceListData `json:"data"`
+	Code    int             `json:"code"`
+	Message string          `json:"message"`
+	Type    string          `json:"type"`
+	Data    ServiceListItem `json:"data"`
 }
 
 type ServiceListData struct {
+	Items []*ServiceListItem `json:"items"`
+	Total int64              `json:"total"`
+}
+
+type ServiceListItem struct {
 	Name              string            `json:"name"`
 	Namespace         string            `json:"namespace"`
 	Labels            map[string]string `json:"labels"`
@@ -573,13 +1015,14 @@ type ServiceListData struct {
 }
 
 type ServiceListReq struct {
-	Namespace string `json:"namespace,optional"`
+	Namespace string `json:"namespace,default=default"`
 }
 
 type ServiceListResp struct {
-	Code int                `json:"code"`
-	Msg  string             `json:"msg"`
-	Data []*ServiceListData `json:"data"`
+	Code    int64           `json:"code"`
+	Message string          `json:"message"`
+	Type    string          `json:"type"`
+	Data    ServiceListData `json:"data"`
 }
 
 type ServiceUpdateReq struct {
@@ -631,22 +1074,29 @@ type StatefulSetGetResp struct {
 }
 
 type StatefulSetListData struct {
+	Items []*StatefulSetListItem `json:"items"`
+	Total int64                  `json:"total"`
+}
+
+type StatefulSetListItem struct {
 	Name              string            `json:"name"`
 	NameSpace         string            `json:"nameSpace"`
 	ClusterName       string            `json:"clusterName"`
 	Labels            map[string]string `json:"labels"`
+	LabelsStr         string            `json:"labelsStr"`
 	Annotations       map[string]string `json:"annotations"`
 	CreationTimestamp string            `json:"creationTimestamp"`
 }
 
 type StatefulSetListReq struct {
-	Namespace string `json:"namespace,optional"`
+	Namespace string `json:"namespace,default=default"`
 }
 
 type StatefulSetListResp struct {
-	Code int                    `json:"code"`
-	Msg  string                 `json:"msg"`
-	Data []*StatefulSetListData `json:"data"`
+	Code    int64               `json:"code"`
+	Message string              `json:"message"`
+	Type    string              `json:"type"`
+	Data    StatefulSetListData `json:"data"`
 }
 
 type StatefulSetUpdateReq struct {
@@ -663,4 +1113,234 @@ type StatefulSetUpdateStatusReq struct {
 
 type StatefulSetUpdateStatusResp struct {
 	Message string `json:"message"`
+}
+
+type UpdateDeptReq struct {
+	Id       int64  `json:"id"`       // 编号
+	Name     string `json:"name"`     // 机构名称
+	ParentId int64  `json:"parentId"` // 上级机构ID，一级机构为0
+	OrderNum int64  `json:"orderNum"` // 排序
+}
+
+type UpdateDeptResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type UpdateDictReq struct {
+	Id          int64   `json:"id"`          // 编号
+	Value       string  `json:"value"`       // 数据值
+	Label       string  `json:"label"`       // 标签名
+	Type        string  `json:"type"`        // 类型
+	Description string  `json:"description"` // 描述
+	Sort        float64 `json:"sort"`        // 排序（升序）
+	Remarks     string  `json:"remarks"`     // 备注信息
+}
+
+type UpdateDictResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
+}
+
+type UpdateJobReq struct {
+	Id       int64  `json:"id"`       // 编号
+	JobName  string `json:"jobName"`  // 职位名称
+	OrderNum int64  `json:"orderNum"` // 排序
+	Remarks  string `json:"remarks"`  // 备注
+}
+
+type UpdateJobResp struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type UpdateMenuReq struct {
+	Id           int64  `json:"id"`                    // 编号
+	Name         string `json:"name"`                  // 菜单名称
+	ParentId     int64  `json:"parentId"`              // 父菜单ID，一级菜单为0
+	Url          string `json:"url,optional"`          // 菜单URL,类型：1.普通页面（如用户管理， /sysmodel/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀+目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+	Perms        string `json:"perms,optional"`        // 授权(多个用逗号分隔，如：sysmodel:user:add,sysmodel:user:edit)
+	Type         int64  `json:"type,optional"`         // 类型   0：目录   1：菜单   2：按钮
+	Icon         string `json:"icon,optional"`         // 菜单图标
+	OrderNum     int64  `json:"orderNum,optional"`     // 排序
+	VuePath      string `json:"vuePath,optional"`      // vue系统的path
+	VueComponent string `json:"vueComponent,optional"` // vue的页面
+	VueIcon      string `json:"vueIcon,optional"`      // vue的图标
+	VueRedirect  string `json:"vueRedirect,optional"`  // vue的路由重定向
+}
+
+type UpdateMenuResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type UpdateRoleMenuReq struct {
+	RoleId  int64   `json:"roleId"`
+	MenuIds []int64 `json:"menuIds"`
+}
+
+type UpdateRoleMenuResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type UpdateRoleReq struct {
+	Id     int64  `json:"id"`     // 编号
+	Name   string `json:"name"`   // 角色名称
+	Remark string `json:"remark"` // 备注
+	Status int64  `json:"status"` // 状态
+}
+
+type UpdateRoleResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type UpdateUserReq struct {
+	Id       int64  `json:"id"`
+	Email    string `json:"email"`
+	Mobile   string `json:"mobile"`
+	Name     string `json:"name"`
+	NickName string `json:"nickName"`
+	DeptId   int64  `json:"deptId"`
+	RoleId   int64  `json:"roleId"`
+	Status   int64  `json:"status"`
+	JobId    int64  `json:"jobId"`
+}
+
+type UpdateUserResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
+}
+
+type UserInfoData struct {
+	Id       string `json:"userId"`
+	Username string `json:"username"`
+	RealName string `json:"realName"`
+	Avatar   string `json:"avatar"`
+	Desc     string `json:"desc"`
+}
+
+type UserStatusReq struct {
+	Id     int64 `json:"id"`
+	Status int64 `json:"status"` // 状态  0：禁用   1：正常
+}
+
+type UserStatusResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type AddDeptReq struct {
+	Name     string `json:"name"`              // 机构名称
+	ParentId int64  `json:"parentId,optional"` // 上级机构ID，一级机构为0
+	OrderNum int64  `json:"orderNum"`          // 排序
+}
+
+type AddDeptResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
+}
+
+type AddDictReq struct {
+	Value       string `json:"value"`       // 数据值
+	Label       string `json:"label"`       // 标签名
+	Type        string `json:"type"`        // 类型
+	Description string `json:"description"` // 描述
+	Sort        string `json:"sort"`        // 排序（升序）
+	Remarks     string `json:"remarks"`     // 备注信息
+}
+
+type AddDictResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type AddJobReq struct {
+	JobName  string `json:"jobName"`  // 职位名称
+	Remarks  string `json:"remarks"`  // 备注
+	OrderNum int64  `json:"orderNum"` // 排序
+}
+
+type AddJobResp struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
+type AddMenuReq struct {
+	Name         string `json:"name"`                  // 菜单名称
+	ParentId     int64  `json:"parentId,optional"`     // 父菜单ID，一级菜单为0
+	Url          string `json:"url,optional"`          // 菜单URL,类型：1.普通页面（如用户管理， /sysmodel/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀+目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
+	Perms        string `json:"perms,optional"`        // 授权(多个用逗号分隔，如：sysmodel:user:add,sysmodel:user:edit)
+	Type         int64  `json:"type,optional"`         // 类型   0：目录   1：菜单   2：按钮
+	Icon         string `json:"icon,optional"`         // 菜单图标
+	OrderNum     int64  `json:"orderNum,optional"`     // 排序
+	VuePath      string `json:"vuePath,optional"`      // vue系统的path
+	VueComponent string `json:"vueComponent,optional"` // vue的页面
+	VueIcon      string `json:"vueIcon,optional"`      // vue的图标
+	VueRedirect  string `json:"vueRedirect,optional"`  // vue的路由重定向
+}
+
+type AddMenuResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type AddRoleReq struct {
+	Name   string `json:"name"`            // 角色名称
+	Remark string `json:"remark"`          // 备注
+	Status int64  `json:"status,optional"` // 状态
+}
+
+type AddRoleResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+}
+
+type AddUserReq struct {
+	Email    string `json:"email"`
+	Mobile   string `json:"mobile"`
+	Name     string `json:"name"`
+	NickName string `json:"nickName"`
+	DeptId   int64  `json:"deptId"`
+	RoleId   int64  `json:"roleId"`
+	JobId    int64  `json:"jobId"`
+}
+
+type AddUserResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
+}
+
+type LoginData struct {
+	Status           string `json:"status"`
+	CurrentAuthority string `json:"currentAuthority"`
+	Id               int64  `json:"userId"`
+	UserName         string `json:"userName"`
+	AccessToken      string `json:"token"`
+	AccessExpire     int64  `json:"accessExpire"`
+	RefreshAfter     int64  `json:"refreshAfter"`
+}
+
+type LoginReq struct {
+	UserName string `json:"userName"`
+	Password string `json:"password"`
+}
+
+type LoginResp struct {
+	Code    int64     `json:"code"`
+	Message string    `json:"message"`
+	Type    string    `json:"type"`
+	Data    LoginData `json:"data"`
+}
+
+type UserInfoResp struct {
+	Code    int64        `json:"code"`
+	Message string       `json:"message"`
+	Type    string       `json:"type"`
+	Data    UserInfoData `json:"data"`
 }
