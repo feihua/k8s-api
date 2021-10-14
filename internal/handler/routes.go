@@ -16,6 +16,7 @@ import (
 	sysdept "k8s_test/internal/handler/sys/dept"
 	sysdict "k8s_test/internal/handler/sys/dict"
 	sysjob "k8s_test/internal/handler/sys/job"
+	syslog "k8s_test/internal/handler/sys/log"
 	sysmenu "k8s_test/internal/handler/sys/menu"
 	sysrole "k8s_test/internal/handler/sys/role"
 	sysuser "k8s_test/internal/handler/sys/user"
@@ -536,6 +537,21 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/api/sys/job/delete",
 				Handler: sysjob.JobDeleteHandler(serverCtx),
+			},
+		},
+	)
+
+	engine.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/loginLog/list",
+				Handler: syslog.LoginLogListHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/sys/loginLog/delete",
+				Handler: syslog.LoginLogDeleteHandler(serverCtx),
 			},
 		},
 	)

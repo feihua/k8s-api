@@ -14,6 +14,7 @@ import "sys/menu.api"
 import "sys/dict.api"
 import "sys/dept.api"
 import "sys/job.api"
+import "sys/log.api"
 
 info(
 	title: "k8s admin"

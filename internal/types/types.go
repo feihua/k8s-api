@@ -112,6 +112,15 @@ type DeleteJobResp struct {
 	Message string `json:"message"`
 }
 
+type DeleteLoginLogReq struct {
+	Id int64 `json:"id"`
+}
+
+type DeleteLoginLogResp struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+}
+
 type DeleteMenuReq struct {
 	Id int64 `json:"id"`
 }
@@ -438,6 +447,32 @@ type ListJobResp struct {
 	Message string      `json:"message"`
 	Type    string      `json:"type"`
 	Data    ListJobData `json:"data"`
+}
+
+type ListLoginLogData struct {
+	Id             int64  `json:"id"`             // 编号
+	UserName       string `json:"userName"`       // 用户名
+	Status         string `json:"status"`         // 登录状态（online:在线，登录初始状态，方便统计在线人数；login:退出登录后将online置为login；logout:退出登录）
+	Ip             string `json:"ip"`             // IP地址
+	CreateBy       string `json:"createBy"`       // 创建人
+	CreateTime     string `json:"createTime"`     // 创建时间
+	LastUpdateBy   string `json:"lastUpdateBy"`   // 更新人
+	LastUpdateTime string `json:"lastUpdateTime"` // 更新时间
+}
+
+type ListLoginLogReq struct {
+	Current  int64 `json:"current,default=1"`
+	PageSize int64 `json:"pageSize,default=20"`
+}
+
+type ListLoginLogResp struct {
+	Code     string              `json:"code"`
+	Message  string              `json:"message"`
+	Current  int64               `json:"current,default=1"`
+	Data     []*ListLoginLogData `json:"data"`
+	PageSize int64               `json:"pageSize,default=20"`
+	Success  bool                `json:"success"`
+	Total    int64               `json:"total"`
 }
 
 type ListMenuData struct {
