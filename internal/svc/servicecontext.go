@@ -3,6 +3,9 @@ package svc
 import (
 	"context"
 	"github.com/tal-tech/go-zero/core/logx"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"gorm.io/gorm/schema"
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -13,6 +16,7 @@ import (
 type ServiceContext struct {
 	Config    config.Config
 	ClientSet *kubernetes.Clientset
+	DbEngine  *gorm.DB
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -28,9 +32,24 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		logx.Errorf("连接kubernetes：%s异常: %s", kubeConfig, err.Error())
 	}
 
+	//启动Gorm支持
+	db, err := gorm.Open(mysql.Open(c.Mysql.Datasource), &gorm.Config{
+		NamingStrategy: schema.NamingStrategy{
+			TablePrefix:   "tech_",
+			SingularTable: true,
+		},
+	})
+
+	if err != nil {
+		panic(err)
+	}
+	//自动同步更新表结构,不要建表了O(∩_∩)O哈哈~
+	//db.AutoMigrate(&models.User{})
+
 	return &ServiceContext{
 		Config:    c,
 		ClientSet: clientSet,
+		DbEngine:  db,
 	}
 }
 

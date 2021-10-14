@@ -1,3 +1,6 @@
 Name: k8s-api
 Host: 0.0.0.0
 Port: 3000
+
+Mysql:
+  Datasource: root:123456@tcp(127.0.0.1:3306)/k8s?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
