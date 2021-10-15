@@ -102,7 +102,7 @@ service k8s-api {
     post /api/sys/role/add (addRoleReq) returns (addRoleResp)
 
     @handler RoleList
-    post /api/sys/role/getAllRoleList (ListRoleReq) returns (ListRoleResp)
+    post /api/sys/role/list (ListRoleReq) returns (ListRoleResp)
 
     @handler RoleUpdate
     post /api/sys/role/update (UpdateRoleReq) returns (UpdateRoleResp)

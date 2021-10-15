@@ -410,7 +410,7 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 			},
 			{
 				Method:  http.MethodPost,
-				Path:    "/api/sys/role/getAllRoleList",
+				Path:    "/api/sys/role/list",
 				Handler: sysrole.RoleListHandler(serverCtx),
 			},
 			{
