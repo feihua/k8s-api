@@ -2,6 +2,7 @@ package logic
 
 import (
 	"context"
+	"k8s_test/internal/model"
 
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
@@ -24,7 +25,28 @@ func NewDeptListLogic(ctx context.Context, svcCtx *svc.ServiceContext) DeptListL
 }
 
 func (l *DeptListLogic) DeptList(req types.ListDeptReq) (*types.ListDeptResp, error) {
-	// todo: add your logic here and delete this line
+	var list []model.Dept
+	l.svcCtx.DbClient.Find(&list)
 
-	return &types.ListDeptResp{}, nil
+	items := make([]*types.ListDeptData, 0)
+	for _, item := range list {
+		items = append(items, &types.ListDeptData{
+			Id:             item.Id,
+			Name:           item.Name,
+			ParentId:       item.ParentId,
+			OrderNum:       item.OrderNum,
+			CreateBy:       item.CreateBy,
+			CreateTime:     item.CreateTime.Format("2006-01-02 15:04:05"),
+			LastUpdateBy:   item.LastUpdateBy,
+			LastUpdateTime: item.LastUpdateTime.Format("2006-01-02 15:04:05"),
+			DelFlag:        item.DelFlag,
+		})
+	}
+	return &types.ListDeptResp{
+		Code:    0,
+		Message: "ok",
+		Type:    "success",
+		Data:    items,
+	}, nil
+
 }

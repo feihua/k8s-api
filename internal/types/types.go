@@ -840,8 +840,8 @@ type AddUserResp struct {
 }
 
 type ListUserReq struct {
-	Current  int64  `json:"current,default=1"`
-	PageSize int64  `json:"pageSize,default=20"`
+	Current  int    `json:"current,default=1"`
+	PageSize int    `json:"pageSize,default=20"`
 	Name     string `json:"name,optional"`
 	NickName string `json:"nickName,optional"`
 	Mobile   string `json:"mobile,optional"`
@@ -952,8 +952,8 @@ type JobAllResp struct {
 }
 
 type SelectDataReq struct {
-	Current  int64 `json:"current,default=1"`
-	PageSize int64 `json:"pageSize,default=20"`
+	Current  int `json:"current,default=1"`
+	PageSize int `json:"pageSize,default=20"`
 }
 
 type SelectDataResp struct {
@@ -976,18 +976,19 @@ type AddRoleResp struct {
 }
 
 type ListRoleReq struct {
-	Current  int64  `json:"current,default=1"`
-	PageSize int64  `json:"pageSize,default=20"`
+	Current  int    `json:"current,default=1"`
+	PageSize int    `json:"pageSize,default=20"`
 	Name     string `json:"name,optional "`
 	Status   int64  `json:"delFlag,optional "`
 }
 
 type ListRoleItem struct {
 	Id         int64  `json:"id"`         // 编号
-	OrderNo    string `json:"orderNo"`    // 角色名称
+	OrderNo    int    `json:"orderNo"`    // 角色名称
 	RoleName   string `json:"roleName"`   // 角色名称
 	RoleValue  string `json:"roleValue"`  // 备注
 	CreateTime string `json:"createTime"` // 创建时间
+	UpdateTime string `json:"updateTime"` // 更新时间
 	Status     string `json:"status"`     // 角色名称
 	Remark     string `json:"remark"`     // 角色名称
 }
@@ -1087,11 +1088,6 @@ type ListMenuReq struct {
 }
 
 type ListtMenuData struct {
-	Items []*ListtMenuItem `json:"items"`
-	Total int64            `json:"total"`
-}
-
-type ListtMenuItem struct {
 	Id             int64  `json:"id"`             // 编号
 	Key            string `json:"key"`            // 菜单名称
 	Name           string `json:"name"`           // 菜单名称
@@ -1099,25 +1095,21 @@ type ListtMenuItem struct {
 	ParentId       int64  `json:"parentId"`       // 父菜单ID，一级菜单为0
 	Url            string `json:"url"`            // 菜单URL,类型：1.普通页面（如用户管理， /sysmodel/user） 2.嵌套完整外部页面，以http(s)开头的链接 3.嵌套服务器页面，使用iframe:前缀+目标URL(如SQL监控， iframe:/druid/login.html, iframe:前缀会替换成服务器地址)
 	Perms          string `json:"perms"`          // 授权(多个用逗号分隔，如：sysmodel:user:add,sysmodel:user:edit)
-	Type           int64  `json:"type"`           // 类型   0：目录   1：菜单   2：按钮
+	Type           int    `json:"type"`           // 类型   0：目录   1：菜单   2：按钮
 	Icon           string `json:"icon"`           // 菜单图标
-	OrderNum       int64  `json:"orderNum"`       // 排序
+	OrderNum       int    `json:"orderNum"`       // 排序
 	CreateBy       string `json:"createBy"`       // 创建人
 	CreateTime     string `json:"createTime"`     // 创建时间
 	LastUpdateBy   string `json:"lastUpdateBy"`   // 更新人
 	LastUpdateTime string `json:"lastUpdateTime"` // 更新时间
-	DelFlag        int64  `json:"delFlag"`        // 是否删除  -1：已删除  0：正常
-	VuePath        string `json:"vuePath"`        // vue系统的path
-	VueComponent   string `json:"vueComponent"`   // vue的页面
-	VueIcon        string `json:"vueIcon"`        // vue的图标
-	VueRedirect    string `json:"vueRedirect"`    // vue的路由重定向
+	DelFlag        int    `json:"delFlag"`        // 是否删除  -1：已删除  0：正常
 }
 
 type ListMenuResp struct {
-	Code    int64         `json:"code"`
-	Message string        `json:"message"`
-	Type    string        `json:"type"`
-	Data    ListtMenuData `json:"data"`
+	Code    int64            `json:"code"`
+	Message string           `json:"message"`
+	Type    string           `json:"type"`
+	Data    []*ListtMenuData `json:"data"`
 }
 
 type UpdateMenuReq struct {
@@ -1164,8 +1156,8 @@ type AddDictResp struct {
 }
 
 type ListDictReq struct {
-	Current  int64  `json:"current,default=1"`
-	PageSize int64  `json:"pageSize,default=20"`
+	Current  int    `json:"current,default=1"`
+	PageSize int    `json:"pageSize,default=20"`
 	Value    string `json:"value,optional"`
 	Label    string `json:"label,optional"`
 	DelFlag  int64  `json:"delFlag,optional"`
@@ -1178,18 +1170,18 @@ type ListDictData struct {
 }
 
 type ListDictItem struct {
-	Id             int64   `json:"id"`             // 编号
-	Value          string  `json:"value"`          // 数据值
-	Label          string  `json:"label"`          // 标签名
-	Type           string  `json:"type"`           // 类型
-	Description    string  `json:"description"`    // 描述
-	Sort           float64 `json:"sort"`           // 排序（升序）
-	CreateBy       string  `json:"createBy"`       // 创建人
-	CreateTime     string  `json:"createTime"`     // 创建时间
-	LastUpdateBy   string  `json:"lastUpdateBy"`   // 更新人
-	LastUpdateTime string  `json:"lastUpdateTime"` // 更新时间
-	Remarks        string  `json:"remarks"`        // 备注信息
-	DelFlag        int64   `json:"delFlag"`        // 是否删除  -1：已删除  0：正常
+	Id             int64  `json:"id"`             // 编号
+	Value          string `json:"value"`          // 数据值
+	Label          string `json:"label"`          // 标签名
+	Type           string `json:"type"`           // 类型
+	Description    string `json:"description"`    // 描述
+	Sort           int    `json:"sort"`           // 排序（升序）
+	CreateBy       string `json:"createBy"`       // 创建人
+	CreateTime     string `json:"createTime"`     // 创建时间
+	LastUpdateBy   string `json:"lastUpdateBy"`   // 更新人
+	LastUpdateTime string `json:"lastUpdateTime"` // 更新时间
+	Remarks        string `json:"remarks"`        // 备注信息
+	DelFlag        int    `json:"delFlag"`        // 是否删除  -1：已删除  0：正常
 }
 
 type ListDictResp struct {
@@ -1246,20 +1238,19 @@ type ListDeptData struct {
 	Id             int64  `json:"id"`             // 编号
 	Name           string `json:"name"`           // 机构名称
 	ParentId       int64  `json:"parentId"`       // 上级机构ID，一级机构为0
-	OrderNum       int64  `json:"orderNum"`       // 排序
+	OrderNum       int    `json:"orderNum"`       // 排序
 	CreateBy       string `json:"createBy"`       // 创建人
 	CreateTime     string `json:"createTime"`     // 创建时间
 	LastUpdateBy   string `json:"lastUpdateBy"`   // 更新人
 	LastUpdateTime string `json:"lastUpdateTime"` // 更新时间
-	DelFlag        int64  `json:"delFlag"`        // 是否删除  -1：已删除  0：正常
+	DelFlag        int    `json:"delFlag"`        // 是否删除  -1：已删除  0：正常
 }
 
 type ListDeptResp struct {
 	Code    int64           `json:"code"`
 	Message string          `json:"message"`
+	Type    string          `json:"type"`
 	Data    []*ListDeptData `json:"data"`
-	Success bool            `json:"success"`
-	Total   int64           `json:"total"`
 }
 
 type UpdateDeptReq struct {
@@ -1295,8 +1286,8 @@ type AddJobResp struct {
 }
 
 type ListJobReq struct {
-	Current  int64  `json:"current,default=1"`
-	PageSize int64  `json:"pageSize,default=20"`
+	Current  int    `json:"current,default=1"`
+	PageSize int    `json:"pageSize,default=20"`
 	JobName  string `json:"jobName,optional"`
 }
 
@@ -1308,17 +1299,17 @@ type ListJobData struct {
 type ListJobItem struct {
 	Id             int64  `json:"id"`             // 编号
 	JobName        string `json:"jobName"`        // 职位名称
-	OrderNum       int64  `json:"orderNum"`       // 排序
+	OrderNum       int    `json:"orderNum"`       // 排序
 	CreateBy       string `json:"createBy"`       // 创建人
 	CreateTime     string `json:"createTime"`     // 创建时间
 	LastUpdateBy   string `json:"lastUpdateBy"`   // 更新人
 	LastUpdateTime string `json:"lastUpdateTime"` // 更新时间
-	DelFlag        int64  `json:"delFlag"`        // 是否删除  -1：已删除  0：正常
+	DelFlag        int    `json:"delFlag"`        // 是否删除  -1：已删除  0：正常
 	Remarks        string `json:"remarks"`        // 备注
 }
 
 type ListJobResp struct {
-	Code    string      `json:"code"`
+	Code    int64       `json:"code"`
 	Message string      `json:"message"`
 	Type    string      `json:"type"`
 	Data    ListJobData `json:"data"`
@@ -1346,11 +1337,16 @@ type DeleteJobResp struct {
 }
 
 type ListLoginLogReq struct {
-	Current  int64 `json:"current,default=1"`
-	PageSize int64 `json:"pageSize,default=20"`
+	Current  int `json:"current,default=1"`
+	PageSize int `json:"pageSize,default=20"`
 }
 
 type ListLoginLogData struct {
+	Items []*ListLoginLogItem `json:"items"`
+	Total int64               `json:"total"`
+}
+
+type ListLoginLogItem struct {
 	Id             int64  `json:"id"`             // 编号
 	UserName       string `json:"userName"`       // 用户名
 	Status         string `json:"status"`         // 登录状态（online:在线，登录初始状态，方便统计在线人数；login:退出登录后将online置为login；logout:退出登录）
@@ -1362,13 +1358,10 @@ type ListLoginLogData struct {
 }
 
 type ListLoginLogResp struct {
-	Code     string              `json:"code"`
-	Message  string              `json:"message"`
-	Current  int64               `json:"current,default=1"`
-	Data     []*ListLoginLogData `json:"data"`
-	PageSize int64               `json:"pageSize,default=20"`
-	Success  bool                `json:"success"`
-	Total    int64               `json:"total"`
+	Code    int64            `json:"code"`
+	Message string           `json:"message"`
+	Type    string           `json:"type"`
+	Data    ListLoginLogData `json:"data"`
 }
 
 type DeleteLoginLogReq struct {

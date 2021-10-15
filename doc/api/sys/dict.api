@@ -20,8 +20,8 @@ type (
         Message string `json:"message"`
     }
     ListDictReq struct {
-        Current int64 `json:"current,default=1"`
-        PageSize int64 `json:"pageSize,default=20"`
+        Current int `json:"current,default=1"`
+        PageSize int `json:"pageSize,default=20"`
         Value string `json:"value,optional"`
         Label string `json:"label,optional"`
         DelFlag int64 `json:"delFlag,optional"`
@@ -37,13 +37,13 @@ type (
         Label string `json:"label"`                        // 标签名
         Type string `json:"type"`                          // 类型
         Description string `json:"description"`            // 描述
-        Sort float64 `json:"sort"`                         // 排序（升序）
+        Sort int `json:"sort"`                         // 排序（升序）
         CreateBy string `json:"createBy"`                 // 创建人
         CreateTime string `json:"createTime"`             // 创建时间
         LastUpdateBy string `json:"lastUpdateBy"`        // 更新人
         LastUpdateTime string `json:"lastUpdateTime"`    // 更新时间
         Remarks string `json:"remarks"`                    // 备注信息
-        DelFlag int64 `json:"delFlag"`                    // 是否删除  -1：已删除  0：正常
+        DelFlag int `json:"delFlag"`                    // 是否删除  -1：已删除  0：正常
     }
     ListDictResp struct {
         Code int64 `json:"code"`

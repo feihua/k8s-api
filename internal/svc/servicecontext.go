@@ -16,7 +16,7 @@ import (
 type ServiceContext struct {
 	Config    config.Config
 	ClientSet *kubernetes.Clientset
-	DbEngine  *gorm.DB
+	DbClient  *gorm.DB
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -35,7 +35,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	//启动Gorm支持
 	db, err := gorm.Open(mysql.Open(c.Mysql.Datasource), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
-			TablePrefix:   "tech_",
+			TablePrefix:   "sys_",
 			SingularTable: true,
 		},
 	})
@@ -49,7 +49,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	return &ServiceContext{
 		Config:    c,
 		ClientSet: clientSet,
-		DbEngine:  db,
+		DbClient:  db,
 	}
 }
 

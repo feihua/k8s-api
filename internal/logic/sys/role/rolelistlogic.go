@@ -2,6 +2,9 @@ package logic
 
 import (
 	"context"
+	"k8s_test/internal/common/pagination"
+	"k8s_test/internal/model"
+	"strconv"
 
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
@@ -24,27 +27,24 @@ func NewRoleListLogic(ctx context.Context, svcCtx *svc.ServiceContext) RoleListL
 }
 
 func (l *RoleListLogic) RoleList(req types.ListRoleReq) (*types.ListRoleResp, error) {
-	// todo: add your logic here and delete this line
+	var list []model.Role
+	l.svcCtx.DbClient.Limit(req.PageSize).Offset(pagination.GetPageOffset(req.Current, req.PageSize)).Find(&list)
 
-	items := make([]*types.ListRoleItem, 2)
+	var count int64
+	l.svcCtx.DbClient.Model(&model.Role{}).Count(&count)
 
-	items[0] = &types.ListRoleItem{
-		Id:         1,
-		OrderNo:    "1",
-		RoleName:   "超级管理员",
-		RoleValue:  "admin",
-		CreateTime: "2021-10-11",
-		Status:     "1",
-		Remark:     "就是牛逼，牛哄哄的",
-	}
-	items[1] = &types.ListRoleItem{
-		Id:         2,
-		OrderNo:    "2",
-		RoleName:   "普通管理员",
-		RoleValue:  "manager",
-		CreateTime: "2021-10-11",
-		Status:     "1",
-		Remark:     "实力一半，哈哈",
+	items := make([]*types.ListRoleItem, 0)
+	for _, item := range list {
+		items = append(items, &types.ListRoleItem{
+			Id:         item.Id,
+			RoleName:   item.Name,
+			RoleValue:  item.Value,
+			OrderNo:    item.Sort,
+			Remark:     item.Remark,
+			CreateTime: item.CreateTime.Format("2006-01-02 15:04:05"),
+			UpdateTime: item.LastUpdateTime.Format("2006-01-02 15:04:05"),
+			Status:     strconv.FormatInt(int64(item.Status), 10),
+		})
 	}
 	return &types.ListRoleResp{
 		Code:    0,
@@ -52,7 +52,7 @@ func (l *RoleListLogic) RoleList(req types.ListRoleReq) (*types.ListRoleResp, er
 		Type:    "success",
 		Data: types.ListRoleData{
 			Items: items,
-			Total: 2,
+			Total: count,
 		},
 	}, nil
 }

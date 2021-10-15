@@ -82,8 +82,8 @@ type (
     }
 
     ListUserReq struct {
-        Current int64 `json:"current,default=1"`
-        PageSize int64 `json:"pageSize,default=20"`
+        Current int `json:"current,default=1"`
+        PageSize int `json:"pageSize,default=20"`
         Name string `json:"name,optional"`
         NickName string `json:"nickName,optional"`
         Mobile string `json:"mobile,optional"`
@@ -186,8 +186,8 @@ type (
     }
 
     SelectDataReq struct {
-        Current int64 `json:"current,default=1"`
-        PageSize int64 `json:"pageSize,default=20"`
+        Current int `json:"current,default=1"`
+        PageSize int `json:"pageSize,default=20"`
     }
 
     SelectDataResp struct {

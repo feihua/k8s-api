@@ -16,17 +16,18 @@ type (
         Message string `json:"message"`
     }
     ListRoleReq struct {
-        Current int64 `json:"current,default=1"`
-        PageSize int64 `json:"pageSize,default=20"`
+        Current int `json:"current,default=1"`
+        PageSize int `json:"pageSize,default=20"`
         Name string `json:"name,optional "`
         Status int64 `json:"delFlag,optional "`
     }
     ListRoleItem struct {
         Id int64 `json:"id"`                                // 编号
-        OrderNo string `json:"orderNo"`                           // 角色名称
+        OrderNo int `json:"orderNo"`                           // 角色名称
         RoleName string `json:"roleName"`                           // 角色名称
         RoleValue string `json:"roleValue"`                       // 备注
         CreateTime string `json:"createTime"`               // 创建时间
+        UpdateTime string `json:"updateTime"`               // 更新时间
         Status string `json:"status"`                        // 角色名称
         Remark string `json:"remark"`                        // 角色名称
     }

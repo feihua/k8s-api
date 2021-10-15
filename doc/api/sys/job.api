@@ -17,8 +17,8 @@ type (
         Message string `json:"message"`
     }
     ListJobReq struct {
-        Current int64 `json:"current,default=1"`
-        PageSize int64 `json:"pageSize,default=20"`
+        Current int `json:"current,default=1"`
+        PageSize int `json:"pageSize,default=20"`
         JobName string `json:"jobName,optional"`
     }
     ListJobData struct {
@@ -28,16 +28,16 @@ type (
     ListJobItem struct {
         Id int64 `json:"id"`                              // 编号
         JobName string `json:"jobName"`                   // 职位名称
-        OrderNum int64 `json:"orderNum"`                  // 排序
+        OrderNum int `json:"orderNum"`                  // 排序
         CreateBy string `json:"createBy"`                 // 创建人
         CreateTime string `json:"createTime"`             // 创建时间
         LastUpdateBy string `json:"lastUpdateBy"`         // 更新人
         LastUpdateTime string `json:"lastUpdateTime"`     // 更新时间
-        DelFlag int64 `json:"delFlag"`                    // 是否删除  -1：已删除  0：正常
+        DelFlag int `json:"delFlag"`                    // 是否删除  -1：已删除  0：正常
         Remarks        string `json:"remarks"`         // 备注
     }
     ListJobResp struct {
-        Code string `json:"code"`
+        Code int64 `json:"code"`
         Message string `json:"message"`
         Type string `json:"type"`
         Data ListJobData `json:"data"`
