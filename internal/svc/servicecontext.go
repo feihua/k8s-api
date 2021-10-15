@@ -5,6 +5,7 @@ import (
 	"github.com/tal-tech/go-zero/core/logx"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -38,6 +39,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 			TablePrefix:   "sys_",
 			SingularTable: true,
 		},
+		Logger: logger.Default.LogMode(logger.Info),
 	})
 
 	if err != nil {

@@ -27,7 +27,12 @@ func NewUserListLogic(ctx context.Context, svcCtx *svc.ServiceContext) UserListL
 
 func (l *UserListLogic) UserList(req types.ListUserReq) (*types.ListUserResp, error) {
 	var list []model.User
-	l.svcCtx.DbClient.Limit(req.PageSize).Offset(pagination.GetPageOffset(req.Current, req.PageSize)).Find(&list)
+	tx := l.svcCtx.DbClient.Limit(req.PageSize).Offset(pagination.GetPageOffset(req.Current, req.PageSize))
+
+	if req.DeptId != 0 {
+		tx.Where("dept_id = ?", req.DeptId)
+	}
+	tx.Find(&list)
 
 	var count int64
 	l.svcCtx.DbClient.Model(&model.User{}).Count(&count)
