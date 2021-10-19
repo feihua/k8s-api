@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/tal-tech/go-zero/core/logx"
 	"github.com/tal-tech/go-zero/rest/httpx"
 	"k8s_test/internal/common/errorx"
 	"net/http"
@@ -22,6 +23,8 @@ func main() {
 
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
+
+	logx.DisableStat()
 
 	ctx := svc.NewServiceContext(c)
 	server := rest.MustNewServer(c.RestConf)
