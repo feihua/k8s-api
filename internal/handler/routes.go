@@ -223,6 +223,11 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/api/pods/updateEphemeralContainers",
 				Handler: pods.PodUpdateEphemeralContainersHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/pods/log",
+				Handler: pods.PodLogHandler(serverCtx),
+			},
 		},
 	)
 

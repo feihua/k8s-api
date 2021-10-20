@@ -107,6 +107,15 @@ type (
         Message string `json:"message"`
     }
 
+    PodLogReq {
+        Namespace string `json:"namespace,optional"`
+        Pod string `json:"pod"`
+    }
+    PodLogResp {
+        Code int    `json:"code"`
+        Message string `json:"message"`
+        Data string `json:"data"`
+    }
 )
 
 @server(
@@ -131,5 +140,6 @@ service k8s-api {
     post /api/pods/getEphemeralContainers (PodGetEphemeralContainersReq) returns (PodGetEphemeralContainersResp);
     @handler PodUpdateEphemeralContainers
     post /api/pods/updateEphemeralContainers (PodUpdateEphemeralContainersReq) returns (PodUpdateEphemeralContainersResp);
-    
+    @handler PodLog
+    post /api/pods/log (PodLogReq) returns (PodLogResp);
 }
