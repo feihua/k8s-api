@@ -109,11 +109,14 @@ type (
 
     PodLogReq {
         Namespace string `json:"namespace,optional"`
-        Pod string `json:"pod"`
+        PodName string `json:"podName"`
+        ContainerName string `json:"containerName,optional"`
+        TailLines int64 `json:"tailLines"`
     }
     PodLogResp {
         Code int    `json:"code"`
         Message string `json:"message"`
+        Type string `json:"type"`
         Data string `json:"data"`
     }
 )

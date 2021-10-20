@@ -460,13 +460,16 @@ type PodUpdateEphemeralContainersResp struct {
 }
 
 type PodLogReq struct {
-	Namespace string `json:"namespace,optional"`
-	Pod       string `json:"pod"`
+	Namespace     string `json:"namespace,optional"`
+	PodName       string `json:"podName"`
+	ContainerName string `json:"containerName,optional"`
+	TailLines     int64  `json:"tailLines"`
 }
 
 type PodLogResp struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
+	Type    string `json:"type"`
 	Data    string `json:"data"`
 }
 
