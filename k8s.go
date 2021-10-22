@@ -3,16 +3,14 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/tal-tech/go-zero/core/conf"
 	"github.com/tal-tech/go-zero/core/logx"
-	"github.com/tal-tech/go-zero/rest/httpx"
-	"k8s_test/internal/common/errorx"
-	"net/http"
-
 	"k8s_test/internal/config"
 	"k8s_test/internal/handler"
 	"k8s_test/internal/svc"
+	"k8s_test/internal/utils/ws"
+	"net/http"
 
-	"github.com/tal-tech/go-zero/core/conf"
 	"github.com/tal-tech/go-zero/rest"
 )
 
@@ -32,14 +30,20 @@ func main() {
 
 	handler.RegisterHandlers(server, ctx)
 
-	// 自定义错误
-	httpx.SetErrorHandler(func(err error) (int, interface{}) {
-		switch e := err.(type) {
-		case *errorx.CodeError:
-			return http.StatusOK, e.Data()
-		default:
-			return http.StatusInternalServerError, e.Error()
-		}
+	server.AddRoute(rest.Route{
+		Method: http.MethodGet,
+		Path:   "/ws",
+		Handler: func(w http.ResponseWriter, r *http.Request) {
+			ws.WsHandler(w, r, ctx)
+		},
+	})
+
+	server.AddRoute(rest.Route{
+		Method: http.MethodGet,
+		Path:   "/test",
+		Handler: func(w http.ResponseWriter, r *http.Request) {
+			ws.WsHandler(w, r, ctx)
+		},
 	})
 
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)

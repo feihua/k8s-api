@@ -10,6 +10,7 @@ import (
 	v1 "k8s.io/api/core/v1"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s_test/internal/config"
 )
@@ -18,6 +19,7 @@ type ServiceContext struct {
 	Config    config.Config
 	ClientSet *kubernetes.Clientset
 	DbClient  *gorm.DB
+	RestConf  *rest.Config
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
@@ -52,6 +54,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		Config:    c,
 		ClientSet: clientSet,
 		DbClient:  db,
+		RestConf:  buildConfigFromFlags,
 	}
 }
 
