@@ -2,7 +2,10 @@ package logic
 
 import (
 	"context"
-
+	"encoding/json"
+	apiV1 "k8s.io/api/core/v1"
+	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s_test/internal/common/errorx"
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
 
@@ -24,7 +27,31 @@ func NewSecretCreateLogic(ctx context.Context, svcCtx *svc.ServiceContext) Secre
 }
 
 func (l *SecretCreateLogic) SecretCreate(req types.SecretAddReq) (*types.SecretAddResp, error) {
-	// todo: add your logic here and delete this line
+	data := make(map[string][]byte)
+	data["user"] = []byte(req.User)
+	data["password"] = []byte(req.Password)
 
-	return &types.SecretAddResp{}, nil
+	secret := &apiV1.Secret{
+		TypeMeta: metaV1.TypeMeta{
+			Kind: "Secret",
+		},
+		ObjectMeta: metaV1.ObjectMeta{
+			Name:      req.Name,
+			Namespace: req.Namespace,
+		},
+		Data: data,
+	}
+
+	result, err := l.svcCtx.ClientSet.CoreV1().Secrets(req.Namespace).Create(context.TODO(), secret, metaV1.CreateOptions{})
+
+	if err != nil {
+		resultStr, _ := json.Marshal(result)
+		logx.WithContext(l.ctx).Errorf("创建secret信息失败,请求参数:%s,异常:%s", resultStr, err.Error())
+		return nil, errorx.NewDefaultError(err.Error())
+	}
+
+	return &types.SecretAddResp{
+		Code:    0,
+		Message: "successful",
+	}, nil
 }

@@ -612,7 +612,10 @@ type StatefulSetListItem struct {
 }
 
 type SecretAddReq struct {
-	Name string `json:"name"`
+	User      string `json:"user"`
+	Password  string `json:"password"`
+	Name      string `json:"name,,default=generic-secret"`
+	Namespace string `json:"namespace,default=default"`
 }
 
 type SecretAddResp struct {
