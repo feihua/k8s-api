@@ -36,13 +36,15 @@ type (
     }
 
     CreateJobReq {
+        JobName string `json:"jobName"`
+        ViewName string `json:"viewName"`
         Config string `json:"config"`
     }
     CreateJobResp {
         Code int64 `json:"code"`
         Message string `json:"message"`
         Type string `json:"type"`
-        Data JenkinsListData `json:"data"`
+        Data Result `json:"data"`
     }
 
     UpdateJenkinsJobReq {
@@ -110,7 +112,7 @@ type (
         Code int64 `json:"code"`
         Message string `json:"message"`
         Type string `json:"type"`
-        Data JenkinsListData `json:"data"`
+        Data Result `json:"data"`
     }
 
     GetJobReq {

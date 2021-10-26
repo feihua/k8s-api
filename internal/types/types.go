@@ -1420,14 +1420,16 @@ type JenkinsInfoResp struct {
 }
 
 type CreateJobReq struct {
-	Config string `json:"config"`
+	JobName  string `json:"jobName"`
+	ViewName string `json:"viewName"`
+	Config   string `json:"config"`
 }
 
 type CreateJobResp struct {
-	Code    int64           `json:"code"`
-	Message string          `json:"message"`
-	Type    string          `json:"type"`
-	Data    JenkinsListData `json:"data"`
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
+	Data    Result `json:"data"`
 }
 
 type UpdateJenkinsJobReq struct {
@@ -1495,10 +1497,10 @@ type GetBuildReq struct {
 }
 
 type GetBuildResp struct {
-	Code    int64           `json:"code"`
-	Message string          `json:"message"`
-	Type    string          `json:"type"`
-	Data    JenkinsListData `json:"data"`
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
+	Data    Result `json:"data"`
 }
 
 type GetJobReq struct {
