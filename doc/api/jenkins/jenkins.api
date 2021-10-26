@@ -280,6 +280,16 @@ type (
 
     SCM {
     }
+
+    AddJobToViewReq {
+        JobName string `json:"jobName"`
+        ViewName string `json:"viewName"`
+    }
+    AddJobToViewResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+    }
 )
 
 @server(
@@ -316,4 +326,6 @@ service k8s-api {
     post /api/jenkins/getAllViewsWith () returns (GetAllViewsRespWith);
     @handler CreateView
     post /api/jenkins/createView (CreateViewReq) returns (CreateViewResp);
+    @handler AddJobToView
+    post /api/jenkins/addJobToView (AddJobToViewReq) returns (AddJobToViewResp);
 }

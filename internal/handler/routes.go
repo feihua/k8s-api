@@ -639,6 +639,11 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/api/jenkins/createView",
 				Handler: jenkins.CreateViewHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/jenkins/addJobToView",
+				Handler: jenkins.AddJobToViewHandler(serverCtx),
+			},
 		},
 	)
 }

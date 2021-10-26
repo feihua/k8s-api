@@ -1670,3 +1670,14 @@ type DefaultParameterValue struct {
 
 type SCM struct {
 }
+
+type AddJobToViewReq struct {
+	JobName  string `json:"jobName"`
+	ViewName string `json:"viewName"`
+}
+
+type AddJobToViewResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
+}

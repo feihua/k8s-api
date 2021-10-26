@@ -3,6 +3,7 @@ package jenkins
 import (
 	"context"
 	"fmt"
+	"github.com/bndr/gojenkins"
 	"k8s_test/internal/common/errorx"
 
 	"k8s_test/internal/svc"
@@ -26,7 +27,7 @@ func NewCreateViewLogic(ctx context.Context, svcCtx *svc.ServiceContext) CreateV
 }
 
 func (l *CreateViewLogic) CreateView(req types.CreateViewReq) (*types.CreateViewResp, error) {
-	jobs, err := l.svcCtx.Jenkins.CreateView(l.ctx, req.Name, req.ViewType)
+	jobs, err := l.svcCtx.Jenkins.CreateView(l.ctx, req.Name, gojenkins.LIST_VIEW)
 
 	if err != nil {
 		logx.WithContext(l.ctx).Errorf("查询jenkins job列表信息失败,请求参数:%s,异常:%s", req.Name, err.Error())
