@@ -1389,3 +1389,284 @@ type DeleteLoginLogResp struct {
 	Code    string `json:"code"`
 	Message string `json:"message"`
 }
+
+type JenkinsListReq struct {
+	Name string `json:"name,optional"`
+}
+
+type JenkinsListResp struct {
+	Code    int64           `json:"code"`
+	Message string          `json:"message"`
+	Type    string          `json:"type"`
+	Data    JenkinsListData `json:"data"`
+}
+
+type JenkinsListData struct {
+	Items []*JenkinsListItem `json:"items"`
+	Total int64              `json:"total"`
+}
+
+type JenkinsListItem struct {
+	Name  string `json:"name"`
+	Url   string `json:"url"`
+	Color string `json:"color"`
+}
+
+type JenkinsInfoResp struct {
+	Code    int64           `json:"code"`
+	Message string          `json:"message"`
+	Type    string          `json:"type"`
+	Data    JenkinsListData `json:"data"`
+}
+
+type CreateJobReq struct {
+	Config string `json:"config"`
+}
+
+type CreateJobResp struct {
+	Code    int64           `json:"code"`
+	Message string          `json:"message"`
+	Type    string          `json:"type"`
+	Data    JenkinsListData `json:"data"`
+}
+
+type UpdateJenkinsJobReq struct {
+	Job    string `json:"job"`
+	Config string `json:"config"`
+}
+
+type UpdateJenkinsJobResp struct {
+	Code    int64           `json:"code"`
+	Message string          `json:"message"`
+	Type    string          `json:"type"`
+	Data    JenkinsListData `json:"data"`
+}
+
+type RenameJobReq struct {
+	OldName string `json:"oldName"`
+	NewName string `json:"newName"`
+}
+
+type RenameJobResp struct {
+	Code    int64           `json:"code"`
+	Message string          `json:"message"`
+	Type    string          `json:"type"`
+	Data    JenkinsListData `json:"data"`
+}
+
+type CopyJobReq struct {
+	CopyFrom string `json:"copyFrom"`
+	NewName  string `json:"newName"`
+}
+
+type CopyJobResp struct {
+	Code    int64           `json:"code"`
+	Message string          `json:"message"`
+	Type    string          `json:"type"`
+	Data    JenkinsListData `json:"data"`
+}
+
+type DeleteJenkinsJobReq struct {
+	Name string `json:"name"`
+}
+
+type DeleteJenkinsJobResp struct {
+	Code    int64           `json:"code"`
+	Message string          `json:"message"`
+	Type    string          `json:"type"`
+	Data    JenkinsListData `json:"data"`
+}
+
+type BuildJobReq struct {
+	Name   string            `json:"name"`
+	Params map[string]string `json:"message"`
+}
+
+type BuildJobResp struct {
+	Code    int64           `json:"code"`
+	Message string          `json:"message"`
+	Type    string          `json:"type"`
+	Data    JenkinsListData `json:"data"`
+}
+
+type GetBuildReq struct {
+	Number  int64  `json:"message"`
+	JobName string `json:"jobName"`
+}
+
+type GetBuildResp struct {
+	Code    int64           `json:"code"`
+	Message string          `json:"message"`
+	Type    string          `json:"type"`
+	Data    JenkinsListData `json:"data"`
+}
+
+type GetJobReq struct {
+	Id string `json:"id"`
+}
+
+type GetJobResp struct {
+	Code    int64  `json:"code"`
+	Message string `json:"message"`
+	Type    string `json:"type"`
+	Data    Result `json:"data"`
+}
+
+type GetViewReq struct {
+	Name string `json:"name,default=all"`
+}
+
+type GetViewResp struct {
+	Code    int64       `json:"code"`
+	Message string      `json:"message"`
+	Type    string      `json:"type"`
+	Data    GetViewData `json:"data"`
+}
+
+type GetViewData struct {
+	Items []*JenkinsListItem `json:"items"`
+	Total int64              `json:"total"`
+}
+
+type GetAllViewsResp struct {
+	Code    int64               `json:"code"`
+	Message string              `json:"message"`
+	Type    string              `json:"type"`
+	Data    GetAllViewsListData `json:"data"`
+}
+
+type GetAllViewsRespWith struct {
+	Code    int64               `json:"code"`
+	Message string              `json:"message"`
+	Type    string              `json:"type"`
+	Data    []*AllViewsListItem `json:"data"`
+}
+
+type GetAllViewsListData struct {
+	Items []*AllViewsListItem `json:"items"`
+	Total int64               `json:"total"`
+}
+
+type AllViewsListItem struct {
+	Description string        `json:"description"`
+	Name        string        `json:"name"`
+	Property    []interface{} `json:"property"`
+	URL         string        `json:"url"`
+}
+
+type Job struct {
+	Class string `json:"_class"`
+	Name  string `json:"name"`
+	URL   string `json:"url"`
+	Color string `json:"color"`
+}
+
+type CreateViewReq struct {
+	Name     string `json:"name"`
+	ViewType string `json:"viewType"`
+}
+
+type CreateViewResp struct {
+	Code    int64           `json:"code"`
+	Message string          `json:"message"`
+	Type    string          `json:"type"`
+	Data    JenkinsListData `json:"data"`
+}
+
+type GetAllJobsResp struct {
+	Code    int64          `json:"code"`
+	Message string         `json:"message"`
+	Type    string         `json:"type"`
+	Data    GetAllJobsData `json:"data"`
+}
+
+type GetAllJobsData struct {
+	Items []*Result `json:"items"`
+	Total int64     `json:"total"`
+}
+
+type Result struct {
+	Class                 string         `json:"_class"`
+	Actions               []Action       `json:"Actions"`
+	Buildable             bool           `json:"buildable"`
+	Builds                []Build        `json:"Builds"`
+	Color                 string         `json:"color"`
+	ConcurrentBuild       bool           `json:"concurrentBuild"`
+	Description           string         `json:"description"`
+	DisplayName           string         `json:"displayName"`
+	DisplayNameOrNull     interface{}    `json:"displayNameOrNull"`
+	DownstreamProjects    interface{}    `json:"downstreamProjects"`
+	FirstBuild            Build          `json:"FirstBuild"`
+	FullName              string         `json:"fullName"`
+	FullDisplayName       string         `json:"fullDisplayName"`
+	HealthReport          []HealthReport `json:"healthReport"`
+	InQueue               bool           `json:"inQueue"`
+	KeepDependencies      bool           `json:"keepDependencies"`
+	LastBuild             Build          `json:"lastBuild"`
+	LastCompletedBuild    Build          `json:"lastCompletedBuild"`
+	LastFailedBuild       Build          `json:"lastFailedBuild"`
+	LastStableBuild       Build          `json:"lastStableBuild"`
+	LastSuccessfulBuild   Build          `json:"lastSuccessfulBuild"`
+	LastUnstableBuild     Build          `json:"lastUnstableBuild"`
+	LastUnsuccessfulBuild Build          `json:"lastUnsuccessfulBuild"`
+	Name                  string         `json:"name"`
+	NextBuildNumber       int64          `json:"nextBuildNumber"`
+	Property              []Property     `json:"property"`
+	QueueItem             interface{}    `json:"queueItem"`
+	SCM                   SCM            `json:"scm"`
+	UpstreamProjects      interface{}    `json:"upstreamProjects"`
+	URL                   string         `json:"url"`
+	Jobs                  interface{}    `json:"jobs"`
+	PrimaryView           interface{}    `json:"primaryView"`
+	Views                 interface{}    `json:"views"`
+}
+
+type Action struct {
+	Parameters              interface{}       `json:"parameters"`
+	Causes                  interface{}       `json:"causes"`
+	BuildsByBranchName      interface{}       `json:"buildsByBranchName"`
+	LastBuiltRevision       LastBuiltRevision `json:"lastBuiltRevision"`
+	RemoteUrls              interface{}       `json:"remoteUrls"`
+	SCMName                 string            `json:"scmName"`
+	MercurialNodeName       string            `json:"mercurialNodeName"`
+	MercurialRevisionNumber string            `json:"mercurialRevisionNumber"`
+	Subdir                  interface{}       `json:"subdir"`
+	TotalCount              int64             `json:"TotalCount"`
+	URLName                 string            `json:"UrlName"`
+}
+
+type LastBuiltRevision struct {
+	Sha1   string      `json:"SHA1"`
+	Branch interface{} `json:"branch"`
+}
+
+type Build struct {
+	Number int64  `json:"Number"`
+	URL    string `json:"URL"`
+}
+
+type HealthReport struct {
+	Description   string `json:"description"`
+	IconClassName string `json:"iconClassName"`
+	IconURL       string `json:"iconUrl"`
+	Score         int64  `json:"score"`
+}
+
+type Property struct {
+	ParameterDefinitions []ParameterDefinition `json:"parameterDefinitions"`
+}
+
+type ParameterDefinition struct {
+	DefaultParameterValue DefaultParameterValue `json:"defaultParameterValue"`
+	Description           string                `json:"description"`
+	Name                  string                `json:"name"`
+	Type                  string                `json:"type"`
+}
+
+type DefaultParameterValue struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
+}
+
+type SCM struct {
+}

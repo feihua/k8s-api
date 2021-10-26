@@ -7,6 +7,7 @@ import (
 	configmap "k8s_test/internal/handler/configmap"
 	deployment "k8s_test/internal/handler/deployment"
 	ingress "k8s_test/internal/handler/ingress"
+	jenkins "k8s_test/internal/handler/jenkins"
 	namespace "k8s_test/internal/handler/namespace"
 	nodes "k8s_test/internal/handler/nodes"
 	pods "k8s_test/internal/handler/pods"
@@ -557,6 +558,86 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Method:  http.MethodPost,
 				Path:    "/api/sys/loginLog/delete",
 				Handler: syslog.LoginLogDeleteHandler(serverCtx),
+			},
+		},
+	)
+
+	engine.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/jenkins/list",
+				Handler: jenkins.GetAllJobsNameHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/jenkins/info",
+				Handler: jenkins.GetInfoHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/jenkins/createJob",
+				Handler: jenkins.CreateJobHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/jenkins/updateJob",
+				Handler: jenkins.UpdateJobHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/jenkins/renameJob",
+				Handler: jenkins.RenameJobHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/jenkins/copyJob",
+				Handler: jenkins.CopyJobHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/jenkins/deleteJob",
+				Handler: jenkins.DeleteJobHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/jenkins/buildJob",
+				Handler: jenkins.BuildJobHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/jenkins/getBuild",
+				Handler: jenkins.GetBuildHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/jenkins/getJob",
+				Handler: jenkins.GetJobHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/jenkins/getAllJobs",
+				Handler: jenkins.GetAllJobsHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/jenkins/getView",
+				Handler: jenkins.GetViewHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/jenkins/getAllViews",
+				Handler: jenkins.GetAllViewsHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/jenkins/getAllViewsWith",
+				Handler: jenkins.GetAllViewsWithHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/jenkins/createView",
+				Handler: jenkins.CreateViewHandler(serverCtx),
 			},
 		},
 	)

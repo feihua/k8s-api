@@ -16,6 +16,8 @@ import "sys/dept.api"
 import "sys/job.api"
 import "sys/log.api"
 
+import "jenkins/jenkins.api"
+
 info(
 	title: "k8s admin"
 	desc: "k8s admin"
