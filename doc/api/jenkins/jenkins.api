@@ -105,7 +105,7 @@ type (
     }
 
     GetBuildReq {
-        number int64 `json:"message"`
+        Number int64 `json:"number"`
         JobName string `json:"jobName"`
     }
     GetBuildResp {
@@ -292,6 +292,24 @@ type (
         Message string `json:"message"`
         Type string `json:"type"`
     }
+
+    GetAllBuildIdsReq {
+        JobName string `json:"jobName"`
+    }
+    GetAllBuildIdsResp {
+        Code int64 `json:"code"`
+        Message string `json:"message"`
+        Type string `json:"type"`
+        Data GetAllBuildIdsData `json:"data"`
+    }
+    GetAllBuildIdsData struct {
+        Items []*GetAllBuildIdsItem `json:"items"`
+        Total int64 `json:"total"`
+    }
+    GetAllBuildIdsItem struct {
+        Number int64  `json:"number"`
+        URL    string `json:"url"`
+    }
 )
 
 @server(
@@ -330,4 +348,6 @@ service k8s-api {
     post /api/jenkins/createView (CreateViewReq) returns (CreateViewResp);
     @handler AddJobToView
     post /api/jenkins/addJobToView (AddJobToViewReq) returns (AddJobToViewResp);
+    @handler GetAllBuildIds
+    post /api/jenkins/getAllBuildIds (GetAllBuildIdsReq) returns (GetAllBuildIdsResp);
 }

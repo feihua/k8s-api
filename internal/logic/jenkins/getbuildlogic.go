@@ -29,7 +29,7 @@ func (l *GetBuildLogic) GetBuild(req types.GetBuildReq) (*types.GetBuildResp, er
 	build, err := l.svcCtx.Jenkins.GetBuild(l.ctx, req.JobName, req.Number)
 
 	if err != nil {
-		logx.WithContext(l.ctx).Errorf("查询jenkins job列表信息失败,请求参数:%s,异常:%s", err.Error())
+		logx.WithContext(l.ctx).Errorf("查询job build信息异常:%s", err.Error())
 		return nil, errorx.NewDefaultError(err.Error())
 	}
 

@@ -1492,7 +1492,7 @@ type BuildJobResp struct {
 }
 
 type GetBuildReq struct {
-	Number  int64  `json:"message"`
+	Number  int64  `json:"number"`
 	JobName string `json:"jobName"`
 }
 
@@ -1682,4 +1682,25 @@ type AddJobToViewResp struct {
 	Code    int64  `json:"code"`
 	Message string `json:"message"`
 	Type    string `json:"type"`
+}
+
+type GetAllBuildIdsReq struct {
+	JobName string `json:"jobName"`
+}
+
+type GetAllBuildIdsResp struct {
+	Code    int64              `json:"code"`
+	Message string             `json:"message"`
+	Type    string             `json:"type"`
+	Data    GetAllBuildIdsData `json:"data"`
+}
+
+type GetAllBuildIdsData struct {
+	Items []*GetAllBuildIdsItem `json:"items"`
+	Total int64                 `json:"total"`
+}
+
+type GetAllBuildIdsItem struct {
+	Number int64  `json:"number"`
+	URL    string `json:"url"`
 }

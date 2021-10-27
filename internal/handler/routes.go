@@ -644,6 +644,11 @@ func RegisterHandlers(engine *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/api/jenkins/addJobToView",
 				Handler: jenkins.AddJobToViewHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/api/jenkins/getAllBuildIds",
+				Handler: jenkins.GetAllBuildIdsHandler(serverCtx),
+			},
 		},
 	)
 }
