@@ -1481,7 +1481,7 @@ type DeleteJenkinsJobResp struct {
 
 type BuildJobReq struct {
 	Name   string            `json:"name"`
-	Params map[string]string `json:"message"`
+	Params map[string]string `json:"params,optional"`
 }
 
 type BuildJobResp struct {
