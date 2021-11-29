@@ -118,6 +118,7 @@ func main() {
 	//stop := make(chan struct{})
 	//go controller.Run(stop)
 
+	//参考https://andblog.cn/?p=3049
 	// 初始化 informer factory（为了测试方便这里设置每30s重新 List 一次）
 	informerFactory := informers.NewSharedInformerFactory(ctx.ClientSet, time.Second*60)
 	// 对 Deployment 监听
