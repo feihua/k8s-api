@@ -143,3 +143,32 @@ type UserRole struct {
 	LastUpdateBy   string    `gorm:"column:last_update_by"`                        // 更新人
 	LastUpdateTime time.Time `gorm:"column:last_update_time"`                      // 更新时间
 }
+
+type K8SDeployment struct {
+	Id             int64     `gorm:"column:id;AUTO_INCREMENT;primary_key"`                  // 编号
+	Name           string    `gorm:"column:name;NOT NULL"`                                  // 控制器名称
+	Content        string    `gorm:"column:content"`                                        // 内容
+	CreateTime     time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"` // 创建时间
+	LastUpdateTime time.Time `gorm:"column:last_update_time"`                               // 更新时间
+}
+type K8SNode struct {
+	Id             int64     `gorm:"column:id;AUTO_INCREMENT;primary_key"`                  // 编号
+	Name           string    `gorm:"column:name;NOT NULL"`                                  // 节点名称
+	Content        string    `gorm:"column:content"`                                        // 内容
+	CreateTime     time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"` // 创建时间
+	LastUpdateTime time.Time `gorm:"column:last_update_time"`                               // 更新时间
+}
+type K8SPod struct {
+	Id             int64     `gorm:"column:id;AUTO_INCREMENT;primary_key"`                  // 编号
+	Name           string    `gorm:"column:name;NOT NULL"`                                  // 容器名称
+	Content        string    `gorm:"column:content"`                                        // 内容
+	CreateTime     time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"` // 创建时间
+	LastUpdateTime time.Time `gorm:"column:last_update_time"`                               // 更新时间
+}
+type K8SService struct {
+	Id             int64     `gorm:"column:id;AUTO_INCREMENT;primary_key"`                  // 编号
+	Name           string    `gorm:"column:name;NOT NULL"`                                  // 服务名称
+	Content        string    `gorm:"column:content"`                                        // 内容
+	CreateTime     time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"` // 创建时间
+	LastUpdateTime time.Time `gorm:"column:last_update_time"`                               // 更新时间
+}
