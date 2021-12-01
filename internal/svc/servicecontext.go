@@ -42,7 +42,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	//启动Gorm支持
 	db, err := gorm.Open(mysql.Open(c.Mysql.Datasource), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
-			TablePrefix:   "sys_",
+			//TablePrefix:   "sys_",
 			SingularTable: true,
 		},
 		Logger: logger.Default.LogMode(logger.Info),

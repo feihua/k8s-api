@@ -18,6 +18,10 @@ type Dept struct {
 	DelFlag        int       `gorm:"column:del_flag;default:0"`                             // 是否删除  -1：已删除  0：正常
 }
 
+func (Dept) TableName() string {
+	return "sys_dept"
+}
+
 // 字典表
 type Dict struct {
 	Id             int64     `gorm:"column:id;AUTO_INCREMENT;primary_key"`                  // 编号
@@ -34,6 +38,10 @@ type Dict struct {
 	DelFlag        int       `gorm:"column:del_flag;default:0"`                             // 是否删除  -1：已删除  0：正常
 }
 
+func (Dict) TableName() string {
+	return "sys_dict"
+}
+
 // 职位管理
 type Job struct {
 	Id             int64     `gorm:"column:id;AUTO_INCREMENT;primary_key"`                  // 编号
@@ -47,6 +55,10 @@ type Job struct {
 	Remarks        string    `gorm:"column:remarks"`                                        // 备注
 }
 
+func (Job) TableName() string {
+	return "sys_job"
+}
+
 // 系统登录日志
 type LoginLog struct {
 	Id             int64     `gorm:"column:id;AUTO_INCREMENT;primary_key"`                  // 编号
@@ -57,6 +69,10 @@ type LoginLog struct {
 	CreateTime     time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"` // 创建时间
 	LastUpdateBy   string    `gorm:"column:last_update_by"`                                 // 更新人
 	LastUpdateTime time.Time `gorm:"column:last_update_time"`                               // 更新时间
+}
+
+func (LoginLog) TableName() string {
+	return "sys_login_log"
 }
 
 // 菜单管理
@@ -76,6 +92,10 @@ type Menu struct {
 	DelFlag        int       `gorm:"column:del_flag;default:0"`                             // 是否删除  -1：已删除  0：正常
 }
 
+func (Menu) TableName() string {
+	return "sys_menu"
+}
+
 // 角色管理
 type Role struct {
 	Id             int64     `gorm:"column:id;AUTO_INCREMENT;primary_key"`                  // 编号
@@ -91,6 +111,10 @@ type Role struct {
 	Status         int       `gorm:"column:status;default:1"`                               // 状态  1:启用,0:禁用
 }
 
+func (Role) TableName() string {
+	return "sys_role"
+}
+
 // 角色机构
 type RoleDept struct {
 	Id             int64     `gorm:"column:id;AUTO_INCREMENT;primary_key"`                  // 编号
@@ -102,6 +126,10 @@ type RoleDept struct {
 	LastUpdateTime time.Time `gorm:"column:last_update_time"`                               // 更新时间
 }
 
+func (RoleDept) TableName() string {
+	return "sys_role_dept"
+}
+
 // 角色菜单
 type RoleMenu struct {
 	Id             int64     `gorm:"column:id;AUTO_INCREMENT;primary_key"`                  // 编号
@@ -111,6 +139,10 @@ type RoleMenu struct {
 	CreateTime     time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"` // 创建时间
 	LastUpdateBy   string    `gorm:"column:last_update_by"`                                 // 更新人
 	LastUpdateTime time.Time `gorm:"column:last_update_time"`                               // 更新时间
+}
+
+func (RoleMenu) TableName() string {
+	return "sys_role_menu"
 }
 
 // 用户管理
@@ -133,6 +165,10 @@ type User struct {
 	JobId          int       `gorm:"column:job_id"`                                         // 岗位Id
 }
 
+func (User) TableName() string {
+	return "sys_user"
+}
+
 // 用户角色
 type UserRole struct {
 	Id             int64     `gorm:"column:id;AUTO_INCREMENT;primary_key"`         // 编号
@@ -144,28 +180,32 @@ type UserRole struct {
 	LastUpdateTime time.Time `gorm:"column:last_update_time"`                      // 更新时间
 }
 
-type K8SDeployment struct {
+func (UserRole) TableName() string {
+	return "sys_user_role"
+}
+
+type K8sDeployment struct {
 	Id             int64     `gorm:"column:id;AUTO_INCREMENT;primary_key"`                  // 编号
 	Name           string    `gorm:"column:name;NOT NULL"`                                  // 控制器名称
 	Content        string    `gorm:"column:content"`                                        // 内容
 	CreateTime     time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"` // 创建时间
 	LastUpdateTime time.Time `gorm:"column:last_update_time"`                               // 更新时间
 }
-type K8SNode struct {
+type K8sNode struct {
 	Id             int64     `gorm:"column:id;AUTO_INCREMENT;primary_key"`                  // 编号
 	Name           string    `gorm:"column:name;NOT NULL"`                                  // 节点名称
 	Content        string    `gorm:"column:content"`                                        // 内容
 	CreateTime     time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"` // 创建时间
 	LastUpdateTime time.Time `gorm:"column:last_update_time"`                               // 更新时间
 }
-type K8SPod struct {
+type K8sPod struct {
 	Id             int64     `gorm:"column:id;AUTO_INCREMENT;primary_key"`                  // 编号
 	Name           string    `gorm:"column:name;NOT NULL"`                                  // 容器名称
 	Content        string    `gorm:"column:content"`                                        // 内容
 	CreateTime     time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"` // 创建时间
 	LastUpdateTime time.Time `gorm:"column:last_update_time"`                               // 更新时间
 }
-type K8SService struct {
+type K8sService struct {
 	Id             int64     `gorm:"column:id;AUTO_INCREMENT;primary_key"`                  // 编号
 	Name           string    `gorm:"column:name;NOT NULL"`                                  // 服务名称
 	Content        string    `gorm:"column:content"`                                        // 内容

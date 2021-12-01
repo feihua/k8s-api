@@ -12,6 +12,7 @@ import (
 	"k8s.io/client-go/tools/cache"
 	"k8s_test/internal/config"
 	"k8s_test/internal/handler"
+	"k8s_test/internal/model"
 	"k8s_test/internal/svc"
 	"k8s_test/internal/utils/ws"
 	"net/http"
@@ -55,8 +56,8 @@ func main() {
 	//
 	//_, controller := cache.NewInformer(
 	//	watchlist,
-	//	&v1.Service{},
-	//	time.Second*0,
+	//	&v2.Service{},
+	//	time.Second*60,
 	//	cache.ResourceEventHandlerFuncs{
 	//		AddFunc: func(obj interface{}) {
 	//			fmt.Printf("service added: %s", obj)
@@ -66,6 +67,7 @@ func main() {
 	//		},
 	//		UpdateFunc: func(oldObj, newObj interface{}) {
 	//			fmt.Printf("service changed")
+	//			ctx.DbClient.Create()
 	//		},
 	//	},
 	//)
@@ -129,37 +131,107 @@ func main() {
 	//deployLister := deployInformer.Lister()
 	// 注册事件处理程序
 	informer.AddEventHandler(cache.ResourceEventHandlerFuncs{
-		AddFunc:    onAdd,
-		UpdateFunc: onUpdate,
+		AddFunc: onAdd,
+		UpdateFunc: func(old, new interface{}) {
+			//oldDeploy := old.(*v2.Node)
+			newDeploy := new.(*v1.Deployment)
+
+			sNode := model.K8sDeployment{}
+			if err := ctx.DbClient.Model(model.K8sDeployment{}).Where("name = ?", newDeploy.Name).First(&sNode).Error; err != nil {
+				sNode.Name = newDeploy.Name
+				sNode.Content = newDeploy.Name
+				ctx.DbClient.Create(&sNode)
+			} else {
+				sNode.Content = newDeploy.Name
+				sNode.LastUpdateTime = time.Now()
+				ctx.DbClient.Model(model.K8sDeployment{}).Where("id = ?", sNode.Id).Updates(sNode)
+			}
+		},
 		DeleteFunc: onDelete,
 	})
 
 	// 监听 pod 资源
 	podInformer := informerFactory.Core().V1().Pods()
 	podInformer.Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
-		AddFunc:    onAddPod,
-		UpdateFunc: onUpdatePod,
+		AddFunc: onAddPod,
+		UpdateFunc: func(old, new interface{}) {
+			//oldDeploy := old.(*v2.Node)
+			newDeploy := new.(*v2.Pod)
+
+			sNode := model.K8sPod{}
+			if err := ctx.DbClient.Model(model.K8sPod{}).Where("name = ?", newDeploy.Name).First(&sNode).Error; err != nil {
+				sNode.Name = newDeploy.Name
+				sNode.Content = newDeploy.Name
+				ctx.DbClient.Create(&sNode)
+			} else {
+				sNode.Content = newDeploy.Name
+				sNode.LastUpdateTime = time.Now()
+				ctx.DbClient.Model(model.K8sPod{}).Where("id = ?", sNode.Id).Updates(sNode)
+			}
+		},
 		DeleteFunc: onDeletePod,
 	})
 	// 监听 service 资源
 	servicesInformer := informerFactory.Core().V1().Services()
 	servicesInformer.Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
-		AddFunc:    onAddService,
-		UpdateFunc: onUpdateService,
+		AddFunc: onAddService,
+		UpdateFunc: func(old, new interface{}) {
+			//oldDeploy := old.(*v2.Node)
+			newDeploy := new.(*v2.Service)
+
+			sNode := model.K8sService{}
+			if err := ctx.DbClient.Model(model.K8sService{}).Where("name = ?", newDeploy.Name).First(&sNode).Error; err != nil {
+				sNode.Name = newDeploy.Name
+				sNode.Content = newDeploy.Name
+				ctx.DbClient.Create(&sNode)
+			} else {
+				sNode.Content = newDeploy.Name
+				sNode.LastUpdateTime = time.Now()
+				ctx.DbClient.Model(model.K8sService{}).Where("id = ?", sNode.Id).Updates(sNode)
+			}
+		},
 		DeleteFunc: onDeleteService,
 	})
 
 	// 监听 node 资源
 	informerFactory.Core().V1().Nodes().Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
-		AddFunc:    onAddNode,
-		UpdateFunc: onUpdateNode,
+		AddFunc: onAddNode,
+		UpdateFunc: func(old, new interface{}) {
+			//oldDeploy := old.(*v2.Node)
+			newDeploy := new.(*v2.Node)
+
+			sNode := model.K8sNode{}
+			if err := ctx.DbClient.Model(model.K8sNode{}).Where("name = ?", newDeploy.Name).First(&sNode).Error; err != nil {
+				sNode.Name = newDeploy.Name
+				sNode.Content = newDeploy.Name
+				ctx.DbClient.Create(&sNode)
+			} else {
+				sNode.Content = newDeploy.Name
+				sNode.LastUpdateTime = time.Now()
+				ctx.DbClient.Model(model.K8sNode{}).Where("id = ?", sNode.Id).Updates(sNode)
+			}
+		},
 		DeleteFunc: onDeleteNode,
 	})
 
 	// 监听 namespace 资源
 	informerFactory.Core().V1().Namespaces().Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
-		AddFunc:    onAddNameSpace,
-		UpdateFunc: onUpdateNameSpace,
+		AddFunc: onAddNameSpace,
+		//UpdateFunc: func(old, new interface{}) {
+		//	//oldDeploy := old.(*v2.Node)
+		//	newDeploy := new.(*v2.Namespace)
+		//
+		//	sNode := model.K8sNode{}
+		//	if err := ctx.DbClient.Model(model.K8sNode{}).Where("name = ?", newDeploy.Name).First(&sNode).Error; err != nil {
+		//		sNode.Name = newDeploy.Name
+		//		sNode.Content = newDeploy.Name
+		//		ctx.DbClient.Create(&sNode)
+		//	} else {
+		//		sNode.Content = newDeploy.Name
+		//		sNode.LastUpdateTime = time.Now()
+		//		ctx.DbClient.Model(model.K8sNode{}).Where("id = ?", sNode.Id).Updates(sNode)
+		//	}
+		//},
 		DeleteFunc: onDeleteNameSpace,
 	})
 
@@ -233,6 +305,7 @@ func onAddNode(obj interface{}) {
 func onUpdateNode(old, new interface{}) {
 	oldDeploy := old.(*v2.Node)
 	newDeploy := new.(*v2.Node)
+
 	fmt.Println("update node:", oldDeploy.Name, newDeploy.Name)
 }
 
