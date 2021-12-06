@@ -212,3 +212,10 @@ type K8sService struct {
 	CreateTime     time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"` // 创建时间
 	LastUpdateTime time.Time `gorm:"column:last_update_time"`                               // 更新时间
 }
+type K8sNamespace struct {
+	Id             int64     `gorm:"column:id;AUTO_INCREMENT;primary_key"`                  // 编号
+	Name           string    `gorm:"column:name;NOT NULL"`                                  // 命名空间名称
+	Content        string    `gorm:"column:content"`                                        // 内容
+	CreateTime     time.Time `gorm:"column:create_time;default:CURRENT_TIMESTAMP;NOT NULL"` // 创建时间
+	LastUpdateTime time.Time `gorm:"column:last_update_time"`                               // 更新时间
+}

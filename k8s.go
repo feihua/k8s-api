@@ -217,21 +217,21 @@ func main() {
 	// 监听 namespace 资源
 	informerFactory.Core().V1().Namespaces().Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
 		AddFunc: onAddNameSpace,
-		//UpdateFunc: func(old, new interface{}) {
-		//	//oldDeploy := old.(*v2.Node)
-		//	newDeploy := new.(*v2.Namespace)
-		//
-		//	sNode := model.K8sNode{}
-		//	if err := ctx.DbClient.Model(model.K8sNode{}).Where("name = ?", newDeploy.Name).First(&sNode).Error; err != nil {
-		//		sNode.Name = newDeploy.Name
-		//		sNode.Content = newDeploy.Name
-		//		ctx.DbClient.Create(&sNode)
-		//	} else {
-		//		sNode.Content = newDeploy.Name
-		//		sNode.LastUpdateTime = time.Now()
-		//		ctx.DbClient.Model(model.K8sNode{}).Where("id = ?", sNode.Id).Updates(sNode)
-		//	}
-		//},
+		UpdateFunc: func(old, new interface{}) {
+			//oldDeploy := old.(*v2.Node)
+			newDeploy := new.(*v2.Namespace)
+
+			sNode := model.K8sNamespace{}
+			if err := ctx.DbClient.Model(model.K8sNamespace{}).Where("name = ?", newDeploy.Name).First(&sNode).Error; err != nil {
+				sNode.Name = newDeploy.Name
+				sNode.Content = newDeploy.Name
+				ctx.DbClient.Create(&sNode)
+			} else {
+				sNode.Content = newDeploy.Name
+				sNode.LastUpdateTime = time.Now()
+				ctx.DbClient.Model(model.K8sNamespace{}).Where("id = ?", sNode.Id).Updates(sNode)
+			}
+		},
 		DeleteFunc: onDeleteNameSpace,
 	})
 
