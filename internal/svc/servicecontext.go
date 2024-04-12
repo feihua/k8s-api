@@ -3,6 +3,7 @@ package svc
 import (
 	"context"
 	"github.com/bndr/gojenkins"
+	"github.com/feihua/k8s-api/internal/config"
 	"github.com/zeromicro/go-zero/core/logx"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -13,7 +14,6 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
-	"k8s_test/internal/config"
 )
 
 type ServiceContext struct {

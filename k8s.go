@@ -3,6 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/feihua/k8s-api/internal/config"
+	"github.com/feihua/k8s-api/internal/handler"
+	"github.com/feihua/k8s-api/internal/model"
+	"github.com/feihua/k8s-api/internal/svc"
+	"github.com/feihua/k8s-api/internal/utils/ws"
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/rest"
@@ -10,11 +15,6 @@ import (
 	v2 "k8s.io/api/core/v1"
 	"k8s.io/client-go/informers"
 	"k8s.io/client-go/tools/cache"
-	"k8s_test/internal/config"
-	"k8s_test/internal/handler"
-	"k8s_test/internal/model"
-	"k8s_test/internal/svc"
-	"k8s_test/internal/utils/ws"
 	"net/http"
 	"time"
 )

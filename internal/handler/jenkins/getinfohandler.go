@@ -3,9 +3,9 @@ package jenkins
 import (
 	"net/http"
 
+	"github.com/feihua/k8s-api/internal/logic/jenkins"
+	"github.com/feihua/k8s-api/internal/svc"
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"k8s_test/internal/logic/jenkins"
-	"k8s_test/internal/svc"
 )
 
 func GetInfoHandler(ctx *svc.ServiceContext) http.HandlerFunc {

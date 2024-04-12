@@ -3,9 +3,9 @@ package handler
 import (
 	"net/http"
 
+	"github.com/feihua/k8s-api/internal/logic/sys/user"
+	"github.com/feihua/k8s-api/internal/svc"
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"k8s_test/internal/logic/sys/user"
-	"k8s_test/internal/svc"
 )
 
 func UserInfoHandler(ctx *svc.ServiceContext) http.HandlerFunc {

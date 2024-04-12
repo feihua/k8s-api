@@ -2,10 +2,10 @@ package logic
 
 import (
 	"context"
+	"github.com/feihua/k8s-api/internal/svc"
+	"github.com/feihua/k8s-api/internal/types"
 	"github.com/zeromicro/go-zero/core/logx"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s_test/internal/svc"
-	"k8s_test/internal/types"
 )
 
 type NamespaceDeleteLogic struct {

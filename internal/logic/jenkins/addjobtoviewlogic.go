@@ -2,10 +2,10 @@ package jenkins
 
 import (
 	"context"
-	"k8s_test/internal/common/errorx"
+	"github.com/feihua/k8s-api/internal/common/errorx"
 
-	"k8s_test/internal/svc"
-	"k8s_test/internal/types"
+	"github.com/feihua/k8s-api/internal/svc"
+	"github.com/feihua/k8s-api/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )

@@ -1,10 +1,10 @@
 package handler
 
 import (
+	"github.com/feihua/k8s-api/internal/logic/pods"
+	"github.com/feihua/k8s-api/internal/svc"
+	"github.com/feihua/k8s-api/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"k8s_test/internal/logic/pods"
-	"k8s_test/internal/svc"
-	"k8s_test/internal/types"
 	"net/http"
 )
 

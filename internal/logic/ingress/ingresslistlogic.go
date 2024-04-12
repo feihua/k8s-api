@@ -2,12 +2,12 @@ package logic
 
 import (
 	"context"
+	"github.com/feihua/k8s-api/internal/common/errorx"
+	"github.com/feihua/k8s-api/internal/svc"
+	"github.com/feihua/k8s-api/internal/types"
 	"github.com/zeromicro/go-zero/core/logx"
 	metaV1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/json"
-	"k8s_test/internal/common/errorx"
-	"k8s_test/internal/svc"
-	"k8s_test/internal/types"
 )
 
 type IngressListLogic struct {

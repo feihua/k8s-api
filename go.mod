@@ -1,4 +1,4 @@
-module k8s_test
+module github.com/feihua/k8s-api
 
 go 1.22
 
