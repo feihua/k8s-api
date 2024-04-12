@@ -7,7 +7,7 @@ import (
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
 
-	"github.com/tal-tech/go-zero/rest/httpx"
+	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
 func SecretCreateHandler(ctx *svc.ServiceContext) http.HandlerFunc {

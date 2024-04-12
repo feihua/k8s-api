@@ -1,11 +1,11 @@
 package handler
 
 import (
-	"net/http"
+	"github.com/zeromicro/go-zero/rest/httpx"
 	"k8s_test/internal/logic/pods"
-	"github.com/tal-tech/go-zero/rest/httpx"
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
+	"net/http"
 )
 
 func PodLogHandler(ctx *svc.ServiceContext) http.HandlerFunc {

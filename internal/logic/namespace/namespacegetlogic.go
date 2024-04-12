@@ -9,7 +9,7 @@ import (
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
 
-	"github.com/tal-tech/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type NamespaceGetLogic struct {
@@ -37,7 +37,7 @@ func (l *NamespaceGetLogic) NamespaceGet(req types.NamespaceGetReq) (*types.Name
 	now := time.Now()
 	data := types.NamespaceGetData{
 		Name:              namespace.Name,
-		ClusterName:       namespace.ClusterName,
+		ClusterName:       namespace.Namespace,
 		Status:            string(namespace.Status.Phase),
 		Age:               now.Sub(namespace.CreationTimestamp.Time).String(),
 		CreationTimestamp: namespace.CreationTimestamp.Format("2006-01-02 15:04:05"),

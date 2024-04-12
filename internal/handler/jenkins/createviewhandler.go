@@ -3,7 +3,7 @@ package jenkins
 import (
 	"net/http"
 
-	"github.com/tal-tech/go-zero/rest/httpx"
+	"github.com/zeromicro/go-zero/rest/httpx"
 	"k8s_test/internal/logic/jenkins"
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"

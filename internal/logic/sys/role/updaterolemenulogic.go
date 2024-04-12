@@ -6,7 +6,7 @@ import (
 	"k8s_test/internal/svc"
 	"k8s_test/internal/types"
 
-	"github.com/tal-tech/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type UpdateRoleMenuLogic struct {
